@@ -1,53 +1,45 @@
-const HEADER_BACK_BUTTON_ID = 'HEADER_BACK_BUTTON_ID';
-const HEADER_STAGE = 'HEADER_STAGE';
+import Logo from '../Public/images/wayke-logo.svg';
 
-const headerStage = (
-  element: HTMLElement,
-  heading: string,
-  stage: number,
-  currentStage: number
-) => {
-  const s = document.createElement('div');
-  s.classList.add(HEADER_STAGE);
-  s.innerText = `${stage}. ${heading}`;
-  if (stage === currentStage) {
-    s.classList.add('checked');
+const header = (onBack?: () => void) => {
+  const headerElement = document.querySelector('[data-ecom-header]') as HTMLElement | null;
+  if (!headerElement?.childElementCount) {
+    const _header = document.createElement('div');
+    _header.className = 'header';
+
+    const headerAction = document.createElement('div');
+    headerAction.className = 'header-action';
+
+    const headerLogoContainer = document.createElement('div');
+    headerLogoContainer.className = 'header-logo-container';
+
+    const img = document.createElement('img');
+    img.src = Logo;
+    img.className = 'header-logo';
+    img.alt = 'Logotype';
+    headerLogoContainer.appendChild(img);
+
+    const headerAction2 = document.createElement('div');
+    headerAction2.className = 'header-action';
+
+    _header.appendChild(headerAction);
+    _header.appendChild(headerLogoContainer);
+    _header.appendChild(headerAction2);
+
+    headerElement?.appendChild(_header);
   }
-  element.appendChild(s);
-};
 
-const header = (stage: number, onBack?: () => void) => {
-  const headerElement = document.getElementById('header');
   if (headerElement) {
-    if (!headerElement?.childElementCount) {
-      headerElement.className = 'box';
-      headerStage(headerElement, 'Beskriv bilen', 1, stage);
-      headerStage(headerElement, 'Skicka', 2, stage);
-      headerStage(headerElement, 'Värderingen', 3, stage);
-    } else {
-      headerElement.querySelectorAll(`.${HEADER_STAGE}`).forEach((el, i) => {
-        if (i === stage - 1) {
-          el.classList.add('checked');
-        } else {
-          el.classList.remove('checked');
-        }
-      });
-    }
+    const headerAction1 = headerElement.querySelectorAll('.header-action')?.[0];
 
-    if (onBack) {
-      const backButtonExist = headerElement.querySelector(`#${HEADER_BACK_BUTTON_ID}`);
-      if (backButtonExist) {
-        headerElement.removeChild(backButtonExist);
+    if (headerAction1) {
+      if (headerAction1.childElementCount) {
+        headerAction1.innerHTML = '';
       }
-      const backButton = document.createElement('button');
-      backButton.id = HEADER_BACK_BUTTON_ID;
-      backButton.innerText = 'Tillbaka';
-      backButton.addEventListener('click', onBack);
-      headerElement?.prepend(backButton);
-    } else {
-      const backButton = headerElement.querySelector(`#${HEADER_BACK_BUTTON_ID}`);
-      if (backButton) {
-        headerElement.removeChild(backButton);
+      if (onBack) {
+        const backButton = document.createElement('button');
+        backButton.innerText = 'Tillbaka';
+        backButton.addEventListener('click', onBack);
+        headerAction1.appendChild(backButton);
       }
     }
   }

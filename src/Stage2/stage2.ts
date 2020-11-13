@@ -11,7 +11,7 @@ const stage2 = (
   onNext: (condition: ConditionType) => void,
   onBack: () => void
 ) => {
-  const element = document.getElementById('content');
+  const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
   if (element) {
     const frame1Button = document.createElement('button');
     frame1Button.innerText = 'Välj';

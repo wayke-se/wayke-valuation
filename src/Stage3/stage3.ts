@@ -35,7 +35,7 @@ const stage3 = async (
   changeStage1: () => void,
   changeStage2: () => void
 ) => {
-  const element = document.getElementById('content');
+  const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
   if (element) {
     try {
       const loader = document.createElement('div');

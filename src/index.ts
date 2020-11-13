@@ -1,12 +1,14 @@
 import './Public/styles/default.css';
 
-import header from './Header/header';
+import timeline from './Timeline/timeline';
 import stage1, { Stage1State } from './Stage1/stage1';
 import stage2, { ConditionType, Stage2State } from './Stage2/stage2';
 import stage3 from './Stage3/stage3';
+import modal from './Modal/modal';
+import header from './Header/header';
 
-const clearElementsChildren = () => {
-  const element = document.getElementById('content');
+const clearPageChildren = () => {
+  const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
   if (element) {
     element.innerHTML = '';
   }
@@ -29,15 +31,7 @@ window.addEventListener('DOMContentLoaded', (_) => {
     stage2: {},
   };
 
-  const root = document.getElementById('root');
-  const headerElement = document.createElement('div');
-  headerElement.id = 'header';
-  const content = document.createElement('div');
-  content.id = 'content';
-
-  root?.appendChild(headerElement);
-  root?.appendChild(content);
-
+  modal();
   const initializeStage1 = () => {
     state = {
       ...state,
@@ -52,8 +46,9 @@ window.addEventListener('DOMContentLoaded', (_) => {
       initializeStage2();
     };
 
-    clearElementsChildren();
-    header(state.currentStage);
+    clearPageChildren();
+    header();
+    timeline(state.currentStage);
     stage1(state.stage1, onNext);
   };
 
@@ -77,8 +72,9 @@ window.addEventListener('DOMContentLoaded', (_) => {
       initializeStage1();
     };
 
-    header(state.currentStage, onBack);
-    clearElementsChildren();
+    header(onBack);
+    timeline(state.currentStage);
+    clearPageChildren();
     stage2(state.stage2, onNext, onBack);
   };
 
@@ -101,8 +97,9 @@ window.addEventListener('DOMContentLoaded', (_) => {
       initializeStage2();
     };
 
-    clearElementsChildren();
-    header(state.currentStage, onBack);
+    clearPageChildren();
+    header(onBack);
+    timeline(state.currentStage);
     stage3(state, onNext, onBack, onChangeStage1, onChangeStage2);
   };
 

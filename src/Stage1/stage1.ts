@@ -30,7 +30,7 @@ interface LocalState {
 }
 
 const stage1 = (state: Stage1State, onNext: (_stage1: Stage1State) => void) => {
-  const element = document.getElementById('content');
+  const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
   const value = { ...state };
   const localState: LocalState = {
     value,
