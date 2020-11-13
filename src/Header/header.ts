@@ -39,6 +39,10 @@ const header = (onBack?: () => void) => {
         const backButton = document.createElement('button');
         backButton.innerText = 'Tillbaka';
         backButton.addEventListener('click', onBack);
+        const icon = document.createElement('i');
+        icon.className = 'icon-chevron-left m-r-half';
+        backButton.prepend(icon);
+
         headerAction1.appendChild(backButton);
       }
     }

@@ -1,38 +1,63 @@
-const HEADER_STAGE = 'HEADER_STAGE';
-
 const headerStage = (
   element: HTMLElement,
   heading: string,
   stage: number,
   currentStage: number
 ) => {
-  const s = document.createElement('div');
-  s.classList.add(HEADER_STAGE);
-  s.innerText = `${stage}. ${heading}`;
+  const li = document.createElement('li');
+  li.classList.add('timeline-item');
+
   if (stage === currentStage) {
-    s.classList.add('checked');
+    li.classList.add('is-active');
   }
-  element.appendChild(s);
+
+  const indicator = document.createElement('div');
+  indicator.className = 'timeline-indicator';
+
+  const label = document.createElement('div');
+  label.className = 'timeline-label';
+  label.innerText = `${stage}. ${heading}`;
+
+  li.appendChild(indicator);
+  li.appendChild(label);
+
+  element.appendChild(li);
 };
 
-const timeline = (stage: number) => {
-  const timelineElement = document.querySelector('[data-ecom-timeline]') as HTMLElement | null;
-  if (timelineElement) {
-    if (!timelineElement?.childElementCount) {
-      timelineElement.className = 'box';
-      headerStage(timelineElement, 'Beskriv bilen', 1, stage);
-      headerStage(timelineElement, 'Skicka', 2, stage);
-      headerStage(timelineElement, 'Värderingen', 3, stage);
-    } else {
-      timelineElement.querySelectorAll(`.${HEADER_STAGE}`).forEach((el, i) => {
-        if (i === stage - 1) {
-          el.classList.add('checked');
-        } else {
-          el.classList.remove('checked');
-        }
-      });
+class Timeline {
+  remove = () => {
+    const timelineElement = document.querySelector('[data-ecom-timeline]') as HTMLElement | null;
+    if (timelineElement) {
+      timelineElement.innerHTML = '';
     }
-  }
-};
+  };
+  render = (stage: number) => {
+    const timelineElement = document.querySelector('[data-ecom-timeline]') as HTMLElement | null;
+    if (timelineElement) {
+      if (!timelineElement?.childElementCount) {
+        const _timeline = document.createElement('div');
+        _timeline.className = 'timeline';
 
-export default timeline;
+        const ul = document.createElement('ul');
+        ul.className = 'timeline-list';
+
+        headerStage(ul, 'Beskriv bilen', 1, stage);
+        headerStage(ul, 'Skicka', 2, stage);
+        headerStage(ul, 'Värderingen', 3, stage);
+
+        _timeline.appendChild(ul);
+        timelineElement.appendChild(_timeline);
+      } else {
+        timelineElement.querySelectorAll('li').forEach((el, i) => {
+          if (i === stage - 1) {
+            el.classList.add('is-active');
+          } else {
+            el.classList.remove('is-active');
+          }
+        });
+      }
+    }
+  };
+}
+
+export default Timeline;

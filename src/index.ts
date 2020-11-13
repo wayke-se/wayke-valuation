@@ -1,11 +1,13 @@
 import './Public/styles/default.css';
 
-import timeline from './Timeline/timeline';
-import stage1, { Stage1State } from './Stage1/stage1';
-import stage2, { ConditionType, Stage2State } from './Stage2/stage2';
-import stage3 from './Stage3/stage3';
+import Timeline from './Timeline/timeline';
+import stage1, { Stage1State } from './Stages/Stage1/stage1';
+import stage2, { ConditionType, Stage2State } from './Stages/Stage2/stage2';
+import stage3 from './Stages/Stage3/stage3';
+import stage4, { Contact } from './Stages/Stage4/stage4';
 import modal from './Modal/modal';
 import header from './Header/header';
+import stage5 from './Stages/Stage5/stage5';
 
 const clearPageChildren = () => {
   const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
@@ -18,6 +20,7 @@ export interface State {
   currentStage: number;
   stage1: Stage1State;
   stage2: Stage2State;
+  stage4: Contact;
 }
 
 window.addEventListener('DOMContentLoaded', (_) => {
@@ -29,7 +32,15 @@ window.addEventListener('DOMContentLoaded', (_) => {
       description: '',
     },
     stage2: {},
+    stage4: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+    },
   };
+
+  const _timeline = new Timeline();
 
   modal();
   const initializeStage1 = () => {
@@ -48,7 +59,8 @@ window.addEventListener('DOMContentLoaded', (_) => {
 
     clearPageChildren();
     header();
-    timeline(state.currentStage);
+    // timeline(state.currentStage);
+    _timeline.render(state.currentStage);
     stage1(state.stage1, onNext);
   };
 
@@ -73,9 +85,10 @@ window.addEventListener('DOMContentLoaded', (_) => {
     };
 
     header(onBack);
-    timeline(state.currentStage);
+    // timeline(state.currentStage);
+    _timeline.render(state.currentStage);
     clearPageChildren();
-    stage2(state.stage2, onNext, onBack);
+    stage2(state.stage2, onNext);
   };
 
   const initializeStage3 = () => {
@@ -83,7 +96,13 @@ window.addEventListener('DOMContentLoaded', (_) => {
       ...state,
       currentStage: 3,
     };
-    const onNext = () => {};
+    const onNext = () => {
+      state = {
+        ...state,
+        currentStage: 4,
+      };
+      initializeStage4();
+    };
 
     const onBack = () => {
       initializeStage2();
@@ -99,8 +118,41 @@ window.addEventListener('DOMContentLoaded', (_) => {
 
     clearPageChildren();
     header(onBack);
-    timeline(state.currentStage);
-    stage3(state, onNext, onBack, onChangeStage1, onChangeStage2);
+    // timeline(state.currentStage);
+    _timeline.render(state.currentStage);
+    stage3(state, onNext, onChangeStage1, onChangeStage2);
+  };
+
+  const initializeStage4 = () => {
+    state = {
+      ...state,
+      currentStage: 4,
+    };
+
+    const onNext = () => {
+      initializeStage5();
+    };
+
+    const onBack = () => {
+      initializeStage3();
+    };
+
+    clearPageChildren();
+    header(onBack);
+    _timeline.remove();
+    stage4(state, onNext);
+  };
+
+  const initializeStage5 = () => {
+    state = {
+      ...state,
+      currentStage: 5,
+    };
+
+    clearPageChildren();
+    header();
+    _timeline.remove();
+    stage5();
   };
 
   initializeStage1();

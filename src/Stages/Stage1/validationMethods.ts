@@ -1,4 +1,4 @@
-import fieldValidation from '../fieldValidation';
+import fieldValidation from '../../fieldValidation';
 
 const validationMethods = {
   registrationNumber: fieldValidation.requiredRegistrationNumber,
