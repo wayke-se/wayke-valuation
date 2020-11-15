@@ -165,14 +165,13 @@ class Stage4 {
       this.state.validation.whenToSell &&
       this.state.validation.confirmTerms
     ) {
-      const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
-      const statusNode = element?.querySelector('#wayke-statusNode') as
-        | HTMLElement
-        | null
-        | undefined;
-      if (statusNode) {
+      const element = document.querySelector('[data-ecom-page] .page-main') as HTMLElement | null;
+      const section = document.createElement('section');
+      section.className = 'page-section';
+      if (element) {
         try {
-          statusNode.innerHTML = Spinner();
+          section.innerHTML = Spinner();
+          element.append(section);
           const payload: ContactPayload = {
             contact: this.state.value,
             condition: this.props.condition,
@@ -183,17 +182,16 @@ class Stage4 {
           console.log('sending', payload);
 
           await sendData(payload);
+          this.props.onNext();
         } catch (e) {
           // eslint-disable-next-line
           console.log('err', e);
-          statusNode.innerHTML = Alert({
+          section.innerHTML = Alert({
             type: 'error',
             header: 'Ett fel har inträffat',
             body: 'Det gick inte att skicka in intresseanmälan, försök igen.',
           }).toString();
         }
-
-        this.props.onNext();
       }
     } else {
       this.TriggerAllFieldValidations();
@@ -267,7 +265,6 @@ class Stage4 {
           <section class="page-section">
             <button data-ecom-button="full-width">Skicka intresseanmälan</button>
           </section>
-          <div id="wayke-statusNode"></div>
         </div>
       `;
 

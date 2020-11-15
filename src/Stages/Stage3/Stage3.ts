@@ -92,8 +92,9 @@ class Stage3 {
               </div>
             </div>
           </section>
-          <section class="page-section">
-            <div>${formatPrice(valuation)} kr</div>
+          <section class="page-section text-center">
+            <div class="m-b-mini">Ungefärligt värde:</div>
+            <div class="h4 no-margin">${formatPrice(valuation)} kr</div>
           </section>
           <section class="page-section">
             ${Alert({
