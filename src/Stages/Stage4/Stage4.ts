@@ -10,6 +10,8 @@ interface ContactValidation {
   lastName: boolean;
   email: boolean;
   phone: boolean;
+  whenToSell: boolean;
+  confirmTerms: boolean;
 }
 
 interface Stage4Props {
@@ -44,17 +46,38 @@ class Stage4 {
         lastName: validationMethods.lastName(this.props.contact.lastName),
         email: validationMethods.email(this.props.contact.email),
         phone: validationMethods.phone(this.props.contact.phone),
+        whenToSell: validationMethods.whenToSell(this.props.contact.whenToSell),
+        confirmTerms: validationMethods.confirmTerms(this.props.contact.confirmTerms),
       },
-      interact: { firstName: false, lastName: false, email: false, phone: false },
+      interact: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        phone: false,
+        whenToSell: false,
+        confirmTerms: false,
+      },
     };
   }
 
   private onChange(e: Event) {
     if (e.currentTarget) {
-      const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
+      const currentTarget = e.currentTarget as
+        | HTMLInputElement
+        | HTMLSelectElement
+        | HTMLTextAreaElement;
       const name = currentTarget.name as keyof Contact;
-      this.state.value[name] = currentTarget.value;
-      this.state.validation[name] = validationMethods[name](this.state.value[name]);
+      if (name === 'confirmTerms') {
+        this.state.value[name] = (currentTarget as HTMLInputElement).checked;
+        this.state.validation[name] = validationMethods[name](this.state.value[name]);
+      } else {
+        this.state.value[name] = currentTarget.value;
+        this.state.validation[name] = validationMethods[name](this.state.value[name]);
+      }
+
+      if (currentTarget.type === 'select-one' || name === 'confirmTerms') {
+        this.state.interact[name] = true;
+      }
 
       if (this.state.interact[name] && currentTarget.parentElement?.parentElement) {
         if (!this.state.validation[name]) {
@@ -69,7 +92,7 @@ class Stage4 {
   private onBlur(e: Event) {
     if (e.currentTarget && this.state) {
       const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
-      const name = currentTarget.name as keyof Contact;
+      const name = currentTarget.name as keyof Omit<Contact, 'confirmTerms'>;
       this.state.validation[name] = validationMethods[name](this.state.value[name]);
       if (!this.state.interact[name]) {
         this.state.interact[name] = true;
@@ -92,12 +115,16 @@ class Stage4 {
         lastName: validationMethods.lastName(this.state.value.lastName),
         email: validationMethods.email(this.state.value.email),
         phone: validationMethods.phone(this.state.value.phone),
+        whenToSell: validationMethods.whenToSell(this.props.contact.whenToSell),
+        confirmTerms: validationMethods.confirmTerms(this.props.contact.confirmTerms),
       },
       interact: {
         firstName: true,
         lastName: true,
         email: true,
         phone: true,
+        whenToSell: true,
+        confirmTerms: true,
       },
     };
     const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
@@ -118,6 +145,14 @@ class Stage4 {
       if (!this.state.validation.phone) {
         formGroups[3].classList.add('has-error');
       }
+
+      if (!this.state.validation.whenToSell) {
+        formGroups[4].classList.add('has-error');
+      }
+
+      if (!this.state.validation.confirmTerms) {
+        formGroups[5].classList.add('has-error');
+      }
     }
   }
 
@@ -126,7 +161,9 @@ class Stage4 {
       this.state?.validation.firstName &&
       this.state.validation.lastName &&
       this.state.validation.email &&
-      this.state.validation.phone
+      this.state.validation.phone &&
+      this.state.validation.whenToSell &&
+      this.state.validation.confirmTerms
     ) {
       const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
       const statusNode = element?.querySelector('#wayke-statusNode') as
@@ -204,6 +241,27 @@ class Stage4 {
                 </div>
                 <div class="form-alert">Ange ditt telefonnummer.</div>
               </div>
+              <div class="form-group">
+                <label data-ecom-input-label="" for="wayke-contact-when-to-sell">När vill du sälja bilen</label>
+                <div data-ecom-select="">
+                  <select id="wayke-contact-when-to-sell" class="select" name="whenToSell">
+                    <option value="1">Snarast</option>
+                    <option value="2">Inom 1 månad</option>
+                    <option value="3">Inom ett halvår</option>
+                    <option value="4">Mer än 1 år</option>
+                  </select>
+                </div>
+                <div class="form-alert">Måste välja ett val</div>
+              </div>
+              <div class="form-group">
+                <div data-ecom-inputselection="checkbox">
+                  <input type="checkbox" id="wayke-contact-confirm-terms" name="confirmTerms" />
+                  <label for="wayke-contact-confirm-terms">
+                    <span class="text">Jag bekärftar att jag är över 16 år och samtycker till att mina uppgifter behandlas i Waykes databas.</span>
+                  </label>
+                </div>
+                <div class="form-alert">Du behöver samtycka.</div>
+              </div>
             </div>
           </section>
           <section class="page-section">
@@ -232,6 +290,16 @@ class Stage4 {
       phone.addEventListener('input', (e) => this.onChange(e));
       phone.addEventListener('blur', (e) => this.onBlur(e));
       phone.value = this.state.value.phone;
+
+      const whenToSell = element.querySelector('#wayke-contact-when-to-sell') as HTMLSelectElement;
+      whenToSell.addEventListener('input', (e) => this.onChange(e));
+      whenToSell.value = this.state.value.whenToSell;
+
+      const confirmTerms = element.querySelector(
+        '#wayke-contact-confirm-terms'
+      ) as HTMLInputElement;
+      confirmTerms.addEventListener('input', (e) => this.onChange(e));
+      confirmTerms.checked = this.state.value.confirmTerms;
 
       const button = element.querySelector('button') as HTMLButtonElement;
       button.addEventListener('click', () => this.onSend());

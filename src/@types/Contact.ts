@@ -6,6 +6,8 @@ export interface Contact {
   lastName: string;
   email: string;
   phone: string;
+  whenToSell: string;
+  confirmTerms: boolean;
 }
 
 export interface ContactPayload {

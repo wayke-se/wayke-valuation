@@ -41,6 +41,8 @@ class App {
       lastName: '',
       email: '',
       phone: '',
+      whenToSell: '1',
+      confirmTerms: false,
     },
   };
 

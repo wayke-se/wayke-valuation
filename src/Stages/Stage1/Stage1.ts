@@ -41,6 +41,10 @@ class Stage1 {
       this.state.value[name] = currentTarget.value;
       this.state.validation[name] = validationMethods[name](this.state.value[name]);
 
+      if (currentTarget.type === 'select-one') {
+        this.state.interact[name] = true;
+      }
+
       if (this.state.interact[name] && currentTarget.parentElement?.parentElement) {
         if (!this.state.validation[name]) {
           currentTarget.parentElement.parentElement.classList.add('has-error');
