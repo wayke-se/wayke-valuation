@@ -2,6 +2,7 @@ import { Api } from '../../@types/Api';
 import { Valuation } from '../../@types/Valuation';
 import Alert from '../../Components/Alert';
 import { AppState } from '../../Components/App';
+import Spinner from '../../Components/Spinner';
 import { sendRequestValuation } from '../../http/http';
 import { ValuationTranslation } from '../../translation';
 
@@ -24,11 +25,7 @@ class Stage3 {
     const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
     if (element) {
       try {
-        element.innerHTML = `
-          <div class="page-main">
-            <div class="loader"></div>
-          </div>
-        `;
+        element.innerHTML = `<div class="page-main">${Spinner()}</div>`;
         const _response = await sendRequestValuation(
           'GET',
           `${this.props.api.address}/v2/tradein/${state.vehicle.registrationNumber}?mileage=${
@@ -61,7 +58,7 @@ class Stage3 {
               <div data-ecom-box="light">
                 <h2 class="h6">NYA710, 1</h2>
                 <div data-ecom-content="">
-                  <b>${manufacturer} ${modelSeries}</b><span>${[modelYear, modelName].join(
+                  <b>${manufacturer} ${modelSeries}</b><span> ${[modelName, modelYear].join(
         ', '
       )}</span>
                 </div>
