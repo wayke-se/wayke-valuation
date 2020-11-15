@@ -1,5 +1,5 @@
 export const ValuationTranslation = {
-  GOOD: 'Mycket bra skick',
-  OK: 'Bra skick',
-  BAD: 'Helt okej skick',
+  VeryGood: 'Mycket bra skick',
+  Good: 'Bra skick',
+  Ok: 'Helt okej skick',
 };
