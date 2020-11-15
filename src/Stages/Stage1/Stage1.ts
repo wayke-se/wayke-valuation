@@ -35,7 +35,7 @@ class Stage1 {
   }
 
   private onChange(e: Event) {
-    if (e.currentTarget && this.state) {
+    if (e.currentTarget) {
       const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
       const name = currentTarget.name as keyof Vehicle;
       this.state.value[name] = currentTarget.value;
@@ -52,7 +52,7 @@ class Stage1 {
   }
 
   private onBlur(e: Event) {
-    if (e.currentTarget && this.state) {
+    if (e.currentTarget) {
       const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
       const name = currentTarget.name as keyof Vehicle;
       this.state.validation[name] = validationMethods[name](this.state.value[name]);

@@ -3,8 +3,20 @@ import { Valuation } from '../../@types/Valuation';
 import Alert from '../../Components/Alert';
 import { AppState } from '../../Components/App';
 import Spinner from '../../Components/Spinner';
-import { sendRequestValuation } from '../../http/http';
+import { formatPrice } from '../../formats';
+import { sendRequestValuation } from '../../Http/http';
 import { ValuationTranslation } from '../../translation';
+
+const cache: { [key: string]: Valuation | undefined } = {};
+const setCache = (key: string, value: Valuation) => {
+  cache[key] = value;
+};
+const getCache = (key: string) => {
+  return cache?.[key] || undefined;
+};
+
+const createCacheKey = (state: AppState) =>
+  `${state.vehicle.registrationNumber}-${2000 || state.vehicle.milage}-${state.condition}`;
 
 interface Stage3Props {
   api: Api;
@@ -19,6 +31,7 @@ class Stage3 {
   private props: Stage3Props;
   constructor(props: Stage3Props) {
     this.props = props;
+    this.response = getCache(createCacheKey(props.state));
   }
 
   private async getValuation(state: AppState) {
@@ -33,6 +46,7 @@ class Stage3 {
           }&condition=${state.condition}`
         );
         this.response = _response.response;
+        setCache(createCacheKey(state), this.response);
         this.renderResult();
       } catch (e) {
         // eslint-disable-next-line
@@ -79,7 +93,7 @@ class Stage3 {
             </div>
           </section>
           <section class="page-section">
-            <div>${valuation} kr</div>
+            <div>${formatPrice(valuation)} kr</div>
           </section>
           <section class="page-section">
             ${Alert({
@@ -102,7 +116,9 @@ class Stage3 {
   }
 
   render() {
-    if (this.props.state) {
+    if (this.response) {
+      this.renderResult();
+    } else if (this.props.state) {
       this.getValuation(this.props.state);
     }
   }

@@ -1,9 +1,9 @@
-import { clearInputContainerError, setInputContainerError } from '../../elements';
 import validationMethods from './validationMethods';
 import Alert from '../../Components/Alert';
 import { Vehicle } from '../../@types/Vehicle';
 import { Contact, ContactPayload } from '../../@types/Contact';
 import { ConditionType } from '../../@types/ConditionType';
+import Spinner from '../../Components/Spinner';
 
 interface ContactValidation {
   firstName: boolean;
@@ -56,11 +56,11 @@ class Stage4 {
       this.state.value[name] = currentTarget.value;
       this.state.validation[name] = validationMethods[name](this.state.value[name]);
 
-      if (this.state.interact[name] && currentTarget.parentElement) {
+      if (this.state.interact[name] && currentTarget.parentElement?.parentElement) {
         if (!this.state.validation[name]) {
-          setInputContainerError(currentTarget.parentElement, 'Fel');
+          currentTarget.parentElement.parentElement.classList.add('has-error');
         } else {
-          clearInputContainerError(currentTarget.parentElement);
+          currentTarget.parentElement.parentElement.classList.remove('has-error');
         }
       }
     }
@@ -74,12 +74,49 @@ class Stage4 {
       if (!this.state.interact[name]) {
         this.state.interact[name] = true;
       }
-      if (this.state.interact[name] && currentTarget.parentElement) {
+      if (this.state.interact[name] && currentTarget.parentElement?.parentElement) {
         if (!this.state.validation[name]) {
-          setInputContainerError(currentTarget.parentElement, 'Fel');
+          currentTarget.parentElement.parentElement.classList.add('has-error');
         } else {
-          clearInputContainerError(currentTarget.parentElement);
+          currentTarget.parentElement.parentElement.classList.remove('has-error');
         }
+      }
+    }
+  }
+
+  private TriggerAllFieldValidations() {
+    this.state = {
+      ...this.state,
+      validation: {
+        firstName: validationMethods.firstName(this.state.value.firstName),
+        lastName: validationMethods.lastName(this.state.value.lastName),
+        email: validationMethods.email(this.state.value.email),
+        phone: validationMethods.phone(this.state.value.phone),
+      },
+      interact: {
+        firstName: true,
+        lastName: true,
+        email: true,
+        phone: true,
+      },
+    };
+    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    if (element) {
+      const formGroups = element.querySelectorAll('.form-group');
+      if (!this.state.validation.firstName) {
+        formGroups[0].classList.add('has-error');
+      }
+
+      if (!this.state.validation.lastName) {
+        formGroups[1].classList.add('has-error');
+      }
+
+      if (!this.state.validation.email) {
+        formGroups[2].classList.add('has-error');
+      }
+
+      if (!this.state.validation.phone) {
+        formGroups[3].classList.add('has-error');
       }
     }
   }
@@ -98,9 +135,7 @@ class Stage4 {
         | undefined;
       if (statusNode) {
         try {
-          statusNode.innerHTML = `
-          <div class="loader"></div>
-        `;
+          statusNode.innerHTML = Spinner();
           const payload: ContactPayload = {
             contact: this.state.value,
             condition: this.props.condition,
@@ -123,6 +158,8 @@ class Stage4 {
 
         this.props.onNext();
       }
+    } else {
+      this.TriggerAllFieldValidations();
     }
   }
 
@@ -138,21 +175,35 @@ class Stage4 {
             </div>
           </section>
           <section class="page-section">
-            <label data-ecom-input-label="" for="wayke-contact-first-name">Förnamn</label>
-            <div data-ecom-inputtext="">
-              <input id="wayke-contact-first-name" name="firstName" autocomplete="off">
-            </div>
-            <label data-ecom-input-label="" for="wayke-contact-last-name">Efternamn</label>
-            <div data-ecom-inputtext="">
-              <input id="wayke-contact-last-name" name="lastName" autocomplete="off">
-            </div>
-            <label data-ecom-input-label="" for="wayke-contact-email">E-postadress</label>
-            <div data-ecom-inputtext="">
-              <input id="wayke-contact-email" name="email" autocomplete="off">
-            </div>
-            <label data-ecom-input-label="" for="wayke-contact-phone">Telefonnummer</label>
-            <div data-ecom-inputtext="">
-              <input id="wayke-contact-phone" name="phone" autocomplete="off">
+            <div data-ecom-form>
+              <div class="form-group">
+                <label data-ecom-input-label="" for="wayke-contact-first-name">Förnamn</label>
+                <div data-ecom-inputtext="">
+                  <input id="wayke-contact-first-name" name="firstName" autocomplete="off">
+                </div>
+                <div class="form-alert">Ange ditt förnamn.</div>
+              </div>
+              <div class="form-group">
+                <label data-ecom-input-label="" for="wayke-contact-last-name">Efternamn</label>
+                <div data-ecom-inputtext="">
+                  <input id="wayke-contact-last-name" name="lastName" autocomplete="off">
+                </div>
+                <div class="form-alert">Ange ditt efternamn.</div>
+              </div>
+              <div class="form-group">
+                <label data-ecom-input-label="" for="wayke-contact-email">E-postadress</label>
+                <div data-ecom-inputtext="">
+                  <input id="wayke-contact-email" name="email" autocomplete="off">
+                </div>
+                <div class="form-alert">Ange din e-postadress.</div>
+              </div>
+              <div class="form-group">
+                <label data-ecom-input-label="" for="wayke-contact-phone">Telefonnummer</label>
+                <div data-ecom-inputtext="">
+                  <input id="wayke-contact-phone" name="phone" autocomplete="off">
+                </div>
+                <div class="form-alert">Ange ditt telefonnummer.</div>
+              </div>
             </div>
           </section>
           <section class="page-section">

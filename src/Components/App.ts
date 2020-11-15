@@ -43,9 +43,12 @@ class App {
       phone: '',
     },
   };
+
   private timeline = new Timeline();
   private header = new Header({
     logo: Logo,
+    //eslint-disable-next-line
+    close: this.close,
   });
 
   private onNextStage1(vehicle: Vehicle) {
@@ -127,10 +130,17 @@ class App {
     }
   }
 
+  public close() {
+    const app = document.querySelector('#wayke-valuation-root');
+    if (app && app.parentElement) {
+      app.parentElement.removeChild(app);
+    }
+  }
+
   render() {
     const app = document.createElement('div');
     app.innerHTML = `
-      <div class="wayke-ecom" data-ecom-modal>
+      <div id="wayke-valuation-root" class="wayke-ecom" data-ecom-modal>
         <div class="modal-container">
           <div class="modal-center">
             <div class="modal-dialog">

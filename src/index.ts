@@ -8,6 +8,9 @@ window.addEventListener('DOMContentLoaded', (_) => {
       authority: 'ecom.wayketech.se',
     },
   });
-  app.render();
-  return;
+
+  const button = document.createElement('button');
+  button.textContent = 'Start Wayke valuation';
+  button.addEventListener('click', () => app.render());
+  document.body.append(button);
 });
