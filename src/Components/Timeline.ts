@@ -2,7 +2,13 @@ class Timeline {
   changeStage(stage: number) {
     const timelineElement = document.querySelector('#timeline-wrapper') as HTMLElement | null;
     if (timelineElement) {
-      timelineElement.querySelectorAll('li').forEach((el, i) => {
+      let liList = timelineElement.querySelectorAll('li');
+      if (!liList.length) {
+        this.render();
+        liList = timelineElement.querySelectorAll('li');
+      }
+
+      liList.forEach((el, i) => {
         if (i === stage - 1) {
           el.classList.add('is-active');
         } else {

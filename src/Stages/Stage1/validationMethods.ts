@@ -2,7 +2,7 @@ import fieldValidation from '../../fieldValidation';
 
 const validationMethods = {
   registrationNumber: fieldValidation.requiredRegistrationNumber,
-  milage: fieldValidation.requiredMilage,
+  milage: fieldValidation.requiredNumberGreaterOrEqualThanZero,
   description: fieldValidation.optionalString,
 };
 

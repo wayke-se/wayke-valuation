@@ -38,12 +38,16 @@ class Stage1 {
     if (e.currentTarget) {
       const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
       const name = currentTarget.name as keyof Vehicle;
-      this.state.value[name] = currentTarget.value;
-      this.state.validation[name] = validationMethods[name](this.state.value[name]);
-
-      if (currentTarget.type === 'select-one') {
-        this.state.interact[name] = true;
+      if (name === 'milage') {
+        this.state.value[name] = currentTarget.value.replace(/\D/, '');
+      } else {
+        this.state.value[name] = currentTarget.value;
+        if (name === 'registrationNumber') {
+          this.state.value[name] = this.state.value[name].toUpperCase();
+          currentTarget.value = this.state.value[name];
+        }
       }
+      this.state.validation[name] = validationMethods[name](this.state.value[name]);
 
       if (this.state.interact[name] && currentTarget.parentElement?.parentElement) {
         if (!this.state.validation[name]) {
@@ -140,17 +144,12 @@ class Stage1 {
                         <div class="form-alert">Ett giltigt registreringsnummer behöver anges.</div>
                     </div>
                     <div class="form-group is-half">
-                        <label data-wayke-valuation-inputlabel="" for="wayke-valuation-select">Miltal</label>
-                        <div data-wayke-valuation-select="">
-                        <select id="wayke-valuation-select" class="select" name="milage">
-                            <option value="1">0 - 5000 mil</option>
-                            <option value="2">5001 - 10000 mil</option>
-                            <option value="3">10001 - 15000 mil</option>
-                            <option value="4">mer än 1500 mil</option>
-                        </select>
-                        </div>
-                        <div class="form-alert">Måste välja ett val</div>
-                    </div>
+                      <label data-wayke-valuation-inputlabel="" for="wayke-valuation-milage">Registreringsnummer</label>
+                      <div data-wayke-valuation-inputtext="">
+                          <input placeholder="Ex. 2000" type="number" min="0" id="wayke-valuation-milage" name="milage" autocomplete="off">
+                      </div>
+                      <div class="form-alert">Ett giltigt miltal behöver anges.</div>
+                  </div>
                 </div>
               <div class="form-group">
                 <label data-wayke-valuation-inputlabel="" for="wayke-valuation-description">Beskrivning</label>
@@ -173,9 +172,10 @@ class Stage1 {
       regInput.addEventListener('blur', (e) => this.onBlur(e));
       regInput.value = this.state.value.registrationNumber;
 
-      const milageSelect = element.querySelector('#wayke-valuation-select') as HTMLSelectElement;
-      milageSelect.addEventListener('input', (e) => this.onChange(e));
-      milageSelect.value = this.state.value.milage;
+      const milageInput = element.querySelector('#wayke-valuation-milage') as HTMLInputElement;
+      milageInput.addEventListener('input', (e) => this.onChange(e));
+      milageInput.addEventListener('blur', (e) => this.onBlur(e));
+      milageInput.value = this.state.value.milage;
 
       const descriptionTextArea = element.querySelector(
         '#wayke-valuation-description'

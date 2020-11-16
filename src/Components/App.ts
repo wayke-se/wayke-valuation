@@ -8,13 +8,8 @@ import Timeline from './Timeline';
 import { Vehicle } from '../@types/Vehicle';
 import { Contact } from '../@types/Contact';
 import { ConditionType } from '../@types/ConditionType';
-import Logo from '../Public/images/wayke-logo.svg';
-import { Api } from '../@types/Api';
-
-interface AppProps {
-  logo?: string;
-  api: Api;
-}
+import Logo from '../logo';
+import { Settings } from '../@types/Settings';
 
 export interface AppState {
   currentStage: number;
@@ -24,15 +19,25 @@ export interface AppState {
 }
 
 class App {
-  private props: AppProps;
-  constructor(props: AppProps) {
+  private props: Settings;
+  private timeline: Timeline;
+  private header: Header;
+
+  constructor(props: Settings) {
     this.props = props;
+
+    this.timeline = new Timeline();
+    this.header = new Header({
+      logo: this.props.logo || Logo,
+      //eslint-disable-next-line
+      close: this.close,
+    });
   }
   private state: AppState = {
     currentStage: 1,
     vehicle: {
       registrationNumber: '',
-      milage: '1',
+      milage: '',
       description: '',
     },
     condition: 'VeryGood',
@@ -46,12 +51,14 @@ class App {
     },
   };
 
+  /*
   private timeline = new Timeline();
   private header = new Header({
-    logo: Logo,
+    logo: this.props.logo || Logo,
     //eslint-disable-next-line
     close: this.close,
   });
+  */
 
   private onNextStage1(vehicle: Vehicle) {
     this.state = {
@@ -107,7 +114,7 @@ class App {
       case 3:
         this.timeline.changeStage(3);
         const stage3 = new Stage3({
-          api: this.props.api,
+          settings: this.props,
           state: this.state,
           changeStage1: () => this.setStage(1),
           changeStage2: () => this.setStage(2),

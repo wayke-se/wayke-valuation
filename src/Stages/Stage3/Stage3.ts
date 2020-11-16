@@ -1,10 +1,10 @@
-import { Api } from '../../@types/Api';
+import { Settings } from '../../@types/Settings';
 import { Valuation } from '../../@types/Valuation';
 import Alert from '../../Components/Alert';
 import { AppState } from '../../Components/App';
 import Spinner from '../../Components/Spinner';
 import { formatPrice } from '../../formats';
-import { sendRequestValuation } from '../../Http/http';
+import { sendRequest } from '../../Http/http';
 import { ValuationTranslation } from '../../translation';
 
 const cache: { [key: string]: Valuation | undefined } = {};
@@ -16,10 +16,10 @@ const getCache = (key: string) => {
 };
 
 const createCacheKey = (state: AppState) =>
-  `${state.vehicle.registrationNumber}-${2000 || state.vehicle.milage}-${state.condition}`;
+  `${state.vehicle.registrationNumber}-${parseInt(state.vehicle.milage, 10) * 10}`;
 
 interface Stage3Props {
-  api: Api;
+  settings: Settings;
   state: AppState;
   changeStage1: () => void;
   changeStage2: () => void;
@@ -39,13 +39,13 @@ class Stage3 {
     if (element) {
       try {
         element.innerHTML = `<div class="page-main">${Spinner()}</div>`;
-        const _response = await sendRequestValuation(
-          'GET',
-          `${this.props.api.address}/v2/tradein/${state.vehicle.registrationNumber}?mileage=${
-            2000 || state.vehicle.milage
-          }&condition=${state.condition}`
-        );
-        this.response = _response.response;
+        const _response = await sendRequest<Valuation>({
+          method: 'GET',
+          url: `${this.props.settings.valuationAddress}/wip/extvehicle?regNo=${
+            state.vehicle.registrationNumber
+          }&km=${parseInt(state.vehicle.milage, 10) * 10}&branchId=${this.props.settings.branchId}`,
+        });
+        this.response = _response;
         setCache(createCacheKey(state), this.response);
         this.renderResult();
       } catch (e) {
@@ -58,14 +58,20 @@ class Stage3 {
   private renderResult() {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element && this.response) {
+      const { registrationNumber, dataUsed, price } = this.response;
       const {
         manufacturer,
         modelName,
         modelSeries,
         modelYear,
-        valuation,
-        registrationNumber,
-      } = this.response;
+        fuelType,
+        gearboxType,
+        chassis,
+      } = dataUsed;
+
+      const fixedPrediction =
+        this.props.settings.conditionReduction[this.props.state.condition] * price.prediction;
+
       element.innerHTML = `
         <div class="page-main">
           <section class="page-section">
@@ -81,7 +87,12 @@ class Stage3 {
                         <div class="column">
                             <div class="font-medium">${registrationNumber}</div>
                             <div class="font-size-small">
-                                ${manufacturer} ${modelSeries}, ${[modelName, modelYear].join(', ')}
+                                ${manufacturer} ${modelSeries} ${modelName}, ${[
+        modelYear,
+        fuelType,
+        gearboxType,
+        chassis,
+      ].join(', ')}
                             </div>
                         </div>
                         <div class="column">
@@ -107,7 +118,7 @@ class Stage3 {
           </section>
           <section class="page-section text-center">
             <div class="m-b-mini">Ungefärligt värde:</div>
-            <div class="h4 no-margin">${formatPrice(valuation)} kr</div>
+            <div class="h4 no-margin">${formatPrice(fixedPrediction)} kr</div>
           </section>
           <section class="page-section">
             ${Alert({
