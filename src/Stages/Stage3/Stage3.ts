@@ -58,7 +58,14 @@ class Stage3 {
   private renderResult() {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element && this.response) {
-      const { manufacturer, modelName, modelSeries, modelYear, valuation } = this.response;
+      const {
+        manufacturer,
+        modelName,
+        modelSeries,
+        modelYear,
+        valuation,
+        registrationNumber,
+      } = this.response;
       element.innerHTML = `
         <div class="page-main">
           <section class="page-section">
@@ -72,7 +79,7 @@ class Stage3 {
                 <div data-wayke-valuation-box="">
                     <div data-wayke-valuation-columnrow="">
                         <div class="column">
-                            <div class="font-medium">NYA710</div>
+                            <div class="font-medium">${registrationNumber}</div>
                             <div class="font-size-small">
                                 ${manufacturer} ${modelSeries}, ${[modelName, modelYear].join(', ')}
                             </div>
