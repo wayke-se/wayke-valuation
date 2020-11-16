@@ -89,7 +89,7 @@ class Stage1 {
         description: true,
       },
     };
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       const formGroups = element.querySelectorAll('.form-group');
       if (!this.state.validation.registrationNumber) {
@@ -119,47 +119,49 @@ class Stage1 {
   }
 
   render() {
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       element.innerHTML = `
         <div class="page-main">
           <section class="page-section">
             <h6>Värdera bilen gratis</h6>
-            <div data-ecom-content="">
+            <div data-wayke-valuation-content="">
               <p>Har du en bil du vill få värderad? Beskriv din bil så gervi dig ett uppskattat försäljningspris. Du förbrinder dig inte till något. Skriv in regrn, mätarställning samt beskrivning av din bil.</p>
             </div>
           </section>
           <section class="page-section">
-            <div data-ecom-form>
-              <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-valuation-registration-number">Registreringsnummer</label>
-                <div data-ecom-inputtext="">
-                  <input id="wayke-valuation-registration-number" name="registrationNumber" autocomplete="off">
+            <div data-wayke-valuation-form>
+                <div class="form-group-row">
+                    <div class="form-group is-half">
+                        <label data-wayke-valuation-inputlabel="" for="wayke-valuation-registration-number">Registreringsnummer</label>
+                        <div data-wayke-valuation-inputtext="">
+                            <input placeholder="XXXXXX" id="wayke-valuation-registration-number" name="registrationNumber" autocomplete="off">
+                        </div>
+                        <div class="form-alert">Ett giltigt registreringsnummer behöver anges.</div>
+                    </div>
+                    <div class="form-group is-half">
+                        <label data-wayke-valuation-inputlabel="" for="wayke-valuation-select">Miltal</label>
+                        <div data-wayke-valuation-select="">
+                        <select id="wayke-valuation-select" class="select" name="milage">
+                            <option value="1">0 - 5000 mil</option>
+                            <option value="2">5001 - 10000 mil</option>
+                            <option value="3">10001 - 15000 mil</option>
+                            <option value="4">mer än 1500 mil</option>
+                        </select>
+                        </div>
+                        <div class="form-alert">Måste välja ett val</div>
+                    </div>
                 </div>
-                <div class="form-alert">Ett giltigt registreringsnummer behöver anges.</div>
-              </div>
               <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-valuation-select">Miltal</label>
-                <div data-ecom-select="">
-                  <select id="wayke-valuation-select" class="select" name="milage">
-                    <option value="1">0 - 5000 mil</option>
-                    <option value="2">5001 - 10000 mil</option>
-                    <option value="3">10001 - 15000 mil</option>
-                    <option value="4">mer än 1500 mil</option>
-                  </select>
-                </div>
-                <div class="form-alert">Måste välja ett val</div>
-              </div>
-              <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-valuation-description">Beskrivning</label>
-                <div data-ecom-inputtext="">
-                  <textarea name="description" id="wayke-valuation-description"></textarea>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-description">Beskrivning</label>
+                <div data-wayke-valuation-inputtext="">
+                  <textarea placeholder="Beskriv din bil..." name="description" id="wayke-valuation-description"></textarea>
                 </div>
               </div>
             </div>
           </section>
           <section class="page-section">
-            <button id="stage1-next-button" data-ecom-button="full-width">Nästa</button>
+            <button id="stage1-next-button" data-wayke-valuation-button="full-width">Nästa</button>
           </section>
       </div>
       `;

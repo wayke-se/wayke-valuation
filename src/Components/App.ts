@@ -142,16 +142,16 @@ class App {
   render() {
     const app = document.createElement('div');
     app.innerHTML = `
-      <div id="wayke-valuation-root" class="wayke-ecom" data-ecom-modal>
+      <div id="wayke-valuation-root" class="wayke-ecom" data-wayke-valuation-modal>
         <div class="modal-container">
           <div class="modal-center">
             <div class="modal-dialog">
               <div class="modal-dialog-main">
-                <div data-ecom-frame>
+                <div data-wayke-valuation-frame>
                   <div class="frame-body">
-                    <header data-ecom-header></header>
-                    <div data-ecom-timeline></div>
-                    <div data-ecom-page></div>
+                    <header data-wayke-valuation-header></header>
+                    <div id="timeline-wrapper"></div>
+                    <div data-wayke-valuation-page></div>
                   </div>
                 </div>
               </div>

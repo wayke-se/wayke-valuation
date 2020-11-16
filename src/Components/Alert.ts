@@ -6,14 +6,15 @@ interface AlertProps {
 
 const Alert = ({ type, header, body }: AlertProps) => {
   return `
-    <div data-ecom-alert="${type}">
+    <div data-wayke-valuation-alert="${type}">
       <div class="alert-icon-section">
         <div class="alert-icon">
           <i class="icon-exclamation no-margin"></i>
         </div>
       </div>
       <div class="alert-content">
-        <span><b>${header}</b> ${body}</span>
+        <div class="font-medium">${header}</div>
+        ${body}
       </div>
     </div>
     `;

@@ -127,7 +127,7 @@ class Stage4 {
         confirmTerms: true,
       },
     };
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       const formGroups = element.querySelectorAll('.form-group');
       if (!this.state.validation.firstName) {
@@ -165,7 +165,9 @@ class Stage4 {
       this.state.validation.whenToSell &&
       this.state.validation.confirmTerms
     ) {
-      const element = document.querySelector('[data-ecom-page] .page-main') as HTMLElement | null;
+      const element = document.querySelector(
+        '[data-wayke-valuation-page] .page-main'
+      ) as HTMLElement | null;
       const section = document.createElement('section');
       section.className = 'page-section';
       if (element) {
@@ -199,49 +201,49 @@ class Stage4 {
   }
 
   render() {
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       element.innerHTML = `
         <div class="page-main">
           <section class="page-section">
             <h6>Fyll i intresseanmälan</h6>
-            <div data-ecom-content="">
+            <div data-wayke-valuation-content="">
               <p>Låt oss hjälpa dig att själja din bil. Fyll i dina kontaktuppgifter så återkommer vi till dig inom kort. Du binder dig inte till något genom att skicka in en intresseanmälan.</p>
             </div>
           </section>
           <section class="page-section">
-            <div data-ecom-form>
+            <div data-wayke-valuation-form>
               <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-contact-first-name">Förnamn</label>
-                <div data-ecom-inputtext="">
-                  <input id="wayke-contact-first-name" name="firstName" autocomplete="off">
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-first-name">Förnamn</label>
+                <div data-wayke-valuation-inputtext="">
+                  <input placeholder="Förnamn" id="wayke-contact-first-name" name="firstName">
                 </div>
                 <div class="form-alert">Ange ditt förnamn.</div>
               </div>
               <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-contact-last-name">Efternamn</label>
-                <div data-ecom-inputtext="">
-                  <input id="wayke-contact-last-name" name="lastName" autocomplete="off">
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-last-name">Efternamn</label>
+                <div data-wayke-valuation-inputtext="">
+                  <input placeholder="Efternamn" id="wayke-contact-last-name" name="lastName">
                 </div>
                 <div class="form-alert">Ange ditt efternamn.</div>
               </div>
               <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-contact-email">E-postadress</label>
-                <div data-ecom-inputtext="">
-                  <input id="wayke-contact-email" name="email" autocomplete="off">
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-email">E-postadress</label>
+                <div data-wayke-valuation-inputtext="">
+                  <input placeholder="E-postadress" id="wayke-contact-email" name="email">
                 </div>
                 <div class="form-alert">Ange din e-postadress.</div>
               </div>
               <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-contact-phone">Telefonnummer</label>
-                <div data-ecom-inputtext="">
-                  <input id="wayke-contact-phone" name="phone" autocomplete="off">
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-phone">Telefonnummer</label>
+                <div data-wayke-valuation-inputtext="">
+                  <input placeholder="Telefonnummer" id="wayke-contact-phone" name="phone">
                 </div>
                 <div class="form-alert">Ange ditt telefonnummer.</div>
               </div>
               <div class="form-group">
-                <label data-ecom-input-label="" for="wayke-contact-when-to-sell">När vill du sälja bilen</label>
-                <div data-ecom-select="">
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-when-to-sell">När vill du sälja bilen</label>
+                <div data-wayke-valuation-select="">
                   <select id="wayke-contact-when-to-sell" class="select" name="whenToSell">
                     <option value="1">Snarast</option>
                     <option value="2">Inom 1 månad</option>
@@ -252,7 +254,7 @@ class Stage4 {
                 <div class="form-alert">Måste välja ett val</div>
               </div>
               <div class="form-group">
-                <div data-ecom-inputselection="checkbox">
+                <div data-wayke-valuation-inputselection="checkbox">
                   <input type="checkbox" id="wayke-contact-confirm-terms" name="confirmTerms" />
                   <label for="wayke-contact-confirm-terms">
                     <span class="text">Jag bekärftar att jag är över 16 år och samtycker till att mina uppgifter behandlas i Waykes databas.</span>
@@ -263,7 +265,7 @@ class Stage4 {
             </div>
           </section>
           <section class="page-section">
-            <button data-ecom-button="full-width">Skicka intresseanmälan</button>
+            <button data-wayke-valuation-button="full-width">Skicka intresseanmälan</button>
           </section>
         </div>
       `;

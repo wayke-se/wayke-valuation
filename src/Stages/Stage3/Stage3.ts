@@ -35,7 +35,7 @@ class Stage3 {
   }
 
   private async getValuation(state: AppState) {
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       try {
         element.innerHTML = `<div class="page-main">${Spinner()}</div>`;
@@ -56,40 +56,46 @@ class Stage3 {
   }
 
   private renderResult() {
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element && this.response) {
       const { manufacturer, modelName, modelSeries, modelYear, valuation } = this.response;
       element.innerHTML = `
         <div class="page-main">
           <section class="page-section">
             <h6>Uppskattat försäljningspris</h6>
-            <div data-ecom-content="">
+            <div data-wayke-valuation-content="">
               <p>Nedan ser du vårt uppskattade värde av din bil.</p>
             </div>
           </section>
           <section class="page-section page-section-accent">
             <div class="repeat-m-half">
-              <div data-ecom-box="light">
-                <h2 class="h6">NYA710, 1</h2>
-                <div data-ecom-content="">
-                  <b>${manufacturer} ${modelSeries}</b><span> ${[modelName, modelYear].join(
-        ', '
-      )}</span>
+                <div data-wayke-valuation-box="">
+                    <div data-wayke-valuation-columnrow="">
+                        <div class="column">
+                            <div class="font-medium">NYA710</div>
+                            <div class="font-size-small">
+                                ${manufacturer} ${modelSeries}, ${[modelName, modelYear].join(', ')}
+                            </div>
+                        </div>
+                        <div class="column">
+                            <button data-wayke-valuation-button="light small">Ändra</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="box-footer box-footer-right">
-                  <button data-ecom-button="small">Ändra</button>
-                </div>
-              </div>
             </div>
             <div class="repeat-m-half">
-              <div data-ecom-box="light">
-                <div data-ecom-content="">
-                  <b>${ValuationTranslation[this.props.state.condition]}</b>
+                <div data-wayke-valuation-box="">
+                    <div data-wayke-valuation-columnrow="">
+                        <div class="column">
+                            <div class="font-medium">
+                                ${ValuationTranslation[this.props.state.condition]}
+                            </div>
+                        </div>
+                        <div class="column">
+                            <button data-wayke-valuation-button="light small">Ändra</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="box-footer box-footer-right">
-                  <button data-ecom-button="small">Ändra</button>
-                </div>
-              </div>
             </div>
           </section>
           <section class="page-section text-center">
@@ -104,7 +110,7 @@ class Stage3 {
             })}
           </section>
           <section class="page-section">
-            <button data-ecom-button="full-width">Sälj via Wayke</button>
+            <button data-wayke-valuation-button="full-width">Sälj via Wayke</button>
           </section>
         </div>
       `;

@@ -14,24 +14,24 @@ class Stage2 {
   }
 
   render() {
-    const element = document.querySelector('[data-ecom-page]') as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       element.innerHTML = `
         <div class="page-main">
           <section class="page-section">
             <h6>Hur är bilens skick?</h6>
-            <div data-ecom-content="">
+            <div data-wayke-valuation-content="">
               <p>Välj det alternativ som passar bilens skick bäst.</p>
             </div>
           </section>
 
-          <section class="page-section page-section-accent">
+          <section class="page-section page-section-accent last-child-pushdown">
             ${ConditionRows.map(
               (c) => `
               <div class="repeat-m-half">
-                <div data-ecom-box="light">
+                <div data-wayke-valuation-box="">
                   <h2 class="h6">${c.header}</h2>
-                  <div data-ecom-content="">
+                  <div data-wayke-valuation-content="">
                     <ul>
                       ${c.usp
                         .map(
@@ -43,7 +43,7 @@ class Stage2 {
                     </ul>
                   </div>
                   <div class="box-footer box-footer-right">
-                    <button data-ecom-button="small">Välj</button>
+                    <button data-wayke-valuation-button="small">Välj</button>
                   </div>
                 </div>
               </div>
