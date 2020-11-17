@@ -9,5 +9,6 @@ export interface Settings {
   logo?: string;
   branchId: string;
   valuationAddress: string;
+  leadAddress: string;
   conditionReduction: ConditionReduction;
 }

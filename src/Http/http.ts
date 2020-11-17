@@ -21,7 +21,9 @@ function _fetch<Response>(
         callback(data);
       }
     } else {
-      // We reached our target server, but it returned an error
+      if (errorCallback) {
+        errorCallback(new Error(request.statusText));
+      }
     }
   };
 
@@ -32,7 +34,7 @@ function _fetch<Response>(
     }
   };
   if (options.method === 'POST') {
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   }
 
   if (options?.headers) {
@@ -44,7 +46,11 @@ function _fetch<Response>(
     });
   }
 
-  request.send((options.body as unknown) as Document | BodyInit | null);
+  const body: Document | BodyInit | null | undefined = options.body
+    ? JSON.stringify(options.body)
+    : undefined;
+
+  request.send(body);
 }
 
 // Using promises:

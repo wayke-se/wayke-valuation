@@ -10,13 +10,19 @@ import { Contact } from '../@types/Contact';
 import { ConditionType } from '../@types/ConditionType';
 import Logo from '../logo';
 import { Settings } from '../@types/Settings';
+import { Valuation } from '../@types/Valuation';
 
 export interface AppState {
   currentStage: number;
   vehicle: Vehicle;
   condition: ConditionType;
   contact: Contact;
+  valuation?: Valuation;
 }
+
+export type NonOptionalAppState = Omit<AppState, 'valuation'> & {
+  valuation: Valuation;
+};
 
 class App {
   private props: Settings;
@@ -48,7 +54,7 @@ class App {
       firstName: '',
       lastName: '',
       email: '',
-      phone: '',
+      phoneNumber: '',
       whenToSell: '1',
       confirmTerms: false,
     },
@@ -72,7 +78,11 @@ class App {
     this.setStage(3);
   }
 
-  private onNextStage3() {
+  private onNextStage3(valuation: Valuation) {
+    this.state = {
+      ...this.state,
+      valuation,
+    };
     this.setStage(4);
   }
 
@@ -112,16 +122,22 @@ class App {
           state: this.state,
           changeStage1: () => this.setStage(1),
           changeStage2: () => this.setStage(2),
-          onNext: () => this.onNextStage3(),
+          onNext: (valuation: Valuation) => this.onNextStage3(valuation),
         });
         stage3.render();
         this.header.render(() => this.setStage(2));
         break;
       case 4:
-        this.timeline.remove();
-        const stage4 = new Stage4({ ...this.state, onNext: () => this.onNextStage4() });
-        stage4.render();
-        this.header.render(() => this.setStage(3));
+        if (this.state.valuation) {
+          this.timeline.remove();
+          const stage4 = new Stage4({
+            settings: this.props,
+            state: this.state as NonOptionalAppState,
+            onNext: () => this.onNextStage4(),
+          });
+          stage4.render();
+          this.header.render(() => this.setStage(3));
+        }
         break;
       case 5:
         const stage5 = new Stage5();

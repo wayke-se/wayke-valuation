@@ -4,7 +4,7 @@ const validationMethods = {
   firstName: fieldValidation.requiredString,
   lastName: fieldValidation.requiredString,
   email: fieldValidation.requiredString,
-  phone: fieldValidation.requiredString,
+  phoneNumber: fieldValidation.requiredString,
   whenToSell: fieldValidation.requiredWhenToSell,
   confirmTerms: fieldValidation.requiredTrue,
 };

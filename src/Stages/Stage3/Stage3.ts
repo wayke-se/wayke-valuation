@@ -23,7 +23,7 @@ interface Stage3Props {
   state: AppState;
   changeStage1: () => void;
   changeStage2: () => void;
-  onNext: () => void;
+  onNext: (valuation: Valuation) => void;
 }
 
 class Stage3 {
@@ -52,6 +52,12 @@ class Stage3 {
         // eslint-disable-next-line
         console.log(e);
       }
+    }
+  }
+
+  private _onNext() {
+    if (this.response) {
+      this.props.onNext(this.response);
     }
   }
 
@@ -136,7 +142,7 @@ class Stage3 {
       const buttons = element.querySelectorAll('button');
       buttons.item(0).addEventListener('click', this.props.changeStage1);
       buttons.item(1).addEventListener('click', this.props.changeStage2);
-      buttons.item(2).addEventListener('click', this.props.onNext);
+      buttons.item(2).addEventListener('click', () => this._onNext());
     }
   }
 

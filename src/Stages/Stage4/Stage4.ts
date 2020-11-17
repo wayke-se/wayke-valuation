@@ -1,23 +1,24 @@
 import validationMethods from './validationMethods';
 import Alert from '../../Components/Alert';
-import { Vehicle } from '../../@types/Vehicle';
-import { Contact, ContactPayload } from '../../@types/Contact';
-import { ConditionType } from '../../@types/ConditionType';
+import { Contact } from '../../@types/Contact';
 import Spinner from '../../Components/Spinner';
+import { sendRequest } from '../../Http/http';
+import { Settings } from '../../@types/Settings';
+import { Lead } from '../../@types/Lead';
+import { NonOptionalAppState } from '../../Components/App';
 
 interface ContactValidation {
   firstName: boolean;
   lastName: boolean;
   email: boolean;
-  phone: boolean;
+  phoneNumber: boolean;
   whenToSell: boolean;
   confirmTerms: boolean;
 }
 
 interface Stage4Props {
-  vehicle: Vehicle;
-  condition: ConditionType;
-  contact: Contact;
+  state: NonOptionalAppState;
+  settings: Settings;
   onNext: () => void;
 }
 
@@ -26,12 +27,6 @@ interface Stage4State {
   validation: ContactValidation;
   interact: ContactValidation;
 }
-
-const sendData = async (_payload: ContactPayload) =>
-  new Promise<ContactPayload>((resolve) => {
-    setTimeout(resolve.bind(null, _payload), 1000);
-  });
-
 class Stage4 {
   props: Stage4Props;
   state: Stage4State;
@@ -39,21 +34,21 @@ class Stage4 {
     this.props = props;
     this.state = {
       value: {
-        ...this.props.contact,
+        ...this.props.state.contact,
       },
       validation: {
-        firstName: validationMethods.firstName(this.props.contact.firstName),
-        lastName: validationMethods.lastName(this.props.contact.lastName),
-        email: validationMethods.email(this.props.contact.email),
-        phone: validationMethods.phone(this.props.contact.phone),
-        whenToSell: validationMethods.whenToSell(this.props.contact.whenToSell),
-        confirmTerms: validationMethods.confirmTerms(this.props.contact.confirmTerms),
+        firstName: validationMethods.firstName(this.props.state.contact.firstName),
+        lastName: validationMethods.lastName(this.props.state.contact.lastName),
+        email: validationMethods.email(this.props.state.contact.email),
+        phoneNumber: validationMethods.phoneNumber(this.props.state.contact.phoneNumber),
+        whenToSell: validationMethods.whenToSell(this.props.state.contact.whenToSell),
+        confirmTerms: validationMethods.confirmTerms(this.props.state.contact.confirmTerms),
       },
       interact: {
         firstName: false,
         lastName: false,
         email: false,
-        phone: false,
+        phoneNumber: false,
         whenToSell: false,
         confirmTerms: false,
       },
@@ -114,15 +109,15 @@ class Stage4 {
         firstName: validationMethods.firstName(this.state.value.firstName),
         lastName: validationMethods.lastName(this.state.value.lastName),
         email: validationMethods.email(this.state.value.email),
-        phone: validationMethods.phone(this.state.value.phone),
-        whenToSell: validationMethods.whenToSell(this.props.contact.whenToSell),
-        confirmTerms: validationMethods.confirmTerms(this.props.contact.confirmTerms),
+        phoneNumber: validationMethods.phoneNumber(this.state.value.phoneNumber),
+        whenToSell: validationMethods.whenToSell(this.state.value.whenToSell),
+        confirmTerms: validationMethods.confirmTerms(this.state.value.confirmTerms),
       },
       interact: {
         firstName: true,
         lastName: true,
         email: true,
-        phone: true,
+        phoneNumber: true,
         whenToSell: true,
         confirmTerms: true,
       },
@@ -142,7 +137,7 @@ class Stage4 {
         formGroups[2].classList.add('has-error');
       }
 
-      if (!this.state.validation.phone) {
+      if (!this.state.validation.phoneNumber) {
         formGroups[3].classList.add('has-error');
       }
 
@@ -161,29 +156,52 @@ class Stage4 {
       this.state?.validation.firstName &&
       this.state.validation.lastName &&
       this.state.validation.email &&
-      this.state.validation.phone &&
+      this.state.validation.phoneNumber &&
       this.state.validation.whenToSell &&
       this.state.validation.confirmTerms
     ) {
       const element = document.querySelector(
         '[data-wayke-valuation-page] .page-main'
       ) as HTMLElement | null;
-      const section = document.createElement('section');
-      section.className = 'page-section';
+      const existingSection = document.querySelector('.status');
+      const section = existingSection || document.createElement('section');
+      section.className = 'page-section status';
       if (element) {
         try {
           section.innerHTML = Spinner();
-          element.append(section);
-          const payload: ContactPayload = {
-            contact: this.state.value,
-            condition: this.props.condition,
-            vehicle: this.props.vehicle,
+          if (!existingSection) {
+            element.append(section);
+          }
+
+          const body: Lead = {
+            firstName: this.state.value.firstName,
+            lastName: this.state.value.lastName,
+            type: 'valuation',
+            phoneNumber: this.state.value.phoneNumber,
+            branchId: this.props.settings.branchId,
+            email: this.state.value.email,
+            metaData: {
+              condition: this.props.state.condition,
+              whenToSell: this.state.value.whenToSell,
+              registrationNumber: this.props.state.vehicle.registrationNumber,
+              description: this.props.state.vehicle.description,
+              milage: this.props.state.vehicle.milage,
+              valuation: `${this.props.state.valuation.price.prediction}`,
+              conditionReductionVeryGood: `${this.props.settings.conditionReduction.VeryGood}`,
+              conditionReductionGood: `${this.props.settings.conditionReduction.Good}`,
+              conditionReductionOk: `${this.props.settings.conditionReduction.Ok}`,
+            },
           };
 
           // eslint-disable-next-line
-          console.log('sending', payload);
+          console.log('sending', body);
 
-          await sendData(payload);
+          await sendRequest<any>({
+            method: 'POST',
+            url: `${this.props.settings.leadAddress}/lead`,
+            body,
+          });
+
           this.props.onNext();
         } catch (e) {
           // eslint-disable-next-line
@@ -235,9 +253,9 @@ class Stage4 {
                 <div class="form-alert">Ange din e-postadress.</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-phone">Telefonnummer</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-phone-number">Telefonnummer</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Telefonnummer" id="wayke-contact-phone" name="phone">
+                  <input placeholder="Telefonnummer" id="wayke-contact-phone-number" name="phoneNumber">
                 </div>
                 <div class="form-alert">Ange ditt telefonnummer.</div>
               </div>
@@ -285,10 +303,10 @@ class Stage4 {
       email.addEventListener('blur', (e) => this.onBlur(e));
       email.value = this.state.value.email;
 
-      const phone = element.querySelector('#wayke-contact-phone') as HTMLInputElement;
-      phone.addEventListener('input', (e) => this.onChange(e));
-      phone.addEventListener('blur', (e) => this.onBlur(e));
-      phone.value = this.state.value.phone;
+      const phoneNumber = element.querySelector('#wayke-contact-phone-number') as HTMLInputElement;
+      phoneNumber.addEventListener('input', (e) => this.onChange(e));
+      phoneNumber.addEventListener('blur', (e) => this.onBlur(e));
+      phoneNumber.value = this.state.value.phoneNumber;
 
       const whenToSell = element.querySelector('#wayke-contact-when-to-sell') as HTMLSelectElement;
       whenToSell.addEventListener('input', (e) => this.onChange(e));
