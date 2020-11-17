@@ -5,6 +5,7 @@ export interface ConditionReduction {
 }
 
 export interface Settings {
+  auto?: boolean;
   logo?: string;
   branchId: string;
   valuationAddress: string;

@@ -32,6 +32,9 @@ class App {
       //eslint-disable-next-line
       close: this.close,
     });
+    if (props.auto) {
+      this.renderButton();
+    }
   }
   private state: AppState = {
     currentStage: 1,
@@ -50,15 +53,6 @@ class App {
       confirmTerms: false,
     },
   };
-
-  /*
-  private timeline = new Timeline();
-  private header = new Header({
-    logo: this.props.logo || Logo,
-    //eslint-disable-next-line
-    close: this.close,
-  });
-  */
 
   private onNextStage1(vehicle: Vehicle) {
     this.state = {
@@ -144,6 +138,23 @@ class App {
     if (app && app.parentElement) {
       app.parentElement.removeChild(app);
     }
+  }
+
+  renderButton() {
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <div>
+        <img src="${this.props.logo || Logo}" alt="Logotype"></img>
+        <h3>Vad är din bil värd?</h3>
+        <p>Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något</p>
+        <button>Gör en gratis värdering</button>
+      </div>
+    `;
+    const button = container.querySelector('button');
+    if (button) {
+      button.addEventListener('click', () => this.render());
+    }
+    document.body.append(container);
   }
 
   render() {

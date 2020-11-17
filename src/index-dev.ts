@@ -9,7 +9,9 @@ window.addEventListener('DOMContentLoaded', (_) => {
     WAYKE_CONDITION_REDUCTION_GOOD,
     WAYKE_CONDITION_REDUCTION_OK,
   } = process.env;
+  // eslint-disable-next-line
   const app = new App({
+    auto: true,
     branchId: WAYKE_BRANCH_ID as string,
     valuationAddress: WAYKE_VALUATION_ADDRESS as string,
     conditionReduction: {
@@ -19,8 +21,10 @@ window.addEventListener('DOMContentLoaded', (_) => {
     },
   });
 
+  /*
   const button = document.createElement('button');
   button.textContent = 'Start Wayke valuation';
   button.addEventListener('click', () => app.render());
   document.body.append(button);
+  */
 });
