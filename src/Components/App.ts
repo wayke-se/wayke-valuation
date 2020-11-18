@@ -180,7 +180,7 @@ class App {
   render() {
     const app = document.createElement('div');
     app.innerHTML = `
-      <div id="wayke-valuation-root" class="wayke-ecom" data-wayke-valuation-modal>
+      <div id="wayke-valuation-root" class="wayke-valuation" data-wayke-valuation-modal>
         <div class="modal-container">
           <div class="modal-center">
             <div class="modal-dialog">
