@@ -194,26 +194,28 @@ class Stage4 {
               registrationNumber: this.props.state.vehicle.registrationNumber,
               description: this.props.state.vehicle.description,
               milage: this.props.state.vehicle.milage,
-              valuation: `${this.props.state.valuation.price.prediction}`,
+              pricePrediction: `${this.props.state.valuation.price.prediction}`,
               conditionReductionVeryGood: `${this.props.settings.conditionReduction.veryGood}`,
               conditionReductionGood: `${this.props.settings.conditionReduction.good}`,
               conditionReductionOk: `${this.props.settings.conditionReduction.ok}`,
+              manufacturer: this.props.state.valuation.dataUsed.manufacturer,
+              modelName: this.props.state.valuation.dataUsed.modelName,
+              modelSeries: this.props.state.valuation.dataUsed.modelSeries,
+              modelYear: `${this.props.state.valuation.dataUsed.modelYear}`,
+              fuelType: this.props.state.valuation.dataUsed.fuelType,
+              gearboxType: this.props.state.valuation.dataUsed.gearboxType,
+              chassis: this.props.state.valuation.dataUsed.chassis,
             }),
           };
 
-          // eslint-disable-next-line
-          console.log('sending', body);
-
           await sendRequest<any>({
             method: 'POST',
-            url: `${this.props.settings.apiAddress}/lead`,
+            url: `${this.props.settings.url}/lead`,
             body,
           });
 
           this.props.onNext();
         } catch (e) {
-          // eslint-disable-next-line
-          console.log('err', e);
           section.innerHTML = Alert({
             type: 'error',
             header: 'Ett fel har inträffat',
@@ -270,8 +272,8 @@ class Stage4 {
               <div class="form-group">
                 <label data-wayke-valuation-inputlabel="" for="wayke-contact-branch-id">Anläggning</label>
                 <div data-wayke-valuation-select="">
-                <select id="wayke-contact-branch-id" class="select" name="branchId">
-                </select>
+                  <select id="wayke-contact-branch-id" class="select" name="branchId">
+                  </select>
                 </div>
                 <div class="form-alert">Måste välja ett val</div>
               </div>
@@ -304,47 +306,77 @@ class Stage4 {
         </div>
       `;
 
-      const firstName = element.querySelector('#wayke-contact-first-name') as HTMLInputElement;
-      firstName.addEventListener('input', (e) => this.onChange(e));
-      firstName.addEventListener('blur', (e) => this.onBlur(e));
-      firstName.value = this.state.value.firstName;
-
-      const lastName = element.querySelector('#wayke-contact-last-name') as HTMLInputElement;
-      lastName.addEventListener('input', (e) => this.onChange(e));
-      lastName.addEventListener('blur', (e) => this.onBlur(e));
-      lastName.value = this.state.value.lastName;
-
-      const email = element.querySelector('#wayke-contact-email') as HTMLInputElement;
-      email.addEventListener('input', (e) => this.onChange(e));
-      email.addEventListener('blur', (e) => this.onBlur(e));
-      email.value = this.state.value.email;
-
-      const phoneNumber = element.querySelector('#wayke-contact-phone-number') as HTMLInputElement;
-      phoneNumber.addEventListener('input', (e) => this.onChange(e));
-      phoneNumber.addEventListener('blur', (e) => this.onBlur(e));
-      phoneNumber.value = this.state.value.phoneNumber;
-
-      const branchId = element.querySelector('#wayke-contact-branch-id') as HTMLSelectElement;
-      branchId.addEventListener('input', (e) => this.onChange(e));
-      branchId.value = this.state.value.branchId;
-      if (branchId) {
-        branchId.innerHTML = this.props.settings.branches
-          .map((branch) => `<option value="${branch.id}">${branch.name}</option>`)
-          .join(' ');
+      const firstName = element.querySelector(
+        '#wayke-contact-first-name'
+      ) as HTMLInputElement | null;
+      if (firstName) {
+        firstName.addEventListener('input', (e) => this.onChange(e));
+        firstName.addEventListener('blur', (e) => this.onBlur(e));
+        firstName.value = this.state.value.firstName;
       }
 
-      const whenToSell = element.querySelector('#wayke-contact-when-to-sell') as HTMLSelectElement;
-      whenToSell.addEventListener('input', (e) => this.onChange(e));
-      whenToSell.value = this.state.value.whenToSell;
+      const lastName = element.querySelector('#wayke-contact-last-name') as HTMLInputElement | null;
+      if (lastName) {
+        lastName.addEventListener('input', (e) => this.onChange(e));
+        lastName.addEventListener('blur', (e) => this.onBlur(e));
+        lastName.value = this.state.value.lastName;
+      }
+
+      const email = element.querySelector('#wayke-contact-email') as HTMLInputElement | null;
+      if (email) {
+        email.addEventListener('input', (e) => this.onChange(e));
+        email.addEventListener('blur', (e) => this.onBlur(e));
+        email.value = this.state.value.email;
+      }
+
+      const phoneNumber = element.querySelector(
+        '#wayke-contact-phone-number'
+      ) as HTMLInputElement | null;
+      if (phoneNumber) {
+        phoneNumber.addEventListener('input', (e) => this.onChange(e));
+        phoneNumber.addEventListener('blur', (e) => this.onBlur(e));
+        phoneNumber.value = this.state.value.phoneNumber;
+      }
+
+      const branchId = element.querySelector(
+        '#wayke-contact-branch-id'
+      ) as HTMLSelectElement | null;
+      if (branchId) {
+        if (this.props.settings.branches.length > 1) {
+          branchId.addEventListener('input', (e) => this.onChange(e));
+          branchId.value = this.state.value.branchId;
+          branchId.innerHTML = this.props.settings.branches
+            .map((branch) => `<option value="${branch.id}">${branch.name || branch.id}</option>`)
+            .join(' ');
+        } else {
+          const parentElement = branchId.parentElement?.parentElement;
+          const parentParentElement = parentElement?.parentElement;
+          if (parentElement && parentParentElement) {
+            parentParentElement.removeChild(parentElement);
+          }
+        }
+      }
+
+      const whenToSell = element.querySelector(
+        '#wayke-contact-when-to-sell'
+      ) as HTMLSelectElement | null;
+      if (whenToSell) {
+        whenToSell.addEventListener('input', (e) => this.onChange(e));
+        whenToSell.value = this.state.value.whenToSell;
+      }
 
       const confirmTerms = element.querySelector(
         '#wayke-contact-confirm-terms'
-      ) as HTMLInputElement;
-      confirmTerms.addEventListener('input', (e) => this.onChange(e));
-      confirmTerms.checked = this.state.value.confirmTerms;
+      ) as HTMLInputElement | null;
+      if (confirmTerms) {
+        confirmTerms.addEventListener('input', (e) => this.onChange(e));
+        confirmTerms.checked = this.state.value.confirmTerms;
+      }
 
-      const button = element.querySelector('button') as HTMLButtonElement;
-      button.addEventListener('click', () => this.onSend());
+      const button = element.querySelector('button') as HTMLButtonElement | null;
+      if (button) {
+        button.addEventListener('click', () => this.onSend());
+      }
     }
   }
 }

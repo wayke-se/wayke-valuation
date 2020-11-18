@@ -167,25 +167,35 @@ class Stage1 {
 
       const regInput = element.querySelector(
         '#wayke-valuation-registration-number'
-      ) as HTMLInputElement;
-      regInput.addEventListener('input', (e) => this.onChange(e));
-      regInput.addEventListener('blur', (e) => this.onBlur(e));
-      regInput.value = this.state.value.registrationNumber;
+      ) as HTMLInputElement | null;
+      if (regInput) {
+        regInput.addEventListener('input', (e) => this.onChange(e));
+        regInput.addEventListener('blur', (e) => this.onBlur(e));
+        regInput.value = this.state.value.registrationNumber;
+      }
 
-      const milageInput = element.querySelector('#wayke-valuation-milage') as HTMLInputElement;
-      milageInput.addEventListener('input', (e) => this.onChange(e));
-      milageInput.addEventListener('blur', (e) => this.onBlur(e));
-      milageInput.value = this.state.value.milage;
+      const milageInput = element.querySelector(
+        '#wayke-valuation-milage'
+      ) as HTMLInputElement | null;
+      if (milageInput) {
+        milageInput.addEventListener('input', (e) => this.onChange(e));
+        milageInput.addEventListener('blur', (e) => this.onBlur(e));
+        milageInput.value = this.state.value.milage;
+      }
 
       const descriptionTextArea = element.querySelector(
         '#wayke-valuation-description'
-      ) as HTMLTextAreaElement;
-      descriptionTextArea.addEventListener('input', (e) => this.onChange(e));
-      descriptionTextArea.addEventListener('blur', (e) => this.onBlur(e));
-      descriptionTextArea.value = this.state.value.description;
+      ) as HTMLTextAreaElement | null;
+      if (descriptionTextArea) {
+        descriptionTextArea.addEventListener('input', (e) => this.onChange(e));
+        descriptionTextArea.addEventListener('blur', (e) => this.onBlur(e));
+        descriptionTextArea.value = this.state.value.description;
+      }
 
-      const button = element.querySelector('#stage1-next-button') as HTMLButtonElement;
-      button.addEventListener('click', () => this.onNextButton());
+      const button = element.querySelector('#stage1-next-button') as HTMLButtonElement | null;
+      if (button) {
+        button.addEventListener('click', () => this.onNextButton());
+      }
     }
   }
 }

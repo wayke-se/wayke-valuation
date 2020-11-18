@@ -14,7 +14,7 @@ module.exports = merge(base, {
       'process.env': {
         WAYKE_BRANCH_ID: `"${process.env.WAYKE_BRANCH_ID}"`,
         WAYKE_VALUATION_ADDRESS: `"${process.env.WAYKE_VALUATION_ADDRESS}"`,
-        WAYKE_API_ADDRESS: `"${process.env.WAYKE_API_ADDRESS}"`,
+        WAYKE_URL: `"${process.env.WAYKE_URL}"`,
         WAYKE_CONDITION_REDUCTION_VERY_GOOD: process.env.WAYKE_CONDITION_REDUCTION_VERY_GOOD,
         WAYKE_CONDITION_REDUCTION_GOOD: process.env.WAYKE_CONDITION_REDUCTION_GOOD,
         WAYKE_CONDITION_REDUCTION_OK: process.env.WAYKE_CONDITION_REDUCTION_OK,

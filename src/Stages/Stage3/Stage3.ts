@@ -41,7 +41,7 @@ class Stage3 {
         element.innerHTML = `<div class="page-main">${Spinner()}</div>`;
         const _response = await sendRequest<Valuation>({
           method: 'GET',
-          url: `${this.props.settings.apiAddress}/wip/extvehicle?regNo=${
+          url: `${this.props.settings.url}/wip/extvehicle?regNo=${
             state.vehicle.registrationNumber
           }&km=${parseInt(state.vehicle.milage, 10) * 10}`,
         });
