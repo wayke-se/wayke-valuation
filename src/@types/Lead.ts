@@ -1,3 +1,5 @@
+import { Pair } from './Pair';
+
 export interface Lead {
   id?: string;
   userId?: string;
@@ -7,5 +9,5 @@ export interface Lead {
   lastName: string;
   phoneNumber: string;
   email?: string;
-  metaData?: { [key: string]: string | undefined };
+  metaData?: Pair[];
 }

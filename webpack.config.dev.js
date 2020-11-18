@@ -18,6 +18,7 @@ module.exports = merge(base, {
         WAYKE_CONDITION_REDUCTION_VERY_GOOD: process.env.WAYKE_CONDITION_REDUCTION_VERY_GOOD,
         WAYKE_CONDITION_REDUCTION_GOOD: process.env.WAYKE_CONDITION_REDUCTION_GOOD,
         WAYKE_CONDITION_REDUCTION_OK: process.env.WAYKE_CONDITION_REDUCTION_OK,
+        WAYKE_BRANCHES: process.env.WAYKE_BRANCHES,
       },
     }),
     new ForkTsCheckerWebpackPlugin({

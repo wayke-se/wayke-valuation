@@ -5,6 +5,7 @@ const validationMethods = {
   lastName: fieldValidation.requiredString,
   email: fieldValidation.requiredString,
   phoneNumber: fieldValidation.requiredString,
+  branchId: fieldValidation.requiredString,
   whenToSell: fieldValidation.requiredWhenToSell,
   confirmTerms: fieldValidation.requiredTrue,
 };

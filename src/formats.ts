@@ -1,3 +1,5 @@
+import { Pair } from './@types/Pair';
+
 const separateEveryThirdCharacter = (value: string) => {
   const characters = value.split('').reverse();
   let result = characters[0];
@@ -31,3 +33,9 @@ export const formatPrice = (value: number, decimalSymbol = ',') => {
 
   return hasDecimal ? separated + decimalSymbol + parts[1] : separated;
 };
+
+export const objToKeyValue = (obj: { [key: string]: string }): Pair[] =>
+  Object.keys(obj).map((key) => ({
+    key,
+    value: obj[key],
+  }));

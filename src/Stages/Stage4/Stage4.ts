@@ -6,12 +6,14 @@ import { sendRequest } from '../../Http/http';
 import { Settings } from '../../@types/Settings';
 import { Lead } from '../../@types/Lead';
 import { NonOptionalAppState } from '../../Components/App';
+import { objToKeyValue } from '../../formats';
 
 interface ContactValidation {
   firstName: boolean;
   lastName: boolean;
   email: boolean;
   phoneNumber: boolean;
+  branchId: boolean;
   whenToSell: boolean;
   confirmTerms: boolean;
 }
@@ -32,23 +34,25 @@ class Stage4 {
   state: Stage4State;
   constructor(props: Stage4Props) {
     this.props = props;
+    const value = { ...this.props.state.contact };
+
     this.state = {
-      value: {
-        ...this.props.state.contact,
-      },
+      value,
       validation: {
-        firstName: validationMethods.firstName(this.props.state.contact.firstName),
-        lastName: validationMethods.lastName(this.props.state.contact.lastName),
-        email: validationMethods.email(this.props.state.contact.email),
-        phoneNumber: validationMethods.phoneNumber(this.props.state.contact.phoneNumber),
-        whenToSell: validationMethods.whenToSell(this.props.state.contact.whenToSell),
-        confirmTerms: validationMethods.confirmTerms(this.props.state.contact.confirmTerms),
+        firstName: validationMethods.firstName(value.firstName),
+        lastName: validationMethods.lastName(value.lastName),
+        email: validationMethods.email(value.email),
+        phoneNumber: validationMethods.phoneNumber(value.phoneNumber),
+        branchId: validationMethods.branchId(value.branchId),
+        whenToSell: validationMethods.whenToSell(value.whenToSell),
+        confirmTerms: validationMethods.confirmTerms(value.confirmTerms),
       },
       interact: {
         firstName: false,
         lastName: false,
         email: false,
         phoneNumber: false,
+        branchId: false,
         whenToSell: false,
         confirmTerms: false,
       },
@@ -110,6 +114,7 @@ class Stage4 {
         lastName: validationMethods.lastName(this.state.value.lastName),
         email: validationMethods.email(this.state.value.email),
         phoneNumber: validationMethods.phoneNumber(this.state.value.phoneNumber),
+        branchId: validationMethods.branchId(this.state.value.branchId),
         whenToSell: validationMethods.whenToSell(this.state.value.whenToSell),
         confirmTerms: validationMethods.confirmTerms(this.state.value.confirmTerms),
       },
@@ -118,6 +123,7 @@ class Stage4 {
         lastName: true,
         email: true,
         phoneNumber: true,
+        branchId: true,
         whenToSell: true,
         confirmTerms: true,
       },
@@ -157,6 +163,7 @@ class Stage4 {
       this.state.validation.lastName &&
       this.state.validation.email &&
       this.state.validation.phoneNumber &&
+      this.state.validation.branchId &&
       this.state.validation.whenToSell &&
       this.state.validation.confirmTerms
     ) {
@@ -178,9 +185,10 @@ class Stage4 {
             lastName: this.state.value.lastName,
             type: 'valuation',
             phoneNumber: this.state.value.phoneNumber,
-            branchId: this.props.settings.branchId,
+            branchId: this.state.value.branchId,
             email: this.state.value.email,
-            metaData: {
+            userId: '00000000-0000-0000-0000-000000000000',
+            metaData: objToKeyValue({
               condition: this.props.state.condition,
               whenToSell: this.state.value.whenToSell,
               registrationNumber: this.props.state.vehicle.registrationNumber,
@@ -190,7 +198,7 @@ class Stage4 {
               conditionReductionVeryGood: `${this.props.settings.conditionReduction.VeryGood}`,
               conditionReductionGood: `${this.props.settings.conditionReduction.Good}`,
               conditionReductionOk: `${this.props.settings.conditionReduction.Ok}`,
-            },
+            }),
           };
 
           // eslint-disable-next-line
@@ -260,9 +268,17 @@ class Stage4 {
                 <div class="form-alert">Ange ditt telefonnummer.</div>
               </div>
               <div class="form-group">
+                <label data-wayke-valuation-inputlabel="" for="wayke-contact-branch-id">Anläggning</label>
+                <div data-wayke-valuation-select="">
+                <select id="wayke-contact-branch-id" class="select" name="branchId">
+                </select>
+                </div>
+                <div class="form-alert">Måste välja ett val</div>
+              </div>
+              <div class="form-group">
                 <label data-wayke-valuation-inputlabel="" for="wayke-contact-when-to-sell">När vill du sälja bilen</label>
                 <div data-wayke-valuation-select="">
-                  <select id="wayke-contact-when-to-sell" class="select" name="whenToSell">
+                  <select id="wayke-contact-when-to-sell" class="select" name="branch">
                     <option value="1">Snarast</option>
                     <option value="2">Inom 1 månad</option>
                     <option value="3">Inom ett halvår</option>
@@ -307,6 +323,15 @@ class Stage4 {
       phoneNumber.addEventListener('input', (e) => this.onChange(e));
       phoneNumber.addEventListener('blur', (e) => this.onBlur(e));
       phoneNumber.value = this.state.value.phoneNumber;
+
+      const branchId = element.querySelector('#wayke-contact-branch-id') as HTMLSelectElement;
+      branchId.addEventListener('input', (e) => this.onChange(e));
+      branchId.value = this.state.value.branchId;
+      if (branchId) {
+        branchId.innerHTML = this.props.settings.branches
+          .map((branch) => `<option value="${branch.id}">${branch.name}</option>`)
+          .join(' ');
+      }
 
       const whenToSell = element.querySelector('#wayke-contact-when-to-sell') as HTMLSelectElement;
       whenToSell.addEventListener('input', (e) => this.onChange(e));

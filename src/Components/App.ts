@@ -26,11 +26,30 @@ export type NonOptionalAppState = Omit<AppState, 'valuation'> & {
 
 class App {
   private props: Settings;
+  private state: AppState;
   private timeline: Timeline;
   private header: Header;
 
   constructor(props: Settings) {
     this.props = props;
+    this.state = {
+      currentStage: 1,
+      vehicle: {
+        registrationNumber: '',
+        milage: '',
+        description: '',
+      },
+      condition: 'VeryGood',
+      contact: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        branchId: this.props.branches[0].id,
+        whenToSell: '1',
+        confirmTerms: false,
+      },
+    };
 
     this.timeline = new Timeline();
     this.header = new Header({
@@ -42,23 +61,6 @@ class App {
       this.renderButton();
     }
   }
-  private state: AppState = {
-    currentStage: 1,
-    vehicle: {
-      registrationNumber: '',
-      milage: '',
-      description: '',
-    },
-    condition: 'VeryGood',
-    contact: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      whenToSell: '1',
-      confirmTerms: false,
-    },
-  };
 
   private onNextStage1(vehicle: Vehicle) {
     this.state = {

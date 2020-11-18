@@ -1,9 +1,11 @@
 import './Public/styles/default.css';
 import App from './Components/App';
+import { Branch } from './@types/Settings';
 
 window.addEventListener('DOMContentLoaded', (_) => {
   const {
     WAYKE_BRANCH_ID,
+    WAYKE_BRANCHES,
     WAYKE_VALUATION_ADDRESS,
     WAYKE_LEAD_ADDRESS,
     WAYKE_CONDITION_REDUCTION_VERY_GOOD,
@@ -14,6 +16,7 @@ window.addEventListener('DOMContentLoaded', (_) => {
   const app = new App({
     auto: true,
     branchId: WAYKE_BRANCH_ID as string,
+    branches: (WAYKE_BRANCHES as unknown) as Branch[],
     valuationAddress: WAYKE_VALUATION_ADDRESS as string,
     leadAddress: WAYKE_LEAD_ADDRESS as string,
     conditionReduction: {
