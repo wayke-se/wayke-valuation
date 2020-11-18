@@ -11,6 +11,7 @@ import { ConditionType } from '../@types/ConditionType';
 import Logo from '../logo';
 import { Settings } from '../@types/Settings';
 import { Valuation } from '../@types/Valuation';
+import verifySettings from '../verifySettings';
 
 export interface AppState {
   currentStage: number;
@@ -31,6 +32,7 @@ class App {
   private header: Header;
 
   constructor(props: Settings) {
+    verifySettings(props);
     this.props = props;
     this.state = {
       currentStage: 1,
