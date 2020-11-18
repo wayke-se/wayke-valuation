@@ -55,11 +55,11 @@ class App {
 
     this.timeline = new Timeline();
     this.header = new Header({
-      logo: this.props.logo || Logo,
+      logo: Logo,
       //eslint-disable-next-line
       close: this.close,
     });
-    if (props.auto) {
+    if (!props.manualTrigger) {
       this.renderButton();
     }
   }
@@ -164,7 +164,7 @@ class App {
     const container = document.createElement('div');
     container.innerHTML = `
       <div>
-        <img src="${this.props.logo || Logo}" alt="Logotype"></img>
+        <img src="${Logo}" alt="Logotype"></img>
         <h3>Vad är din bil värd?</h3>
         <p>Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något</p>
         <button>Gör en gratis värdering</button>

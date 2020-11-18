@@ -6,13 +6,12 @@ export interface ConditionReduction {
 
 export interface Branch {
   id: string;
-  name: string;
+  name?: string;
 }
 
 export interface Settings {
-  auto?: boolean;
-  logo?: string;
+  manualTrigger?: boolean;
   branches: Branch[];
-  apiAddress: string;
+  url: string;
   conditionReduction: ConditionReduction;
 }
