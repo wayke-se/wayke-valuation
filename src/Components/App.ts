@@ -191,6 +191,10 @@ class App {
     if (button) {
       button.addEventListener('click', () => this.render());
     }
+    const header = container.querySelector('.floating-panel-header');
+    if (header) {
+        header.addEventListener('click', () => header.classList.toggle('is-extended'));
+    }
     document.body.append(container);
   }
 
