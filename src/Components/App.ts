@@ -163,12 +163,29 @@ class App {
   renderButton() {
     const container = document.createElement('div');
     container.innerHTML = `
-      <div>
-        <img src="${Logo}" alt="Logotype"></img>
-        <h3>Vad är din bil värd?</h3>
-        <p>Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något</p>
-        <button>Gör en gratis värdering</button>
-      </div>
+        <div data-wayke-valuation-floatingpanel="">
+            <header class="floating-panel-header">
+                <div class="floating-panel-header-content">
+                    <div class="floating-panel-logo">
+                        <img src="${Logo}" alt="Wayke logotype" class="floating-panel-logo-img" />
+                    </div>
+                    <div class="floating-panel-heading">Vad är din bil värd?</div>
+                </div>
+                <div class="floating-panel-header-icon">
+                    <i class="icon-chevron-up no-margin"></i>
+                </div>
+            </header>
+            <div class="floating-panel-body">
+                <div class="floating-panel-description">
+                    Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något.
+                </div>
+                <div class="floating-panel-action">
+                    <button data-wayke-valuation-button="full-width">
+				        Gör en gratis värdering
+			        </button>
+                </div>
+            </div>
+        </div>
     `;
     const button = container.querySelector('button');
     if (button) {
