@@ -194,10 +194,17 @@ class Stage4 {
               registrationNumber: this.props.state.vehicle.registrationNumber,
               description: this.props.state.vehicle.description,
               milage: this.props.state.vehicle.milage,
-              valuation: `${this.props.state.valuation.price.prediction}`,
+              pricePrediction: `${this.props.state.valuation.price.prediction}`,
               conditionReductionVeryGood: `${this.props.settings.conditionReduction.veryGood}`,
               conditionReductionGood: `${this.props.settings.conditionReduction.good}`,
               conditionReductionOk: `${this.props.settings.conditionReduction.ok}`,
+              manufacturer: this.props.state.valuation.dataUsed.manufacturer,
+              modelName: this.props.state.valuation.dataUsed.modelName,
+              modelSeries: this.props.state.valuation.dataUsed.modelSeries,
+              modelYear: `${this.props.state.valuation.dataUsed.modelYear}`,
+              fuelType: this.props.state.valuation.dataUsed.fuelType,
+              gearboxType: this.props.state.valuation.dataUsed.gearboxType,
+              chassis: this.props.state.valuation.dataUsed.chassis,
             }),
           };
 
