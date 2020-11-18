@@ -39,7 +39,7 @@ class App {
         milage: '',
         description: '',
       },
-      condition: 'VeryGood',
+      condition: 'veryGood',
       contact: {
         firstName: '',
         lastName: '',

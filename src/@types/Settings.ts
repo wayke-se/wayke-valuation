@@ -1,7 +1,7 @@
 export interface ConditionReduction {
-  VeryGood: number;
-  Good: number;
-  Ok: number;
+  veryGood: number;
+  good: number;
+  ok: number;
 }
 
 export interface Branch {
@@ -12,9 +12,7 @@ export interface Branch {
 export interface Settings {
   auto?: boolean;
   logo?: string;
-  branchId: string;
   branches: Branch[];
-  valuationAddress: string;
-  leadAddress: string;
+  apiAddress: string;
   conditionReduction: ConditionReduction;
 }

@@ -4,10 +4,8 @@ import { Branch } from './@types/Settings';
 
 window.addEventListener('DOMContentLoaded', (_) => {
   const {
-    WAYKE_BRANCH_ID,
     WAYKE_BRANCHES,
-    WAYKE_VALUATION_ADDRESS,
-    WAYKE_LEAD_ADDRESS,
+    WAYKE_API_ADDRESS,
     WAYKE_CONDITION_REDUCTION_VERY_GOOD,
     WAYKE_CONDITION_REDUCTION_GOOD,
     WAYKE_CONDITION_REDUCTION_OK,
@@ -15,14 +13,12 @@ window.addEventListener('DOMContentLoaded', (_) => {
   // eslint-disable-next-line
   const app = new App({
     auto: true,
-    branchId: WAYKE_BRANCH_ID as string,
     branches: (WAYKE_BRANCHES as unknown) as Branch[],
-    valuationAddress: WAYKE_VALUATION_ADDRESS as string,
-    leadAddress: WAYKE_LEAD_ADDRESS as string,
+    apiAddress: WAYKE_API_ADDRESS as string,
     conditionReduction: {
-      VeryGood: (WAYKE_CONDITION_REDUCTION_VERY_GOOD as unknown) as number,
-      Good: (WAYKE_CONDITION_REDUCTION_GOOD as unknown) as number,
-      Ok: (WAYKE_CONDITION_REDUCTION_OK as unknown) as number,
+      veryGood: (WAYKE_CONDITION_REDUCTION_VERY_GOOD as unknown) as number,
+      good: (WAYKE_CONDITION_REDUCTION_GOOD as unknown) as number,
+      ok: (WAYKE_CONDITION_REDUCTION_OK as unknown) as number,
     },
   });
 

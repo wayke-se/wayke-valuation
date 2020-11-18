@@ -195,9 +195,9 @@ class Stage4 {
               description: this.props.state.vehicle.description,
               milage: this.props.state.vehicle.milage,
               valuation: `${this.props.state.valuation.price.prediction}`,
-              conditionReductionVeryGood: `${this.props.settings.conditionReduction.VeryGood}`,
-              conditionReductionGood: `${this.props.settings.conditionReduction.Good}`,
-              conditionReductionOk: `${this.props.settings.conditionReduction.Ok}`,
+              conditionReductionVeryGood: `${this.props.settings.conditionReduction.veryGood}`,
+              conditionReductionGood: `${this.props.settings.conditionReduction.good}`,
+              conditionReductionOk: `${this.props.settings.conditionReduction.ok}`,
             }),
           };
 
@@ -206,7 +206,7 @@ class Stage4 {
 
           await sendRequest<any>({
             method: 'POST',
-            url: `${this.props.settings.leadAddress}/lead`,
+            url: `${this.props.settings.apiAddress}/lead`,
             body,
           });
 

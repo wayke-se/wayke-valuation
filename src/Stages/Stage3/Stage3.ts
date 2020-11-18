@@ -41,9 +41,9 @@ class Stage3 {
         element.innerHTML = `<div class="page-main">${Spinner()}</div>`;
         const _response = await sendRequest<Valuation>({
           method: 'GET',
-          url: `${this.props.settings.valuationAddress}/wip/extvehicle?regNo=${
+          url: `${this.props.settings.apiAddress}/wip/extvehicle?regNo=${
             state.vehicle.registrationNumber
-          }&km=${parseInt(state.vehicle.milage, 10) * 10}&branchId=${this.props.settings.branchId}`,
+          }&km=${parseInt(state.vehicle.milage, 10) * 10}`,
         });
         this.response = _response;
         setCache(createCacheKey(state), this.response);

@@ -1,1 +1,1 @@
-export type ConditionType = 'VeryGood' | 'Good' | 'Ok';
+export type ConditionType = 'veryGood' | 'good' | 'ok';

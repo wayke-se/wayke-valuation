@@ -8,7 +8,7 @@ interface ConditionRow {
 
 const ConditionRows: ConditionRow[] = [
   {
-    condition: 'VeryGood',
+    condition: 'veryGood',
     header: 'Mycket bra skick',
     usp: [
       'Inga repor eller skador',
@@ -17,7 +17,7 @@ const ConditionRows: ConditionRow[] = [
     ],
   },
   {
-    condition: 'Good',
+    condition: 'good',
     header: 'Bra skick',
     usp: [
       'Några mindre repor och/eller skador',
@@ -26,7 +26,7 @@ const ConditionRows: ConditionRow[] = [
     ],
   },
   {
-    condition: 'Ok',
+    condition: 'ok',
     header: 'Helt okej skick',
     usp: [
       'Finns en del repor och skador',
