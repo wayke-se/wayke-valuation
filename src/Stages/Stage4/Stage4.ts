@@ -180,6 +180,18 @@ class Stage4 {
             element.append(section);
           }
 
+          const { condition, vehicle, valuation } = this.props.state;
+          const { price, dataUsed } = valuation;
+          const {
+            manufacturer,
+            modelName,
+            modelSeries,
+            modelYear,
+            fuelType,
+            gearboxType,
+            chassis,
+          } = dataUsed;
+          const { veryGood, good, ok } = this.props.settings.conditionReduction;
           const body: Lead = {
             firstName: this.state.value.firstName,
             lastName: this.state.value.lastName,
@@ -187,24 +199,23 @@ class Stage4 {
             phoneNumber: this.state.value.phoneNumber,
             branchId: this.state.value.branchId,
             email: this.state.value.email,
-            userId: '00000000-0000-0000-0000-000000000000',
             metaData: objToKeyValue({
-              condition: this.props.state.condition,
+              condition,
               whenToSell: this.state.value.whenToSell,
-              registrationNumber: this.props.state.vehicle.registrationNumber,
-              description: this.props.state.vehicle.description,
-              milage: this.props.state.vehicle.milage,
-              pricePrediction: `${this.props.state.valuation.price.prediction}`,
-              conditionReductionVeryGood: `${this.props.settings.conditionReduction.veryGood}`,
-              conditionReductionGood: `${this.props.settings.conditionReduction.good}`,
-              conditionReductionOk: `${this.props.settings.conditionReduction.ok}`,
-              manufacturer: this.props.state.valuation.dataUsed.manufacturer,
-              modelName: this.props.state.valuation.dataUsed.modelName,
-              modelSeries: this.props.state.valuation.dataUsed.modelSeries,
-              modelYear: `${this.props.state.valuation.dataUsed.modelYear}`,
-              fuelType: this.props.state.valuation.dataUsed.fuelType,
-              gearboxType: this.props.state.valuation.dataUsed.gearboxType,
-              chassis: this.props.state.valuation.dataUsed.chassis,
+              registrationNumber: vehicle.registrationNumber,
+              description: vehicle.description,
+              milage: vehicle.milage,
+              pricePrediction: `${price.prediction}`,
+              conditionReductionVeryGood: `${veryGood}`,
+              conditionReductionGood: `${good}`,
+              conditionReductionOk: `${ok}`,
+              manufacturer,
+              modelName,
+              modelSeries,
+              modelYear: `${modelYear}`,
+              fuelType,
+              gearboxType,
+              chassis,
             }),
           };
 

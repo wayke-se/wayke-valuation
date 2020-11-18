@@ -10,17 +10,17 @@ const verifySettings = (settings: Settings) => {
     throw `${pre} Must provide "conditionReduction"`;
   }
   if (
-    settings.conditionReduction.veryGood !== null ||
-    settings.conditionReduction.veryGood !== undefined
+    settings.conditionReduction.veryGood === null ||
+    settings.conditionReduction.veryGood === undefined
   ) {
     throw `${pre} Must provide "conditionReduction.veryGood"`;
   }
 
-  if (settings.conditionReduction.good !== null || settings.conditionReduction.good !== undefined) {
+  if (settings.conditionReduction.good === null || settings.conditionReduction.good === undefined) {
     throw `${pre} Must provide "conditionReduction.good"`;
   }
 
-  if (settings.conditionReduction.ok !== null || settings.conditionReduction.ok !== undefined) {
+  if (settings.conditionReduction.ok === null || settings.conditionReduction.ok === undefined) {
     throw `${pre} Must provide "conditionReduction.ok"`;
   }
 
