@@ -163,26 +163,28 @@ class App {
   renderButton() {
     const container = document.createElement('div');
     container.innerHTML = `
-        <div data-wayke-valuation-floatingpanel="">
-            <header class="floating-panel-header">
-                <div class="floating-panel-header-content">
-                    <div class="floating-panel-logo">
-                        <img src="${Logo}" alt="Wayke logotype" class="floating-panel-logo-img" />
+        <div class="wayke-valuation">
+            <div data-wayke-valuation-floatingpanel="">
+                <header class="floating-panel-header">
+                    <div class="floating-panel-header-content">
+                        <div class="floating-panel-logo">
+                            <img src="${Logo}" alt="Wayke logotype" class="floating-panel-logo-img" />
+                        </div>
+                        <div class="floating-panel-heading">Vad är din bil värd?</div>
                     </div>
-                    <div class="floating-panel-heading">Vad är din bil värd?</div>
-                </div>
-                <div class="floating-panel-header-icon">
-                    <i class="icon-chevron-up no-margin"></i>
-                </div>
-            </header>
-            <div class="floating-panel-body">
-                <div class="floating-panel-description">
-                    Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något.
-                </div>
-                <div class="floating-panel-action">
-                    <button data-wayke-valuation-button="full-width">
-				        Gör en gratis värdering
-			        </button>
+                    <div class="floating-panel-header-icon">
+                        <i class="icon-chevron-up no-margin"></i>
+                    </div>
+                </header>
+                <div class="floating-panel-body">
+                    <div class="floating-panel-description">
+                        Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något.
+                    </div>
+                    <div class="floating-panel-action">
+                        <button data-wayke-valuation-button="full-width">
+                            Gör en gratis värdering
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,7 +195,12 @@ class App {
     }
     const header = container.querySelector('.floating-panel-header');
     if (header) {
-        header.addEventListener('click', () => header.classList.toggle('is-extended'));
+      header.addEventListener('click', () => {
+        const headerParent = header.parentElement;
+        if (headerParent) {
+          headerParent.classList.toggle('is-extended');
+        }
+      });
     }
     document.body.append(container);
   }
