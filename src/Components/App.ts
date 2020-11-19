@@ -30,7 +30,6 @@ const initialState = (props: Settings): AppState => ({
   vehicle: {
     registrationNumber: '',
     milage: '',
-    description: '',
   },
   condition: 'veryGood',
   contact: {
@@ -40,6 +39,7 @@ const initialState = (props: Settings): AppState => ({
     phoneNumber: '',
     branchId: props.branches[0].id,
     whenToSell: '1',
+    description: '',
     confirmTerms: false,
   },
 });

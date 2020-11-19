@@ -15,6 +15,7 @@ interface ContactValidation {
   phoneNumber: boolean;
   branchId: boolean;
   whenToSell: boolean;
+  description: boolean;
   confirmTerms: boolean;
 }
 
@@ -45,6 +46,7 @@ class Stage4 {
         phoneNumber: validationMethods.phoneNumber(value.phoneNumber),
         branchId: validationMethods.branchId(value.branchId),
         whenToSell: validationMethods.whenToSell(value.whenToSell),
+        description: validationMethods.description(value.description),
         confirmTerms: validationMethods.confirmTerms(value.confirmTerms),
       },
       interact: {
@@ -54,6 +56,7 @@ class Stage4 {
         phoneNumber: false,
         branchId: false,
         whenToSell: false,
+        description: false,
         confirmTerms: false,
       },
     };
@@ -116,6 +119,7 @@ class Stage4 {
         phoneNumber: validationMethods.phoneNumber(this.state.value.phoneNumber),
         branchId: validationMethods.branchId(this.state.value.branchId),
         whenToSell: validationMethods.whenToSell(this.state.value.whenToSell),
+        description: validationMethods.description(this.state.value.description),
         confirmTerms: validationMethods.confirmTerms(this.state.value.confirmTerms),
       },
       interact: {
@@ -125,6 +129,7 @@ class Stage4 {
         phoneNumber: true,
         branchId: true,
         whenToSell: true,
+        description: true,
         confirmTerms: true,
       },
     };
@@ -151,8 +156,12 @@ class Stage4 {
         formGroups[4].classList.add('has-error');
       }
 
-      if (!this.state.validation.confirmTerms) {
+      if (!this.state.validation.description) {
         formGroups[5].classList.add('has-error');
+      }
+
+      if (!this.state.validation.confirmTerms) {
+        formGroups[6].classList.add('has-error');
       }
     }
   }
@@ -165,6 +174,7 @@ class Stage4 {
       this.state.validation.phoneNumber &&
       this.state.validation.branchId &&
       this.state.validation.whenToSell &&
+      this.state.validation.description &&
       this.state.validation.confirmTerms
     ) {
       const element = document.querySelector(
@@ -203,7 +213,7 @@ class Stage4 {
               condition,
               whenToSell: this.state.value.whenToSell,
               registrationNumber: vehicle.registrationNumber,
-              description: vehicle.description,
+              description: this.state.value.description,
               milage: vehicle.milage,
               pricePrediction: `${price.prediction}`,
               conditionReductionVeryGood: `${veryGood}`,
@@ -253,45 +263,45 @@ class Stage4 {
           <section class="page-section">
             <div data-wayke-valuation-form>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-first-name">Förnamn</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-first-name">Förnamn</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Förnamn" id="wayke-contact-first-name" name="firstName">
+                  <input placeholder="Förnamn" id="wayke-valuation-contact-first-name" name="firstName">
                 </div>
                 <div class="form-alert">Ange ditt förnamn.</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-last-name">Efternamn</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-last-name">Efternamn</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Efternamn" id="wayke-contact-last-name" name="lastName">
+                  <input placeholder="Efternamn" id="wayke-valuation-contact-last-name" name="lastName">
                 </div>
                 <div class="form-alert">Ange ditt efternamn.</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-email">E-postadress</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-email">E-postadress</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="E-postadress" id="wayke-contact-email" name="email">
+                  <input placeholder="E-postadress" id="wayke-valuation-contact-email" name="email">
                 </div>
                 <div class="form-alert">Ange din e-postadress.</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-phone-number">Telefonnummer</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-phone-number">Telefonnummer</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Telefonnummer" id="wayke-contact-phone-number" name="phoneNumber">
+                  <input placeholder="Telefonnummer" id="wayke-valuation-contact-phone-number" name="phoneNumber">
                 </div>
                 <div class="form-alert">Ange ditt telefonnummer.</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-branch-id">Anläggning</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-branch-id">Anläggning</label>
                 <div data-wayke-valuation-select="">
-                  <select id="wayke-contact-branch-id" class="select" name="branchId">
+                  <select id="wayke-valuation-contact-branch-id" class="select" name="branchId">
                   </select>
                 </div>
                 <div class="form-alert">Måste välja ett val</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-contact-when-to-sell">När vill du sälja bilen</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-when-to-sell">När vill du sälja bilen</label>
                 <div data-wayke-valuation-select="">
-                  <select id="wayke-contact-when-to-sell" class="select" name="branch">
+                  <select id="wayke-valuation-contact-when-to-sell" class="select" name="whenToSell">
                     <option value="1">Snarast</option>
                     <option value="2">Inom 1 månad</option>
                     <option value="3">Inom ett halvår</option>
@@ -301,9 +311,15 @@ class Stage4 {
                 <div class="form-alert">Måste välja ett val</div>
               </div>
               <div class="form-group">
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-description">Beskrivning (valfritt)</label>
+                <div data-wayke-valuation-inputtext="">
+                  <textarea placeholder="Är det något mer om din bil som du vill berätta för bilhandlaren, något som kan påverka värdet såsom servicehistorik, extrautrustning, vinterdäck?" name="description" id="wayke-valuation-contact-description"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
                 <div data-wayke-valuation-inputselection="checkbox">
-                  <input type="checkbox" id="wayke-contact-confirm-terms" name="confirmTerms" />
-                  <label for="wayke-contact-confirm-terms">
+                  <input type="checkbox" id="wayke-valuation-contact-confirm-terms" name="confirmTerms" />
+                  <label for="wayke-valuation-contact-confirm-terms">
                     <span class="text">Jag bekärftar att jag är över 16 år och samtycker till att mina uppgifter behandlas i Waykes databas.</span>
                   </label>
                 </div>
@@ -318,7 +334,7 @@ class Stage4 {
       `;
 
       const firstName = element.querySelector(
-        '#wayke-contact-first-name'
+        '#wayke-valuation-contact-first-name'
       ) as HTMLInputElement | null;
       if (firstName) {
         firstName.addEventListener('input', (e) => this.onChange(e));
@@ -326,14 +342,18 @@ class Stage4 {
         firstName.value = this.state.value.firstName;
       }
 
-      const lastName = element.querySelector('#wayke-contact-last-name') as HTMLInputElement | null;
+      const lastName = element.querySelector(
+        '#wayke-valuation-contact-last-name'
+      ) as HTMLInputElement | null;
       if (lastName) {
         lastName.addEventListener('input', (e) => this.onChange(e));
         lastName.addEventListener('blur', (e) => this.onBlur(e));
         lastName.value = this.state.value.lastName;
       }
 
-      const email = element.querySelector('#wayke-contact-email') as HTMLInputElement | null;
+      const email = element.querySelector(
+        '#wayke-valuation-contact-email'
+      ) as HTMLInputElement | null;
       if (email) {
         email.addEventListener('input', (e) => this.onChange(e));
         email.addEventListener('blur', (e) => this.onBlur(e));
@@ -341,7 +361,7 @@ class Stage4 {
       }
 
       const phoneNumber = element.querySelector(
-        '#wayke-contact-phone-number'
+        '#wayke-valuation-contact-phone-number'
       ) as HTMLInputElement | null;
       if (phoneNumber) {
         phoneNumber.addEventListener('input', (e) => this.onChange(e));
@@ -350,7 +370,7 @@ class Stage4 {
       }
 
       const branchId = element.querySelector(
-        '#wayke-contact-branch-id'
+        '#wayke-valuation-contact-branch-id'
       ) as HTMLSelectElement | null;
       if (branchId) {
         if (this.props.settings.branches.length > 1) {
@@ -369,15 +389,24 @@ class Stage4 {
       }
 
       const whenToSell = element.querySelector(
-        '#wayke-contact-when-to-sell'
+        '#wayke-valuation-contact-when-to-sell'
       ) as HTMLSelectElement | null;
       if (whenToSell) {
         whenToSell.addEventListener('input', (e) => this.onChange(e));
         whenToSell.value = this.state.value.whenToSell;
       }
 
+      const descriptionTextArea = element.querySelector(
+        '#wayke-valuation-contact-description'
+      ) as HTMLTextAreaElement | null;
+      if (descriptionTextArea) {
+        descriptionTextArea.addEventListener('input', (e) => this.onChange(e));
+        descriptionTextArea.addEventListener('blur', (e) => this.onBlur(e));
+        descriptionTextArea.value = this.state.value.description;
+      }
+
       const confirmTerms = element.querySelector(
-        '#wayke-contact-confirm-terms'
+        '#wayke-valuation-contact-confirm-terms'
       ) as HTMLInputElement | null;
       if (confirmTerms) {
         confirmTerms.addEventListener('input', (e) => this.onChange(e));

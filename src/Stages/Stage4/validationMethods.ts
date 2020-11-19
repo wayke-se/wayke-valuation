@@ -7,6 +7,7 @@ const validationMethods = {
   phoneNumber: fieldValidation.optionalPhone,
   branchId: fieldValidation.requiredString,
   whenToSell: fieldValidation.requiredWhenToSell,
+  description: fieldValidation.optionalString,
   confirmTerms: fieldValidation.requiredTrue,
 };
 

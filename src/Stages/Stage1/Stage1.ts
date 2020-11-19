@@ -4,7 +4,6 @@ import validationMethods from './validationMethods';
 interface Stage1Validation {
   registrationNumber: boolean;
   milage: boolean;
-  description: boolean;
 }
 
 interface Stage1State {
@@ -28,9 +27,8 @@ class Stage1 {
       validation: {
         registrationNumber: validationMethods.registrationNumber(props.vehicle.registrationNumber),
         milage: validationMethods.milage(props.vehicle.milage),
-        description: validationMethods.description(props.vehicle.description),
       },
-      interact: { registrationNumber: false, milage: false, description: false },
+      interact: { registrationNumber: false, milage: false },
     };
   }
 
@@ -85,12 +83,10 @@ class Stage1 {
           this.state.value.registrationNumber
         ),
         milage: validationMethods.milage(this.state.value.milage),
-        description: validationMethods.description(this.state.value.description),
       },
       interact: {
         registrationNumber: true,
         milage: true,
-        description: true,
       },
     };
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
@@ -103,22 +99,20 @@ class Stage1 {
       if (!this.state.validation.milage) {
         formGroups[1].classList.add('has-error');
       }
-
-      if (!this.state.validation.description) {
-        formGroups[2].classList.add('has-error');
-      }
     }
   }
 
   private onNextButton() {
-    if (
-      this.state?.validation.registrationNumber &&
-      this.state.validation.milage &&
-      this.state.validation.description
-    ) {
+    if (this.state?.validation.registrationNumber && this.state.validation.milage) {
       this.props.onNext(this.state.value);
     } else {
       this.TriggerAllFieldValidations();
+    }
+  }
+
+  private onKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      this.onNextButton();
     }
   }
 
@@ -151,12 +145,6 @@ class Stage1 {
                       <div class="form-alert">Ett giltigt miltal behöver anges.</div>
                   </div>
                 </div>
-              <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-description">Beskrivning</label>
-                <div data-wayke-valuation-inputtext="">
-                  <textarea placeholder="Beskriv din bil..." name="description" id="wayke-valuation-description"></textarea>
-                </div>
-              </div>
             </div>
           </section>
           <section class="page-section">
@@ -170,6 +158,7 @@ class Stage1 {
       ) as HTMLInputElement | null;
       if (regInput) {
         regInput.addEventListener('input', (e) => this.onChange(e));
+        regInput.addEventListener('keydown', (e) => this.onKeyDown(e));
         regInput.addEventListener('blur', (e) => this.onBlur(e));
         regInput.value = this.state.value.registrationNumber;
       }
@@ -179,17 +168,9 @@ class Stage1 {
       ) as HTMLInputElement | null;
       if (milageInput) {
         milageInput.addEventListener('input', (e) => this.onChange(e));
+        milageInput.addEventListener('keydown', (e) => this.onKeyDown(e));
         milageInput.addEventListener('blur', (e) => this.onBlur(e));
         milageInput.value = this.state.value.milage;
-      }
-
-      const descriptionTextArea = element.querySelector(
-        '#wayke-valuation-description'
-      ) as HTMLTextAreaElement | null;
-      if (descriptionTextArea) {
-        descriptionTextArea.addEventListener('input', (e) => this.onChange(e));
-        descriptionTextArea.addEventListener('blur', (e) => this.onBlur(e));
-        descriptionTextArea.value = this.state.value.description;
       }
 
       const button = element.querySelector('#stage1-next-button') as HTMLButtonElement | null;

@@ -5,5 +5,6 @@ export interface Contact {
   phoneNumber: string;
   branchId: string;
   whenToSell: string;
+  description: string;
   confirmTerms: boolean;
 }
