@@ -1,1 +1,3 @@
-export const regexReg = /[a-zA-Z]{3}\d{2}(d||[a-zA-Z]){1}/;
+export const registrationNumberReg = /[a-zA-Z]{3}\d{2}(d||[a-zA-Z]){1}/;
+export const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const phoneReg = /^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$/;

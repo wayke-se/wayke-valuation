@@ -144,7 +144,7 @@ class Stage1 {
                         <div class="form-alert">Ett giltigt registreringsnummer behöver anges.</div>
                     </div>
                     <div class="form-group is-half">
-                      <label data-wayke-valuation-inputlabel="" for="wayke-valuation-milage">Registreringsnummer</label>
+                      <label data-wayke-valuation-inputlabel="" for="wayke-valuation-milage">Miltal</label>
                       <div data-wayke-valuation-inputtext="">
                           <input placeholder="Ex. 2000" type="number" min="0" id="wayke-valuation-milage" name="milage" autocomplete="off">
                       </div>

@@ -134,7 +134,7 @@ class Stage3 {
             })}
           </section>
           <section class="page-section">
-            <button data-wayke-valuation-button="full-width">Sälj via Wayke</button>
+            <button data-wayke-valuation-button="full-width">Bli kontaktad av en handlare</button>
           </section>
         </div>
       `;

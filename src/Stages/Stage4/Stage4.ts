@@ -195,7 +195,7 @@ class Stage4 {
           const body: Lead = {
             firstName: this.state.value.firstName,
             lastName: this.state.value.lastName,
-            type: 'valuation',
+            type: 'registrationOfInterestToSell',
             phoneNumber: this.state.value.phoneNumber,
             branchId: this.state.value.branchId,
             email: this.state.value.email,

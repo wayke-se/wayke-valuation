@@ -25,6 +25,25 @@ export type NonOptionalAppState = Omit<AppState, 'valuation'> & {
   valuation: Valuation;
 };
 
+const initialState = (props: Settings): AppState => ({
+  currentStage: 1,
+  vehicle: {
+    registrationNumber: '',
+    milage: '',
+    description: '',
+  },
+  condition: 'veryGood',
+  contact: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    branchId: props.branches[0].id,
+    whenToSell: '1',
+    confirmTerms: false,
+  },
+});
+
 class App {
   private props: Settings;
   private state: AppState;
@@ -34,30 +53,13 @@ class App {
   constructor(props: Settings) {
     verifySettings(props);
     this.props = props;
-    this.state = {
-      currentStage: 1,
-      vehicle: {
-        registrationNumber: '',
-        milage: '',
-        description: '',
-      },
-      condition: 'veryGood',
-      contact: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        branchId: this.props.branches[0].id,
-        whenToSell: '1',
-        confirmTerms: false,
-      },
-    };
+    this.state = initialState(props);
 
     this.timeline = new Timeline();
     this.header = new Header({
       logo: Logo,
       //eslint-disable-next-line
-      close: this.close,
+      close: () => this.close(),
     });
     if (!props.manualTrigger) {
       this.renderButton();
@@ -157,6 +159,10 @@ class App {
     const app = document.querySelector('#wayke-valuation-root');
     if (app && app.parentElement) {
       app.parentElement.removeChild(app);
+    }
+
+    if (this.state.currentStage === 5) {
+      this.state = initialState(this.props);
     }
   }
 
