@@ -1,70 +1,32 @@
 import { Settings } from '../../@types/Settings';
 import { Valuation } from '../../@types/Valuation';
 import Alert from '../../Components/Alert';
-import { AppState } from '../../Components/App';
-import Spinner from '../../Components/Spinner';
+import { NonOptionalAppState } from '../../Components/App';
 import { formatPrice } from '../../formats';
-import { sendRequest } from '../../Http/http';
 import { ValuationTranslation } from '../../translation';
-
-const cache: { [key: string]: Valuation | undefined } = {};
-const setCache = (key: string, value: Valuation) => {
-  cache[key] = value;
-};
-const getCache = (key: string) => {
-  return cache?.[key] || undefined;
-};
-
-const createCacheKey = (state: AppState) =>
-  `${state.vehicle.registrationNumber}-${parseInt(state.vehicle.milage, 10) * 10}`;
 
 interface Stage3Props {
   settings: Settings;
-  state: AppState;
+  state: NonOptionalAppState;
   changeStage1: () => void;
   changeStage2: () => void;
   onNext: (valuation: Valuation) => void;
 }
 
 class Stage3 {
-  private response?: Valuation = undefined;
   private props: Stage3Props;
   constructor(props: Stage3Props) {
     this.props = props;
-    this.response = getCache(createCacheKey(props.state));
-  }
-
-  private async getValuation(state: AppState) {
-    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
-    if (element) {
-      try {
-        element.innerHTML = `<div class="page-main">${Spinner()}</div>`;
-        const _response = await sendRequest<Valuation>({
-          method: 'GET',
-          url: `${this.props.settings.url}/wip/extvehicle?regNo=${
-            state.vehicle.registrationNumber
-          }&km=${parseInt(state.vehicle.milage, 10) * 10}`,
-        });
-        this.response = _response;
-        setCache(createCacheKey(state), this.response);
-        this.renderResult();
-      } catch (e) {
-        // eslint-disable-next-line
-        console.log(e);
-      }
-    }
   }
 
   private _onNext() {
-    if (this.response) {
-      this.props.onNext(this.response);
-    }
+    this.props.onNext(this.props.state.valuation);
   }
 
-  private renderResult() {
+  render() {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
-    if (element && this.response) {
-      const { registrationNumber, dataUsed, price } = this.response;
+    if (element) {
+      const { registrationNumber, dataUsed, price } = this.props.state.valuation;
       const {
         manufacturer,
         modelName,
@@ -143,14 +105,6 @@ class Stage3 {
       buttons.item(0).addEventListener('click', this.props.changeStage1);
       buttons.item(1).addEventListener('click', this.props.changeStage2);
       buttons.item(2).addEventListener('click', () => this._onNext());
-    }
-  }
-
-  render() {
-    if (this.response) {
-      this.renderResult();
-    } else if (this.props.state) {
-      this.getValuation(this.props.state);
     }
   }
 }

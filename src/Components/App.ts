@@ -66,11 +66,14 @@ class App {
     }
   }
 
-  private onNextStage1(vehicle: Vehicle) {
+  private onNextStage1(vehicle: Vehicle, valuation: Valuation) {
     this.state = {
       ...this.state,
       vehicle: {
         ...vehicle,
+      },
+      valuation: {
+        ...valuation,
       },
     };
     this.setStage(2);
@@ -84,11 +87,7 @@ class App {
     this.setStage(3);
   }
 
-  private onNextStage3(valuation: Valuation) {
-    this.state = {
-      ...this.state,
-      valuation,
-    };
+  private onNextStage3() {
     this.setStage(4);
   }
 
@@ -106,8 +105,9 @@ class App {
       case 1:
         this.timeline.changeStage(1);
         const stage1 = new Stage1({
+          settings: this.props,
           vehicle: this.state.vehicle,
-          onNext: (vehicle: Vehicle) => this.onNextStage1(vehicle),
+          onNext: (vehicle: Vehicle, valuation: Valuation) => this.onNextStage1(vehicle, valuation),
         });
 
         stage1.render();
@@ -125,10 +125,10 @@ class App {
         this.timeline.changeStage(3);
         const stage3 = new Stage3({
           settings: this.props,
-          state: this.state,
+          state: this.state as NonOptionalAppState,
           changeStage1: () => this.setStage(1),
           changeStage2: () => this.setStage(2),
-          onNext: (valuation: Valuation) => this.onNextStage3(valuation),
+          onNext: () => this.onNextStage3(),
         });
         stage3.render();
         this.header.render(() => this.setStage(2));

@@ -1,5 +1,21 @@
+import { Settings } from '../../@types/Settings';
+import { Valuation } from '../../@types/Valuation';
 import { Vehicle } from '../../@types/Vehicle';
+import Alert from '../../Components/Alert';
+import Spinner from '../../Components/Spinner';
+import { RequestError, sendRequest } from '../../Http/http';
 import validationMethods from './validationMethods';
+
+const cache: { [key: string]: Valuation | undefined } = {};
+const setCache = (key: string, value: Valuation) => {
+  cache[key] = value;
+};
+const getCache = (key: string) => {
+  return cache?.[key] || undefined;
+};
+
+const createCacheKey = (state: Vehicle) =>
+  `${state.registrationNumber}-${parseInt(state.milage, 10) * 10}`;
 
 interface Stage1Validation {
   registrationNumber: boolean;
@@ -13,13 +29,15 @@ interface Stage1State {
 }
 
 interface Stage1Props {
+  settings: Settings;
   vehicle: Vehicle;
-  onNext: (vehicle: Vehicle) => void;
+  onNext: (vehicle: Vehicle, valuation: Valuation) => void;
 }
 
 class Stage1 {
   private props: Stage1Props;
   private state: Stage1State;
+
   constructor(props: Stage1Props) {
     this.props = props;
     this.state = {
@@ -30,6 +48,52 @@ class Stage1 {
       },
       interact: { registrationNumber: false, milage: false },
     };
+  }
+
+  private async getValuation(state: Vehicle) {
+    const cachedResult = getCache(createCacheKey(state));
+    if (cachedResult) {
+      this.props.onNext(this.state.value, cachedResult);
+      return;
+    }
+
+    const element = document.querySelector(
+      '[data-wayke-valuation-page] .page-main'
+    ) as HTMLElement | null;
+    const existingSection = document.querySelector('.status');
+    const section = existingSection || document.createElement('section');
+    section.className = 'page-section status';
+    if (element) {
+      try {
+        section.innerHTML = Spinner();
+        if (!existingSection) {
+          element.append(section);
+        }
+
+        const _response = await sendRequest<Valuation>({
+          method: 'GET',
+          url: `${this.props.settings.url}/wip/extvehicle?regNo=${state.registrationNumber}&km=${
+            parseInt(state.milage, 10) * 10
+          }`,
+        });
+        setCache(createCacheKey(state), _response);
+        this.props.onNext(this.state.value, _response);
+      } catch (e: any) {
+        if ((e as RequestError).status === 404) {
+          section.innerHTML = Alert({
+            type: 'error',
+            header: 'Ett fel har inträffat',
+            body: `Det hittades inget fordon med registreringsnummer "${state.registrationNumber}", kontrollera att det verkligen stämmer.`,
+          }).toString();
+        } else {
+          section.innerHTML = Alert({
+            type: 'error',
+            header: 'Ett fel har inträffat',
+            body: 'Ett fel har inträffat, försök igen.',
+          }).toString();
+        }
+      }
+    }
   }
 
   private onChange(e: Event) {
@@ -102,7 +166,7 @@ class Stage1 {
 
   private onNextButton() {
     if (this.state?.validation.registrationNumber && this.state.validation.milage) {
-      this.props.onNext(this.state.value);
+      this.getValuation(this.state.value);
     } else {
       this.TriggerAllFieldValidations();
     }

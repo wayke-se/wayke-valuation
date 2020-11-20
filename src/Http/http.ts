@@ -5,6 +5,14 @@ interface RequestOptions {
   headers?: { [key: string]: string | undefined };
 }
 
+export class RequestError extends Error {
+  status?: number;
+  constructor(message: string, status?: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
 // Using callbacks:
 function _fetch<Response>(
   options: RequestOptions,
@@ -22,7 +30,7 @@ function _fetch<Response>(
       }
     } else {
       if (errorCallback) {
-        errorCallback(new Error(request.statusText));
+        errorCallback(new RequestError(request.statusText, request.status));
       }
     }
   };
