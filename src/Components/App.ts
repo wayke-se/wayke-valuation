@@ -122,16 +122,18 @@ class App {
         this.header.render(() => this.setStage(1));
         break;
       case 3:
-        this.timeline.changeStage(3);
-        const stage3 = new Stage3({
-          settings: this.props,
-          state: this.state as NonOptionalAppState,
-          changeStage1: () => this.setStage(1),
-          changeStage2: () => this.setStage(2),
-          onNext: () => this.onNextStage3(),
-        });
-        stage3.render();
-        this.header.render(() => this.setStage(2));
+        if (this.state.valuation) {
+          this.timeline.changeStage(3);
+          const stage3 = new Stage3({
+            settings: this.props,
+            state: this.state as NonOptionalAppState,
+            changeStage1: () => this.setStage(1),
+            changeStage2: () => this.setStage(2),
+            onNext: () => this.onNextStage3(),
+          });
+          stage3.render();
+          this.header.render(() => this.setStage(2));
+        }
         break;
       case 4:
         if (this.state.valuation) {

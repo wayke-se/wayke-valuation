@@ -13,7 +13,6 @@ export class RequestError extends Error {
   }
 }
 
-// Using callbacks:
 function _fetch<Response>(
   options: RequestOptions,
   callback?: (response: Response) => void,
@@ -36,7 +35,6 @@ function _fetch<Response>(
   };
 
   request.onerror = function (err) {
-    // There was a connection error of some sort
     if (errorCallback) {
       errorCallback(err);
     }
@@ -61,7 +59,6 @@ function _fetch<Response>(
   request.send(body);
 }
 
-// Using promises:
 export function sendRequest<Response>(options: RequestOptions): Promise<Response> {
   return new Promise<Response>((resolve, reject) => {
     _fetch(options, resolve, reject);
