@@ -40,10 +40,8 @@ class Stage1 {
         this.state.value[name] = currentTarget.value.replace(/\D/, '');
       } else {
         this.state.value[name] = currentTarget.value;
-        if (name === 'registrationNumber') {
-          this.state.value[name] = this.state.value[name].toUpperCase();
-          currentTarget.value = this.state.value[name];
-        }
+        this.state.value[name] = this.state.value[name].toUpperCase();
+        currentTarget.value = this.state.value[name];
       }
       this.state.validation[name] = validationMethods[name](this.state.value[name]);
 
@@ -133,7 +131,7 @@ class Stage1 {
                     <div class="form-group is-half">
                         <label data-wayke-valuation-inputlabel="" for="wayke-valuation-registration-number">Registreringsnummer</label>
                         <div data-wayke-valuation-inputtext="">
-                            <input placeholder="XXXXXX" id="wayke-valuation-registration-number" name="registrationNumber" autocomplete="off">
+                            <input placeholder="XXXXXX" maxlength="6" id="wayke-valuation-registration-number" name="registrationNumber" autocomplete="off">
                         </div>
                         <div class="form-alert">Ett giltigt registreringsnummer behöver anges.</div>
                     </div>
