@@ -26,7 +26,9 @@ class Header {
         <div class="header">
           <div class="header-action"></div>
           <div class="header-logo-container">
-            <img src="${this.props.logo}" class="header-logo" alt="Logotype">
+            <a href="https://wayke.se" title="Gå till wayke.se" target="_blank" rel="noopener">
+                ${this.props.logo}
+            </a>
           </div>
           <div class="header-action">
             <button class="header-action-btn" title="Stäng"><i class="icon-close no-margin"></i></button>

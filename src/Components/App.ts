@@ -33,10 +33,10 @@ const initialState = (props: Settings): AppState => ({
   },
   condition: 'veryGood',
   contact: {
-    firstName: '',
-    lastName: '',
+    fname: '',
+    lname: '',
     email: '',
-    phoneNumber: '',
+    phone: '',
     branchId: props.branches[0].id,
     whenToSell: '1',
     description: '',
@@ -173,42 +173,36 @@ class App {
     container.innerHTML = `
         <div class="wayke-valuation">
             <div data-wayke-valuation-floatingpanel="">
-                <header class="floating-panel-header">
-                    <div class="floating-panel-header-content">
-                        <div class="floating-panel-logo">
-                            <img src="${Logo}" alt="Wayke logotype" class="floating-panel-logo-img" />
-                        </div>
-                        <div class="floating-panel-heading">Vad är din bil värd?</div>
-                    </div>
-                    <div class="floating-panel-header-icon">
-                        <i class="icon-chevron-up no-margin"></i>
-                    </div>
-                </header>
-                <div class="floating-panel-body">
-                    <div class="floating-panel-description">
-                        Beskriv din bil i tre enkla steg så ger vi dig ett uppskattat försäljningspris. Du förbinder dig inte till något.
-                    </div>
-                    <div class="floating-panel-action">
-                        <button data-wayke-valuation-button="full-width">
-                            Gör en gratis värdering
-                        </button>
-                    </div>
-                </div>
+                <button title="Gör en gratis värdering" class="floating-panel-content" id="wayke-valuation-open">
+                    <svg class="floating-panel-logo" viewBox="0 0 185.57 109.13" preserveAspectRatio="xMinYMid" xmlns="http://www.w3.org/2000/svg">
+                        <title>Wayke logotyp</title>
+                        <circle class="wayke-logo-dot-1" cx="4.25" cy="39.68" r="4.25" />
+                        <circle class="wayke-logo-dot-2" cx="25.15" cy="68.03" r="4.96" />
+                        <circle class="wayke-logo-dot-3" cx="46.04" cy="96.38" r="6.38" />
+                        <circle class="wayke-logo-dot-4" cx="66.93" cy="68.03" r="7.09" />
+                        <circle class="wayke-logo-dot-5" cx="87.82" cy="39.68" r="8.5" />
+                        <circle class="wayke-logo-dot-6" cx="108.72" cy="68.03" r="10.63" />
+                        <circle class="wayke-logo-dot-7" cx="129.61" cy="96.38" r="12.76" />
+                        <circle class="wayke-logo-dot-8" cx="150.5" cy="68.03" r="13.47" />
+                        <circle class="wayke-logo-dot-9" cx="171.4" cy="39.68" r="14.17" />
+                        <circle class="wayke-logo-dot-10" cx="129.61" cy="39.68" r="12.05" />
+                        <circle class="wayke-logo-dot-11" cx="66.93" cy="11.34" r="7.09" />
+                        <circle class="wayke-logo-dot-12" cx="150.5" cy="11.34" r="11.34" />
+                        <circle class="wayke-logo-dot-13" cx="108.72" cy="11.34" r="10.63" />
+                        <circle class="wayke-logo-dot-14" cx="46.04" cy="39.68" r="6.38" />
+                        <circle class="wayke-logo-dot-15" cx="25.15" cy="11.34" r="4.96" />
+                    </svg>
+                    <div class="floating-panel-text">Vad är din bil värd? <span class="floating-panel-highlight">Gör en gratis värdering</span></div>
+                </button>
+                <button title="Dölj" class="floating-panel-action">
+                    <i class="icon-close no-margin"></i>
+                </button>
             </div>
         </div>
     `;
-    const button = container.querySelector('button');
+    const button = container.querySelector('#wayke-valuation-open');
     if (button) {
       button.addEventListener('click', () => this.render());
-    }
-    const header = container.querySelector('.floating-panel-header');
-    if (header) {
-      header.addEventListener('click', () => {
-        const headerParent = header.parentElement;
-        if (headerParent) {
-          headerParent.classList.toggle('is-extended');
-        }
-      });
     }
     document.body.append(container);
   }
@@ -216,7 +210,7 @@ class App {
   render() {
     const app = document.createElement('div');
     app.innerHTML = `
-      <div id="wayke-valuation-root" class="wayke-valuation" data-wayke-valuation-modal>
+      <article id="wayke-valuation-root" class="wayke-valuation" data-wayke-valuation-modal>
         <div class="modal-container">
           <div class="modal-center">
             <div class="modal-dialog">
@@ -232,7 +226,7 @@ class App {
             </div>
           </div>
         </div>
-      </div>
+      </article>
     `;
     document.body.append(app);
     this.timeline.render();

@@ -57,9 +57,7 @@ class Stage1 {
       return;
     }
 
-    const element = document.querySelector(
-      '[data-wayke-valuation-page] .page-main'
-    ) as HTMLElement | null;
+    const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     const existingSection = document.querySelector('.status');
     const section = existingSection || document.createElement('section');
     section.className = 'page-section status';
@@ -182,9 +180,8 @@ class Stage1 {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       element.innerHTML = `
-        <div class="page-main">
           <section class="page-section">
-            <h6>Värdera bilen gratis</h6>
+            <h1 class="h6">Värdera bilen gratis</h1>
             <div data-wayke-valuation-content="">
               <p>Har du en bil du vill få värderad? Beskriv din bil så gervi dig ett uppskattat försäljningspris. Du förbrinder dig inte till något. Skriv in regrn, mätarställning samt beskrivning av din bil.</p>
             </div>
@@ -209,10 +206,9 @@ class Stage1 {
                 </div>
             </div>
           </section>
-          <section class="page-section">
+          <section class="page-section page-section-bottom">
             <button id="stage1-next-button" data-wayke-valuation-button="full-width">Nästa</button>
           </section>
-      </div>
       `;
 
       const regInput = element.querySelector(

@@ -9,10 +9,10 @@ import { NonOptionalAppState } from '../../Components/App';
 import { objToKeyValue } from '../../formats';
 
 interface ContactValidation {
-  firstName: boolean;
-  lastName: boolean;
+  fname: boolean;
+  lname: boolean;
   email: boolean;
-  phoneNumber: boolean;
+  phone: boolean;
   branchId: boolean;
   whenToSell: boolean;
   description: boolean;
@@ -40,20 +40,20 @@ class Stage4 {
     this.state = {
       value,
       validation: {
-        firstName: validationMethods.firstName(value.firstName),
-        lastName: validationMethods.lastName(value.lastName),
+        fname: validationMethods.fname(value.fname),
+        lname: validationMethods.lname(value.lname),
         email: validationMethods.email(value.email),
-        phoneNumber: validationMethods.phoneNumber(value.phoneNumber),
+        phone: validationMethods.phone(value.phone),
         branchId: validationMethods.branchId(value.branchId),
         whenToSell: validationMethods.whenToSell(value.whenToSell),
         description: validationMethods.description(value.description),
         confirmTerms: validationMethods.confirmTerms(value.confirmTerms),
       },
       interact: {
-        firstName: false,
-        lastName: false,
+        fname: false,
+        lname: false,
         email: false,
-        phoneNumber: false,
+        phone: false,
         branchId: false,
         whenToSell: false,
         description: false,
@@ -113,20 +113,20 @@ class Stage4 {
     this.state = {
       ...this.state,
       validation: {
-        firstName: validationMethods.firstName(this.state.value.firstName),
-        lastName: validationMethods.lastName(this.state.value.lastName),
+        fname: validationMethods.fname(this.state.value.fname),
+        lname: validationMethods.lname(this.state.value.lname),
         email: validationMethods.email(this.state.value.email),
-        phoneNumber: validationMethods.phoneNumber(this.state.value.phoneNumber),
+        phone: validationMethods.phone(this.state.value.phone),
         branchId: validationMethods.branchId(this.state.value.branchId),
         whenToSell: validationMethods.whenToSell(this.state.value.whenToSell),
         description: validationMethods.description(this.state.value.description),
         confirmTerms: validationMethods.confirmTerms(this.state.value.confirmTerms),
       },
       interact: {
-        firstName: true,
-        lastName: true,
+        fname: true,
+        lname: true,
         email: true,
-        phoneNumber: true,
+        phone: true,
         branchId: true,
         whenToSell: true,
         description: true,
@@ -136,11 +136,11 @@ class Stage4 {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       const formGroups = element.querySelectorAll('.form-group');
-      if (!this.state.validation.firstName) {
+      if (!this.state.validation.fname) {
         formGroups[0].classList.add('has-error');
       }
 
-      if (!this.state.validation.lastName) {
+      if (!this.state.validation.lname) {
         formGroups[1].classList.add('has-error');
       }
 
@@ -148,7 +148,7 @@ class Stage4 {
         formGroups[2].classList.add('has-error');
       }
 
-      if (!this.state.validation.phoneNumber) {
+      if (!this.state.validation.phone) {
         formGroups[3].classList.add('has-error');
       }
 
@@ -168,18 +168,16 @@ class Stage4 {
 
   private async onSend() {
     if (
-      this.state?.validation.firstName &&
-      this.state.validation.lastName &&
+      this.state?.validation.fname &&
+      this.state.validation.lname &&
       this.state.validation.email &&
-      this.state.validation.phoneNumber &&
+      this.state.validation.phone &&
       this.state.validation.branchId &&
       this.state.validation.whenToSell &&
       this.state.validation.description &&
       this.state.validation.confirmTerms
     ) {
-      const element = document.querySelector(
-        '[data-wayke-valuation-page] .page-main'
-      ) as HTMLElement | null;
+      const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
       const existingSection = document.querySelector('.status');
       const section = existingSection || document.createElement('section');
       section.className = 'page-section status';
@@ -203,10 +201,10 @@ class Stage4 {
           } = dataUsed;
           const { veryGood, good, ok } = this.props.settings.conditionReduction;
           const body: Lead = {
-            firstName: this.state.value.firstName,
-            lastName: this.state.value.lastName,
+            firstName: this.state.value.fname,
+            lastName: this.state.value.lname,
             type: 'registrationOfInterestToSell',
-            phoneNumber: this.state.value.phoneNumber,
+            phoneNumber: this.state.value.phone,
             branchId: this.state.value.branchId,
             email: this.state.value.email,
             metaData: objToKeyValue({
@@ -253,9 +251,8 @@ class Stage4 {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       element.innerHTML = `
-        <div class="page-main">
           <section class="page-section">
-            <h6>Fyll i intresseanmälan</h6>
+            <h2 class="h6">Fyll i intresseanmälan</h2>
             <div data-wayke-valuation-content="">
               <p>Låt oss hjälpa dig att själja din bil. Fyll i dina kontaktuppgifter så återkommer vi till dig inom kort. Du binder dig inte till något genom att skicka in en intresseanmälan.</p>
             </div>
@@ -265,28 +262,28 @@ class Stage4 {
               <div class="form-group">
                 <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-first-name">Förnamn</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Förnamn" id="wayke-valuation-contact-first-name" name="firstName">
+                  <input placeholder="Förnamn" id="wayke-valuation-contact-first-name" name="fname" autocomplete="given-name">
                 </div>
                 <div class="form-alert">Ange ditt förnamn.</div>
               </div>
               <div class="form-group">
                 <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-last-name">Efternamn</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Efternamn" id="wayke-valuation-contact-last-name" name="lastName">
+                  <input placeholder="Efternamn" id="wayke-valuation-contact-last-name" name="lname" autocomplete="family-name">
                 </div>
                 <div class="form-alert">Ange ditt efternamn.</div>
               </div>
               <div class="form-group">
                 <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-email">E-postadress</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="E-postadress" id="wayke-valuation-contact-email" name="email">
+                  <input placeholder="E-postadress" id="wayke-valuation-contact-email" name="email" autocomplete="email">
                 </div>
                 <div class="form-alert">Ange din e-postadress.</div>
               </div>
               <div class="form-group">
-                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-phone-number">Telefonnummer</label>
+                <label data-wayke-valuation-inputlabel="" for="wayke-valuation-contact-phone-number">Telefonnummer (valfritt)</label>
                 <div data-wayke-valuation-inputtext="">
-                  <input placeholder="Telefonnummer" id="wayke-valuation-contact-phone-number" name="phoneNumber">
+                  <input placeholder="Telefonnummer" id="wayke-valuation-contact-phone-number" name="phone" autocomplete="tel">
                 </div>
                 <div class="form-alert">Ange ditt telefonnummer.</div>
               </div>
@@ -327,10 +324,9 @@ class Stage4 {
               </div>
             </div>
           </section>
-          <section class="page-section">
+          <section class="page-section page-section-bottom">
             <button data-wayke-valuation-button="full-width">Skicka intresseanmälan</button>
           </section>
-        </div>
       `;
 
       const firstName = element.querySelector(
@@ -339,7 +335,7 @@ class Stage4 {
       if (firstName) {
         firstName.addEventListener('input', (e) => this.onChange(e));
         firstName.addEventListener('blur', (e) => this.onBlur(e));
-        firstName.value = this.state.value.firstName;
+        firstName.value = this.state.value.fname;
       }
 
       const lastName = element.querySelector(
@@ -348,7 +344,7 @@ class Stage4 {
       if (lastName) {
         lastName.addEventListener('input', (e) => this.onChange(e));
         lastName.addEventListener('blur', (e) => this.onBlur(e));
-        lastName.value = this.state.value.lastName;
+        lastName.value = this.state.value.lname;
       }
 
       const email = element.querySelector(
@@ -366,7 +362,7 @@ class Stage4 {
       if (phoneNumber) {
         phoneNumber.addEventListener('input', (e) => this.onChange(e));
         phoneNumber.addEventListener('blur', (e) => this.onBlur(e));
-        phoneNumber.value = this.state.value.phoneNumber;
+        phoneNumber.value = this.state.value.phone;
       }
 
       const branchId = element.querySelector(

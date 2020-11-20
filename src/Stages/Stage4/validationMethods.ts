@@ -1,10 +1,10 @@
 import fieldValidation from '../../fieldValidation';
 
 const validationMethods = {
-  firstName: fieldValidation.requiredString,
-  lastName: fieldValidation.requiredString,
+  fname: fieldValidation.requiredString,
+  lname: fieldValidation.requiredString,
   email: fieldValidation.requiredEmail,
-  phoneNumber: fieldValidation.optionalPhone,
+  phone: fieldValidation.optionalPhone,
   branchId: fieldValidation.requiredString,
   whenToSell: fieldValidation.requiredWhenToSell,
   description: fieldValidation.optionalString,

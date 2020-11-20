@@ -1,8 +1,8 @@
 export interface Contact {
-  firstName: string;
-  lastName: string;
+  fname: string;
+  lname: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   branchId: string;
   whenToSell: string;
   description: string;

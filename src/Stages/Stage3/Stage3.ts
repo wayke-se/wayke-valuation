@@ -41,9 +41,8 @@ class Stage3 {
         this.props.settings.conditionReduction[this.props.state.condition] * price.prediction;
 
       element.innerHTML = `
-        <div class="page-main">
           <section class="page-section">
-            <h6>Uppskattat försäljningspris</h6>
+            <h2 class="h6">Uppskattat försäljningspris</h2>
             <div data-wayke-valuation-content="">
               <p>Nedan ser du vårt uppskattade värde av din bil.</p>
             </div>
@@ -95,10 +94,9 @@ class Stage3 {
               body: 'Definitiv värdering sker vid möte med handlaren.',
             })}
           </section>
-          <section class="page-section">
+          <section class="page-section page-section-bottom">
             <button data-wayke-valuation-button="full-width">Bli kontaktad av en handlare</button>
           </section>
-        </div>
       `;
 
       const buttons = element.querySelectorAll('button');
