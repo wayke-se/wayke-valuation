@@ -10,7 +10,7 @@ class Stage5 implements Stage5State {
           <section class="page-section">
             <h2 class="h6">Tack för din intresseanmälan!</h2>
             <div data-wayke-valuation-content="">
-              <p>En handlare kommer att kontakta dig inom 48h för att lämna bud på din bil.</p>
+              <p>Vi kommer att kontakta dig inom 48 timmar för att lämna bud på din bil.</p>
             </div>
           </section>
       `;
