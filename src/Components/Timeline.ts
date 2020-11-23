@@ -34,7 +34,7 @@ class Timeline {
                 <ul class="timeline-list">
                     <li class="timeline-item is-active">
                         <div class="timeline-indicator"></div>
-                        <div class="timeline-label">1. Beskriv bilen</div>
+                        <div class="timeline-label">1. Biluppgifter</div>
                     </li>
                     <li class="timeline-item">
                         <div class="timeline-indicator"></div>

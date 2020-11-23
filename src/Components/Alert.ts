@@ -13,7 +13,7 @@ const Alert = ({ type, header, body }: AlertProps) => {
         </div>
       </div>
       <div class="alert-content">
-        <div class="font-medium">${header}</div>
+        <span class="font-medium">${header}</span>
         ${body}
       </div>
     </div>

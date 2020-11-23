@@ -237,8 +237,8 @@ class Stage4 {
         } catch (e) {
           section.innerHTML = Alert({
             type: 'error',
-            header: 'Ett fel har inträffat',
-            body: 'Det gick inte att skicka in intresseanmälan, försök igen.',
+            header: 'Ett fel har inträffat.',
+            body: 'Det gick inte att skicka in din intresseanmälan, vänligen försök igen.',
           }).toString();
         }
       }
@@ -254,7 +254,7 @@ class Stage4 {
           <section class="page-section">
             <h2 class="h6">Fyll i intresseanmälan</h2>
             <div data-wayke-valuation-content="">
-              <p>Låt oss hjälpa dig att själja din bil. Fyll i dina kontaktuppgifter så återkommer vi till dig inom kort. Du binder dig inte till något genom att skicka in en intresseanmälan.</p>
+              <p>Låt oss hjälpa dig att sälja din bil. Fyll i dina kontaktuppgifter och välj vilken anläggning du vill ska hjälpa dig, så återkommer vi till dig inom kort. Du binder dig inte till något genom att skicka in en intresseanmälan.</p>
             </div>
           </section>
           <section class="page-section">
@@ -317,7 +317,7 @@ class Stage4 {
                 <div data-wayke-valuation-inputselection="checkbox">
                   <input type="checkbox" id="wayke-valuation-contact-confirm-terms" name="confirmTerms" />
                   <label for="wayke-valuation-contact-confirm-terms">
-                    <span class="text">Jag bekärftar att jag är över 16 år och samtycker till att mina uppgifter behandlas i Waykes databas.</span>
+                    <span class="text">Jag bekräftar att jag är över 18 år och samtycker till att mina uppgifter behandlas i vår teknikleverantör Waykes databas. </span>
                   </label>
                 </div>
                 <div class="form-alert">Du behöver samtycka.</div>

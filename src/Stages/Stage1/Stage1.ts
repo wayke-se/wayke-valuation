@@ -80,14 +80,14 @@ class Stage1 {
         if ((e as RequestError).status === 404) {
           section.innerHTML = Alert({
             type: 'error',
-            header: 'Ett fel har inträffat',
-            body: `Det hittades inget fordon med registreringsnummer "${state.registrationNumber}", kontrollera att det verkligen stämmer.`,
+            header: 'Ett fel har inträffat.',
+            body: `Det hittades inget fordon med registreringsnummer "${state.registrationNumber}". Kontrollera att det registreringsnumret stämmer.`,
           }).toString();
         } else {
           section.innerHTML = Alert({
             type: 'error',
-            header: 'Ett fel har inträffat',
-            body: 'Ett fel har inträffat, försök igen.',
+            header: 'Ett fel har inträffat.',
+            body: 'Vänligen försök igen.',
           }).toString();
         }
       }
@@ -183,7 +183,7 @@ class Stage1 {
           <section class="page-section">
             <h1 class="h6">Värdera bilen gratis</h1>
             <div data-wayke-valuation-content="">
-              <p>Har du en bil du vill få värderad? Beskriv din bil så gervi dig ett uppskattat försäljningspris. Du förbrinder dig inte till något. Skriv in regrn, mätarställning samt beskrivning av din bil.</p>
+              <p>Vill du veta vad din bil är värd idag? Ange registreringsnummer och mätarställning så får du kostnadsfritt ett uppskattat försäljningspris av din bil och du väljer sedan själv ifall du vill sälja.</p>
             </div>
           </section>
           <section class="page-section">

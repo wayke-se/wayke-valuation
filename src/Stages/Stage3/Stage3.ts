@@ -44,7 +44,7 @@ class Stage3 {
           <section class="page-section">
             <h2 class="h6">Uppskattat försäljningspris</h2>
             <div data-wayke-valuation-content="">
-              <p>Nedan ser du vårt uppskattade värde av din bil.</p>
+              <p>Nedan ser du det uppskattade försäljningspriset av din bil.</p>
             </div>
           </section>
           <section class="page-section page-section-accent">
@@ -90,7 +90,7 @@ class Stage3 {
           <section class="page-section">
             ${Alert({
               type: 'info',
-              header: 'Ungefärlig värdering',
+              header: 'Ungefärlig värdering.',
               body: 'Definitiv värdering sker vid möte med handlaren.',
             })}
           </section>
