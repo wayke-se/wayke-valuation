@@ -189,16 +189,7 @@ class Stage4 {
           }
 
           const { condition, vehicle, valuation } = this.props.state;
-          const { price, dataUsed } = valuation;
-          const {
-            manufacturer,
-            modelName,
-            modelSeries,
-            modelYear,
-            fuelType,
-            gearboxType,
-            chassis,
-          } = dataUsed;
+          const { price } = valuation;
           const { veryGood, good, ok } = this.props.settings.conditionReduction;
           const body: Lead = {
             firstName: this.state.value.fname,
@@ -217,13 +208,6 @@ class Stage4 {
               conditionReductionVeryGood: `${veryGood}`,
               conditionReductionGood: `${good}`,
               conditionReductionOk: `${ok}`,
-              manufacturer,
-              modelName,
-              modelSeries,
-              modelYear: `${modelYear}`,
-              fuelType,
-              gearboxType,
-              chassis,
             }),
           };
 
