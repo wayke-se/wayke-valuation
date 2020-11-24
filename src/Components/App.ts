@@ -168,10 +168,17 @@ class App {
     }
   }
 
+  private destroy() {
+    const app = document.querySelector('#wayke-valuation-root-button');
+    if (app && app.parentElement) {
+      app.parentElement.removeChild(app);
+    }
+  }
+
   renderButton() {
     const container = document.createElement('div');
     container.innerHTML = `
-        <div class="wayke-valuation">
+        <div class="wayke-valuation" id="wayke-valuation-root-button">
             <div data-wayke-valuation-floatingpanel="">
                 <button title="Gör en gratis värdering" class="floating-panel-content" id="wayke-valuation-open">
                     <svg class="floating-panel-logo" viewBox="0 0 185.57 109.13" preserveAspectRatio="xMinYMid" xmlns="http://www.w3.org/2000/svg">
@@ -194,15 +201,20 @@ class App {
                     </svg>
                     <div class="floating-panel-text">Vad är din bil värd? <span class="floating-panel-highlight">Gör en gratis värdering</span></div>
                 </button>
-                <button title="Dölj" class="floating-panel-action">
+                <button title="Dölj" class="floating-panel-action"  id="wayke-valuation-close">
                     <i class="icon-close no-margin"></i>
                 </button>
             </div>
         </div>
     `;
-    const button = container.querySelector('#wayke-valuation-open');
-    if (button) {
-      button.addEventListener('click', () => this.render());
+    const buttonOpen = container.querySelector('#wayke-valuation-open');
+    if (buttonOpen) {
+      buttonOpen.addEventListener('click', () => this.render());
+    }
+
+    const buttonClose = container.querySelector('#wayke-valuation-close');
+    if (buttonClose) {
+      buttonClose.addEventListener('click', () => this.destroy());
     }
     document.body.append(container);
   }
