@@ -70,9 +70,9 @@ class Stage1 {
 
         const _response = await sendRequest<Valuation>({
           method: 'GET',
-          url: `${this.props.settings.url}/wip/extvehicle?regNo=${state.registrationNumber}&km=${
-            parseInt(state.milage, 10) * 10
-          }`,
+          url: `${this.props.settings.url}/wip/external/vehicle?regNo=${
+            state.registrationNumber
+          }&km=${parseInt(state.milage, 10) * 10}`,
         });
         setCache(createCacheKey(state), _response);
         this.props.onNext(this.state.value, _response);

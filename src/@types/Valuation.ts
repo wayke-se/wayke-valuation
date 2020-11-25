@@ -15,40 +15,6 @@ export interface DataUsed {
   vinNumber: string;
 }
 
-export interface MarketInfo {
-  branchName: string;
-  daysPublished: number;
-  imageUrl: string[];
-  price: number;
-  shortDescription: string;
-  url: string;
-}
-
-export interface Market {
-  blocket: MarketInfo | null;
-  bytbil: MarketInfo | null;
-  wayke: MarketInfo | null;
-}
-export interface MarketItem {
-  branchName: string;
-  equipmentLevel: string | null;
-  fuelType: string;
-  gearboxType: string;
-  imageUrl: string[];
-  isPredictionVehicle: boolean;
-  km: number;
-  manufacturer: string;
-  market: Market;
-  modelName: string;
-  modelSeries: string;
-  modelYear: number;
-  price: number;
-  sellerType: string;
-  shortDescription: string;
-  url: string;
-  vinNumber: string;
-}
-
 export interface Price {
   avg: number;
   marketValueIndex: number;
@@ -59,17 +25,8 @@ export interface Price {
 }
 
 export interface Valuation {
-  carCount: number;
   dataUsed: DataUsed;
-  market: MarketItem[];
-  marketMatchLevel: number;
-  mdsValue: 67.5;
-  onMarket: false;
-  possibleEquipmentLvels: any[];
   price: Price;
   registrationNumber: string;
-  regressionCarCount: number;
-  regressionMatchLevel: number;
   requestId: string;
-  soldCount: number;
 }
