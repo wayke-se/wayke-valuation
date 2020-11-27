@@ -284,9 +284,8 @@ class Stage4 {
                 <div data-wayke-valuation-select="">
                   <select id="wayke-valuation-contact-when-to-sell" class="select" name="whenToSell">
                     <option value="1">Snarast</option>
-                    <option value="2">Inom 1 månad</option>
+                    <option value="2">Inom 2 månader</option>
                     <option value="3">Inom ett halvår</option>
-                    <option value="4">Mer än 1 år</option>
                   </select>
                 </div>
                 <div class="form-alert">Måste välja ett val</div>

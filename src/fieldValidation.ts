@@ -9,7 +9,7 @@ const fieldValidation = {
     const f = parseInt(s.toString(), 10);
     return f !== NaN && f >= 0;
   },
-  requiredWhenToSell: (s?: string) => ['1', '2', '3', '4'].includes(s || ''),
+  requiredWhenToSell: (s?: string) => ['1', '2', '3'].includes(s || ''),
   requiredString: (s?: string) => !!s,
   optionalString: (s?: string) => !s || !!s,
   optionalPhone: (s?: string | null) => !s || phoneReg.test(s || ''),
