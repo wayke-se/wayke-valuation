@@ -1,6 +1,6 @@
 {
   "name": "wayke-valuation",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "prepare": "npm run prettify && npm run type-check && npm run lint",
     "type-check": "tsc --noEmit --skipLibCheck"
   },
-  "author": "",
+  "author": "Ourstudio",
   "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.1",
