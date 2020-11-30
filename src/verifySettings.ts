@@ -3,9 +3,6 @@ import { Settings } from './@types/Settings';
 const pre = 'Wayke Valuation -';
 
 const verifySettings = (settings: Settings) => {
-  if (!settings.url) {
-    throw `${pre} Must provide "url"`;
-  }
   if (!settings.conditionReduction) {
     throw `${pre} Must provide "conditionReduction"`;
   }

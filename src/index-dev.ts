@@ -5,7 +5,6 @@ import { Branch } from './@types/Settings';
 window.addEventListener('DOMContentLoaded', (_) => {
   const {
     WAYKE_BRANCHES,
-    WAYKE_URL,
     WAYKE_CONDITION_REDUCTION_VERY_GOOD,
     WAYKE_CONDITION_REDUCTION_GOOD,
     WAYKE_CONDITION_REDUCTION_OK,
@@ -13,7 +12,6 @@ window.addEventListener('DOMContentLoaded', (_) => {
   // eslint-disable-next-line
   const app = new App({
     branches: (WAYKE_BRANCHES as unknown) as Branch[],
-    url: WAYKE_URL as string,
     conditionReduction: {
       veryGood: (WAYKE_CONDITION_REDUCTION_VERY_GOOD as unknown) as number,
       good: (WAYKE_CONDITION_REDUCTION_GOOD as unknown) as number,

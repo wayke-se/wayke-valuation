@@ -12,6 +12,9 @@ export interface Branch {
 export interface Settings {
   manualTrigger?: boolean;
   branches: Branch[];
-  url: string;
   conditionReduction: ConditionReduction;
+}
+
+export interface AppSettings extends Settings {
+  url: string;
 }

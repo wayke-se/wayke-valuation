@@ -9,7 +9,7 @@ import { Vehicle } from '../@types/Vehicle';
 import { Contact } from '../@types/Contact';
 import { ConditionType } from '../@types/ConditionType';
 import Logo from '../logo';
-import { Settings } from '../@types/Settings';
+import { AppSettings, Settings } from '../@types/Settings';
 import { Valuation } from '../@types/Valuation';
 import verifySettings from '../verifySettings';
 
@@ -45,14 +45,14 @@ const initialState = (props: Settings): AppState => ({
 });
 
 class App {
-  private props: Settings;
+  private props: AppSettings;
   private state: AppState;
   private timeline: Timeline;
   private header: Header;
 
   constructor(props: Settings) {
     verifySettings(props);
-    this.props = props;
+    this.props = { ...props, url: process.env.WAYKE_URL as string };
     this.state = initialState(props);
 
     this.timeline = new Timeline();

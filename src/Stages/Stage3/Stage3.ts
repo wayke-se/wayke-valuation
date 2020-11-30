@@ -1,4 +1,4 @@
-import { Settings } from '../../@types/Settings';
+import { AppSettings } from '../../@types/Settings';
 import { Valuation } from '../../@types/Valuation';
 import Alert from '../../Components/Alert';
 import { NonOptionalAppState } from '../../Components/App';
@@ -6,7 +6,7 @@ import { formatPrice } from '../../formats';
 import { ValuationTranslation } from '../../translation';
 
 interface Stage3Props {
-  settings: Settings;
+  settings: AppSettings;
   state: NonOptionalAppState;
   changeStage1: () => void;
   changeStage2: () => void;

@@ -3,7 +3,7 @@ import Alert from '../../Components/Alert';
 import { Contact } from '../../@types/Contact';
 import Spinner from '../../Components/Spinner';
 import { sendRequest } from '../../Http/http';
-import { Settings } from '../../@types/Settings';
+import { AppSettings } from '../../@types/Settings';
 import { Lead } from '../../@types/Lead';
 import { NonOptionalAppState } from '../../Components/App';
 import { objToKeyValue } from '../../formats';
@@ -21,7 +21,7 @@ interface ContactValidation {
 
 interface Stage4Props {
   state: NonOptionalAppState;
-  settings: Settings;
+  settings: AppSettings;
   onNext: () => void;
 }
 

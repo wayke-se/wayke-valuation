@@ -1,4 +1,4 @@
-import { Settings } from '../../@types/Settings';
+import { AppSettings } from '../../@types/Settings';
 import { Valuation } from '../../@types/Valuation';
 import { Vehicle } from '../../@types/Vehicle';
 import Alert from '../../Components/Alert';
@@ -29,7 +29,7 @@ interface Stage1State {
 }
 
 interface Stage1Props {
-  settings: Settings;
+  settings: AppSettings;
   vehicle: Vehicle;
   onNext: (vehicle: Vehicle, valuation: Valuation) => void;
 }
