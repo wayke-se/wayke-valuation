@@ -17,7 +17,6 @@ This project creates a stand alone javascript bundle with the Wayke Valuation wh
     <script>
       new Wayke.Valuation({
         branches: [{ id: '51577a27-7c62-42da-8fda-0b158c160868', name: 'Branch 1'}],
-        url: 'https://test-ext-api.wayketech.se',
         conditionReduction: {
           veryGood: 0.9,
           good: 0.8,
@@ -47,7 +46,6 @@ Provide a custom button in order to start the widget
       function openWaykeValuation() {
         const app = new Wayke.Valuation({
           branches: [{ id: '51577a27-7c62-42da-8fda-0b158c160868', name: 'Branch 1'}],
-          url: 'https://test-ext-api.wayketech.se',
           conditionReduction: {
             veryGood: 0.9,
             good: 0.8,
@@ -69,12 +67,10 @@ Provide a custom button in order to start the widget
 
 | Property           | Type               | Required |
 |--------------------|--------------------|----------|
-| url                | string             | true     |
 | branches           | Branch[]           | true     |
 | conditionReduction | ConditionReduction | true     |
 | manualTrigger      | boolean            | false    |
 
-* `url` - URL to Wayke ext-api
 * `branches` - List of `Branch`-items. Must contain at least one entry.
 * `conditionReduction` - Instructions on how much valuated price should be reduces given a condition.
 * `manualTrigger` - An *optional* flag. If set to true, then the default floating panel will not be attach to the DOM.

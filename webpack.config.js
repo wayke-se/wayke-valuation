@@ -1,8 +1,12 @@
 require('dotenv').config();
+const webpack = require('webpack');
 const path = require('path');
 const version = require('./package.json').version;
 
-module.exports = {
+const URL_PRODUCTION = 'https://api.wayke.se';
+const ULR_DEVELOPMENT = 'https://test-ext-api.wayketech.se';
+
+module.exports = (_env, argv) => ({
   devtool: 'source-map',
   context: path.resolve(__dirname),
   target: 'web',
@@ -39,4 +43,11 @@ module.exports = {
       },
     ],
   },
-};
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        WAYKE_URL: `"${argv.mode === 'production' ? URL_PRODUCTION : ULR_DEVELOPMENT}"`,
+      },
+    }),
+  ],
+});
