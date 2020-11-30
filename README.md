@@ -14,6 +14,10 @@ This project creates a stand alone javascript bundle with the Wayke Valuation wh
   </head>
   <body>
     <script src="https://cdn.wayke.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+    <!--
+        A development version is available here:
+        <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+    -->
     <script>
       new Wayke.Valuation({
         branches: [{ id: '51577a27-7c62-42da-8fda-0b158c160868', name: 'Branch 1'}],
@@ -42,6 +46,10 @@ Provide a custom button in order to start the widget
   </head>
   <body>
     <script src="https://cdn.wayke.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+    <!--
+      A development version is available here:
+      <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+    -->
     <script>
       function openWaykeValuation() {
         const app = new Wayke.Valuation({
