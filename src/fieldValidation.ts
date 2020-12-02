@@ -1,4 +1,4 @@
-import { registrationNumberReg, emailReg, phoneReg } from './regex';
+import { registrationNumberReg, emailReg } from './regex';
 
 const fieldValidation = {
   requiredRegistrationNumber: (s?: string) => registrationNumberReg.test(s || ''),
@@ -12,7 +12,6 @@ const fieldValidation = {
   requiredWhenToSell: (s?: string) => ['1', '2', '3'].includes(s || ''),
   requiredString: (s?: string) => !!s,
   optionalString: (s?: string) => !s || !!s,
-  optionalPhone: (s?: string | null) => !s || phoneReg.test(s || ''),
   requiredEmail: (s?: string | null) => emailReg.test(s || ''),
   requiredTrue: (s?: boolean) => s === true,
 };
