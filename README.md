@@ -98,6 +98,12 @@ The modal is opened by calling the Valuation's instance `render`-method.
 | ok       | number | true     |
 
 
+## Available Sources
+| Version | Environment | Url                                                                   |
+|---------|-------------|-----------------------------------------------------------------------|
+| 1.0.0   | Production  | https://cdn.wayke.se/public-assets/wayke.valuation.v1.0.0.js          |
+| 1.0.0   | Development | https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js |
+
 ## Develop
 
 ### Prerequisite
