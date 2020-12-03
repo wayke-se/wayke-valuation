@@ -14,7 +14,7 @@ module.exports = (_env, argv) => ({
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: `wayke.valuation.v${version}.js`,
-    library: 'Wayke',
+    library: 'WaykeValuation',
     libraryTarget: 'umd',
   },
   resolve: {

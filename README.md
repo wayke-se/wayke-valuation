@@ -19,7 +19,7 @@ This project creates a stand alone javascript bundle with the Wayke Valuation wh
         <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js"></script>
     -->
     <script>
-      new Wayke.Valuation({
+      new WaykeValuation.default({
         branches: [{ id: '51577a27-7c62-42da-8fda-0b158c160868', name: 'Branch 1'}],
         conditionReduction: {
           veryGood: 0.9,
@@ -52,7 +52,7 @@ Provide a custom button in order to start the widget
     -->
     <script>
       function openWaykeValuation() {
-        const app = new Wayke.Valuation({
+        const app = new WaykeValuation.default({
           branches: [{ id: '51577a27-7c62-42da-8fda-0b158c160868', name: 'Branch 1'}],
           conditionReduction: {
             veryGood: 0.9,
