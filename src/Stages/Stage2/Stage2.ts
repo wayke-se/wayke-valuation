@@ -24,7 +24,7 @@ class Stage2 {
         </div>
         </section>
 
-        <section class="page-section page-section-accent last-child-pushdown">
+        <section class="page-section page-section-accent">
         ${ConditionRows.map(
           (c) => `
             <div class="repeat-m-half">

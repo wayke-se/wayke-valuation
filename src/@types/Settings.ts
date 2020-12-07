@@ -9,10 +9,17 @@ export interface Branch {
   name?: string;
 }
 
+export interface ColorPrimary {
+  background: string;
+  text: string;
+}
+
 export interface Settings {
   manualTrigger?: boolean;
   branches: Branch[];
   conditionReduction: ConditionReduction;
+  colorPrimary?: ColorPrimary;
+  logo?: string;
 }
 
 export interface AppSettings extends Settings {

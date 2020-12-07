@@ -78,11 +78,15 @@ Provide a custom button in order to start the widget
 | branches           | Branch[]           | true     |
 | conditionReduction | ConditionReduction | true     |
 | manualTrigger      | boolean            | false    |
+| colorPrimary       | ColorPrimary       | false    |
+| logo               | string             | false    |
 
 * `branches` - List of `Branch`-items. Must contain at least one entry.
 * `conditionReduction` - Instructions on how much valuated price should be reduces given a condition.
 * `manualTrigger` - An *optional* flag. If set to true, then the default floating panel will not be attach to the DOM.
 The modal is opened by calling the Valuation's instance `render`-method.
+* `colorPrimary` - An *optional* flag. Add a custom color theme.
+* `logo` - An *optional* flag. Add a custom logo to the valuation modal.
 
 ### Branch
 | Property | Type   | Required |
@@ -97,6 +101,11 @@ The modal is opened by calling the Valuation's instance `render`-method.
 | good     | number | true     |
 | ok       | number | true     |
 
+### ColorPrimary
+| Property   | Type   | Required |
+|------------|--------|----------|
+| background | string | true     |
+| text       | string | true     |
 
 ## Available Sources
 | Version | Environment | Url                                                                   |

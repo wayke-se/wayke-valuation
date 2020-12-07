@@ -9,6 +9,7 @@ import { Vehicle } from '../@types/Vehicle';
 import { Contact } from '../@types/Contact';
 import { ConditionType } from '../@types/ConditionType';
 import Logo from '../logo';
+import CreateLogo from '../CreateLogo';
 import { AppSettings, Settings } from '../@types/Settings';
 import { Valuation } from '../@types/Valuation';
 import verifySettings from '../verifySettings';
@@ -57,7 +58,7 @@ class App {
 
     this.timeline = new Timeline();
     this.header = new Header({
-      logo: Logo,
+      logo: this.props.logo ? CreateLogo(this.props.logo) : Logo,
       //eslint-disable-next-line
       close: () => this.close(),
     });
@@ -175,7 +176,56 @@ class App {
     }
   }
 
+  renderTheme() {
+    if (document.querySelector('#wayke-valuation-theme')) {
+      return;
+    }
+
+    if (!this.props.colorPrimary?.background && !this.props.colorPrimary?.text) {
+      return;
+    }
+
+    const style = document.createElement('style');
+    style.id = 'wayke-valuation-theme';
+    style.innerHTML = `
+            [data-wayke-valuation-timeline] .timeline-indicator {
+                background-color: ${this.props.colorPrimary.background};
+                border-color: ${this.props.colorPrimary.background};
+            }
+
+            .wayke-valuation [data-wayke-valuation-button] {
+                background-color: ${this.props.colorPrimary.background};
+                color: ${this.props.colorPrimary.text};
+            }
+
+            [data-wayke-valuation-floatingpanel] {
+                background-color: ${this.props.colorPrimary.background};
+                color: ${this.props.colorPrimary.text};
+            }
+
+            [data-wayke-valuation-inputselection] input[type=checkbox].is-checked+label:before,
+            [data-wayke-valuation-inputselection] input[type=checkbox]:checked+label:before,
+            [data-wayke-valuation-inputselection] input[type=radio].is-checked+label:before,
+            [data-wayke-valuation-inputselection] input[type=radio]:checked+label:before {
+                background-color: ${this.props.colorPrimary.background};
+            }
+
+            [data-wayke-valuation-inputselection] input[type=checkbox].is-checked+label:after,
+            [data-wayke-valuation-inputselection] input[type=checkbox]:checked+label:after,
+            [data-wayke-valuation-inputselection] input[type=radio].is-checked+label:after,
+            [data-wayke-valuation-inputselection] input[type=radio]:checked+label:after {
+                color: ${this.props.colorPrimary.text};
+            }
+
+            [data-wayke-valuation-timeline] .timeline-item.is-active:before {
+                background-color: ${this.props.colorPrimary.background};
+            }
+        `;
+    document.head.append(style);
+  }
+
   renderButton() {
+    this.renderTheme();
     const container = document.createElement('div');
     container.innerHTML = `
         <div class="wayke-valuation" id="wayke-valuation-root-button">
@@ -220,6 +270,7 @@ class App {
   }
 
   render() {
+    this.renderTheme();
     const app = document.createElement('div');
     app.innerHTML = `
       <article id="wayke-valuation-root" class="wayke-valuation" data-wayke-valuation-modal>
@@ -232,6 +283,31 @@ class App {
                     <header data-wayke-valuation-header></header>
                     <div id="timeline-wrapper"></div>
                     <div data-wayke-valuation-page></div>
+                    <div data-wayke-valuation-power="">
+                        <div class="power-logo">
+                            <svg class="power-logo-svg" viewBox="0 0 185.57 109.13" preserveAspectRatio="xMinYMid" xmlns="http://www.w3.org/2000/svg">
+                                <title>Wayke logotyp</title>
+                                <circle class="wayke-logo-dot-1" cx="4.25" cy="39.68" r="4.25"></circle>
+                                <circle class="wayke-logo-dot-2" cx="25.15" cy="68.03" r="4.96"></circle>
+                                <circle class="wayke-logo-dot-3" cx="46.04" cy="96.38" r="6.38"></circle>
+                                <circle class="wayke-logo-dot-4" cx="66.93" cy="68.03" r="7.09"></circle>
+                                <circle class="wayke-logo-dot-5" cx="87.82" cy="39.68" r="8.5"></circle>
+                                <circle class="wayke-logo-dot-6" cx="108.72" cy="68.03" r="10.63"></circle>
+                                <circle class="wayke-logo-dot-7" cx="129.61" cy="96.38" r="12.76"></circle>
+                                <circle class="wayke-logo-dot-8" cx="150.5" cy="68.03" r="13.47"></circle>
+                                <circle class="wayke-logo-dot-9" cx="171.4" cy="39.68" r="14.17"></circle>
+                                <circle class="wayke-logo-dot-10" cx="129.61" cy="39.68" r="12.05"></circle>
+                                <circle class="wayke-logo-dot-11" cx="66.93" cy="11.34" r="7.09"></circle>
+                                <circle class="wayke-logo-dot-12" cx="150.5" cy="11.34" r="11.34"></circle>
+                                <circle class="wayke-logo-dot-13" cx="108.72" cy="11.34" r="10.63"></circle>
+                                <circle class="wayke-logo-dot-14" cx="46.04" cy="39.68" r="6.38"></circle>
+                                <circle class="wayke-logo-dot-15" cx="25.15" cy="11.34" r="4.96"></circle>
+                            </svg>
+                        </div>
+                        <div class="power-text">
+                            Powered by <a href="https://wayke.se" target="_blank" rel="noopener" title="Gå till wayke.se" class="power-link">Wayke</a>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
