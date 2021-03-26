@@ -296,14 +296,12 @@ class Stage4 {
                   <textarea placeholder="Är det något mer om din bil som du vill berätta för bilhandlaren, något som kan påverka värdet såsom servicehistorik, extrautrustning, vinterdäck?" name="description" id="wayke-valuation-contact-description"></textarea>
                 </div>
               </div>
-              <div class="form-group">
-                <div data-wayke-valuation-inputselection="checkbox">
-                  <input type="checkbox" id="wayke-valuation-contact-confirm-terms" name="confirmTerms" />
-                  <label for="wayke-valuation-contact-confirm-terms">
-                    <span class="text">Jag bekräftar att jag är över 18 år och samtycker till att mina uppgifter behandlas i vår teknikleverantör Waykes databas. </span>
-                  </label>
-                </div>
-                <div class="form-alert">Du behöver samtycka.</div>
+              
+              <div data-wayke-valuation-info=""> 
+                <p>Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span></p> 
+                <button data-wayke-valuation-link="primary" id="wayke-valuation-contact-read-more-toggler">Läs mer <div class="wayke-valuation-chevron><i class="wayke-valuation-chevron-icon"></i></div></button>
+                <p class="wayke-valuation-contact-read-more">Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de personuppgifter du lämnar i samband med din begäran att få ditt fordon värderat. Läs mer om hur dina personuppgifter behandlas i Waykes personuppgiftspolicy <a href="https://www.wayke.se/personuppgiftspolicy-wayke">https://www.wayke.se/personuppgiftspolicy-wayke</a>. 
+                <span id="wayke-valuation-contact-read-more-content"></span> är personuppgiftsansvarig för behandling av de personuppgifter som mottas från Wayke Sweden AB. </p>
               </div>
             </div>
           </section>
@@ -375,6 +373,50 @@ class Stage4 {
         whenToSell.value = this.state.value.whenToSell;
       }
 
+      const valuationContactInfo = document.getElementById(
+        'wayke-valuation-contact-name-info'
+      ) as HTMLElement | null;
+
+      const valuationContactReadMoreContent = document.getElementById(
+        'wayke-valuation-contact-read-more-content'
+      ) as HTMLElement | null;
+
+      if (valuationContactReadMoreContent) {
+        if (this.props.settings.branches.length > 1) {
+          valuationContactReadMoreContent.innerHTML += `${this.props.settings.branches.map(
+            (branch) => branch.id === this.state.value.branchId && branch.name
+          )}`;
+        } else {
+          valuationContactReadMoreContent.innerHTML += `${this.props.settings.branches[0].name}`;
+        }
+      }
+
+      if (valuationContactInfo) {
+        if (this.props.settings.branches.length > 1) {
+          valuationContactInfo.innerHTML += `${this.props.settings.branches.map(
+            (branch) => branch.id === this.state.value.branchId && branch.name
+          )}`;
+        } else {
+          valuationContactInfo.innerHTML += `${this.props.settings.branches[0].name}`;
+        }
+      }
+
+      const readMore = document.getElementById(
+        'wayke-valuation-contact-read-more-toggler'
+      ) as HTMLDivElement;
+
+      const content = readMore.nextElementSibling as HTMLElement | null;
+      readMore.addEventListener('click', () => {
+        if (content) {
+          content.classList.toggle('wayke-valuation-contact-read-more-active');
+          if (content.style.display === 'block') {
+            content.style.display = 'none';
+          } else {
+            content.style.display = 'block';
+          }
+        }
+      });
+
       const descriptionTextArea = element.querySelector(
         '#wayke-valuation-contact-description'
       ) as HTMLTextAreaElement | null;
@@ -382,14 +424,6 @@ class Stage4 {
         descriptionTextArea.addEventListener('input', (e) => this.onChange(e));
         descriptionTextArea.addEventListener('blur', (e) => this.onBlur(e));
         descriptionTextArea.value = this.state.value.description;
-      }
-
-      const confirmTerms = element.querySelector(
-        '#wayke-valuation-contact-confirm-terms'
-      ) as HTMLInputElement | null;
-      if (confirmTerms) {
-        confirmTerms.addEventListener('input', (e) => this.onChange(e));
-        confirmTerms.checked = this.state.value.confirmTerms;
       }
 
       const button = element.querySelector('button') as HTMLButtonElement | null;
