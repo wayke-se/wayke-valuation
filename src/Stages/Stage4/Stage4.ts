@@ -298,9 +298,9 @@ class Stage4 {
               </div>
               
               <div data-wayke-valuation-info=""> 
-                <p>Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span></p> 
-                <button data-wayke-valuation-link="primary" id="wayke-valuation-contact-read-more-toggler">Läs mer <div class="wayke-valuation-chevron><i class="wayke-valuation-chevron-icon"></i></div></button>
-                <p class="wayke-valuation-contact-read-more">Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de personuppgifter du lämnar i samband med din begäran att få ditt fordon värderat. Läs mer om hur dina personuppgifter behandlas i Waykes personuppgiftspolicy <a href="https://www.wayke.se/personuppgiftspolicy-wayke">https://www.wayke.se/personuppgiftspolicy-wayke</a>. 
+                <p>Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span>.</p> 
+                <button data-wayke-valuation-link="primary" id="wayke-valuation-contact-read-more-toggler">Läs mer</button>
+                <p class="wayke-valuation-contact-read-more">Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de personuppgifter du lämnar i samband med din begäran att få ditt fordon värderat. Läs mer om hur dina personuppgifter behandlas i Waykes personuppgiftspolicy <a data-wayke-valuation-link href="https://www.wayke.se/personuppgiftspolicy-wayke">https://www.wayke.se/personuppgiftspolicy-wayke</a>. 
                 <span id="wayke-valuation-contact-read-more-content"></span> är personuppgiftsansvarig för behandling av de personuppgifter som mottas från Wayke Sweden AB. </p>
               </div>
             </div>
@@ -383,9 +383,10 @@ class Stage4 {
 
       if (valuationContactReadMoreContent) {
         if (this.props.settings.branches.length > 1) {
-          valuationContactReadMoreContent.innerHTML += `${this.props.settings.branches.map(
-            (branch) => branch.id === this.state.value.branchId && branch.name
-          )}`;
+          const result = this.props.settings.branches.find(
+            ({ id }) => id === this.state.value.branchId
+          );
+          valuationContactReadMoreContent.innerHTML += result?.name;
         } else {
           valuationContactReadMoreContent.innerHTML += `${this.props.settings.branches[0].name}`;
         }
@@ -393,9 +394,10 @@ class Stage4 {
 
       if (valuationContactInfo) {
         if (this.props.settings.branches.length > 1) {
-          valuationContactInfo.innerHTML += `${this.props.settings.branches.map(
-            (branch) => branch.id === this.state.value.branchId && branch.name
-          )}`;
+          const result = this.props.settings.branches.find(
+            ({ id }) => id === this.state.value.branchId
+          );
+          valuationContactInfo.innerHTML += result?.name;
         } else {
           valuationContactInfo.innerHTML += `${this.props.settings.branches[0].name}`;
         }
@@ -411,8 +413,10 @@ class Stage4 {
           content.classList.toggle('wayke-valuation-contact-read-more-active');
           if (content.style.display === 'block') {
             content.style.display = 'none';
+            readMore.innerText = 'Läs mer';
           } else {
             content.style.display = 'block';
+            readMore.innerText = 'Läs mindre';
           }
         }
       });
