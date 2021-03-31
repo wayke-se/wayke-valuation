@@ -296,14 +296,32 @@ class Stage4 {
                   <textarea placeholder="Är det något mer om din bil som du vill berätta för bilhandlaren, något som kan påverka värdet såsom servicehistorik, extrautrustning, vinterdäck?" name="description" id="wayke-valuation-contact-description"></textarea>
                 </div>
               </div>
-              
-              <div data-wayke-valuation-info=""> 
-                <p>Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span>.</p> 
-                <button data-wayke-valuation-link="primary" id="wayke-valuation-contact-read-more-toggler">Läs mer</button>
-                <p class="wayke-valuation-contact-read-more">Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de personuppgifter du lämnar i samband med din begäran att få ditt fordon värderat. Läs mer om hur dina personuppgifter behandlas i Waykes personuppgiftspolicy <a data-wayke-valuation-link href="https://www.wayke.se/personuppgiftspolicy-wayke">https://www.wayke.se/personuppgiftspolicy-wayke</a>. 
-                <span id="wayke-valuation-contact-read-more-content"></span> är personuppgiftsansvarig för behandling av de personuppgifter som mottas från Wayke Sweden AB. </p>
+              <div class="form-group">
+              <div data-wayke-valuation-content="">
+                <p>
+                  Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår
+                  värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span>.
+                  <button data-wayke-valuation-link="" id="wayke-valuation-read-more-toggler">Läs mer</button>
+                </p>
+              </div>
+              <div data-wayke-valuation-scrollbox class="m-t">
+                <div data-wayke-valuation-content>
+                  <p>
+                    Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de
+                    personuppgifter du lämnar i samband med din begäran att få ditt
+                    fordon värderat. Läs mer om hu r dina personuppgifter behandlas i
+                    Waykes personuppgiftspolicy
+                    <a
+                      data-wayke-valuation-link
+                      href="https://www.wayke.se/personuppgiftspolicy-wayke"
+                      >https://www.wayke.se/personuppgiftspolicy-wayke</a
+                    >. <span id="wayke-valuation-contact-read-more-content"></span> är personuppgiftsansvarig för behandling av de
+                    personuppgifter som mottas från Wayke Sweden AB.
+                  </p>
+                </div>
               </div>
             </div>
+            
           </section>
           <section class="page-section page-section-bottom">
             <button data-wayke-valuation-button="full-width">Skicka intresseanmälan</button>
@@ -404,13 +422,16 @@ class Stage4 {
       }
 
       const readMore = document.getElementById(
-        'wayke-valuation-contact-read-more-toggler'
+        'wayke-valuation-read-more-toggler'
       ) as HTMLDivElement;
 
-      const content = readMore.nextElementSibling as HTMLElement | null;
-      readMore.addEventListener('click', () => {
-        if (content) {
-          content.classList.toggle('wayke-valuation-contact-read-more-active');
+      const content = document.querySelector(
+        '[data-wayke-valuation-scrollbox]'
+      ) as HTMLElement | null;
+
+      if (content) {
+        content.style.display = 'none';
+        readMore.addEventListener('click', () => {
           if (content.style.display === 'block') {
             content.style.display = 'none';
             readMore.innerText = 'Läs mer';
@@ -418,8 +439,8 @@ class Stage4 {
             content.style.display = 'block';
             readMore.innerText = 'Läs mindre';
           }
-        }
-      });
+        });
+      }
 
       const descriptionTextArea = element.querySelector(
         '#wayke-valuation-contact-description'
