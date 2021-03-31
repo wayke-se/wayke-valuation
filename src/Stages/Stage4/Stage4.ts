@@ -301,7 +301,7 @@ class Stage4 {
                 <p>
                   Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår
                   värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span>.
-                  <button data-wayke-valuation-link="" id="wayke-valuation-read-more-toggler">Läs mer</button>
+                  <button class="align-baseline" data-wayke-valuation-link="" id="wayke-valuation-read-more-toggler">Läs mer</button>
                 </p>
               </div>
               <div data-wayke-valuation-scrollbox class="m-t">
