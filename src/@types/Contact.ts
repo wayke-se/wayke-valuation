@@ -6,5 +6,4 @@ export interface Contact {
   branchId: string;
   whenToSell: string;
   description: string;
-  confirmTerms: boolean;
 }

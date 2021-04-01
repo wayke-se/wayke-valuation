@@ -8,7 +8,6 @@ const validationMethods = {
   branchId: fieldValidation.requiredString,
   whenToSell: fieldValidation.requiredWhenToSell,
   description: fieldValidation.optionalString,
-  confirmTerms: fieldValidation.requiredTrue,
 };
 
 export default validationMethods;

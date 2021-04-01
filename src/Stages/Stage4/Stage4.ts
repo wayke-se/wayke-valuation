@@ -16,7 +16,6 @@ interface ContactValidation {
   branchId: boolean;
   whenToSell: boolean;
   description: boolean;
-  confirmTerms: boolean;
 }
 
 interface Stage4Props {
@@ -47,7 +46,6 @@ class Stage4 {
         branchId: validationMethods.branchId(value.branchId),
         whenToSell: validationMethods.whenToSell(value.whenToSell),
         description: validationMethods.description(value.description),
-        confirmTerms: validationMethods.confirmTerms(value.confirmTerms),
       },
       interact: {
         fname: false,
@@ -57,7 +55,6 @@ class Stage4 {
         branchId: false,
         whenToSell: false,
         description: false,
-        confirmTerms: false,
       },
     };
   }
@@ -69,15 +66,12 @@ class Stage4 {
         | HTMLSelectElement
         | HTMLTextAreaElement;
       const name = currentTarget.name as keyof Contact;
-      if (name === 'confirmTerms') {
-        this.state.value[name] = (currentTarget as HTMLInputElement).checked;
-        this.state.validation[name] = validationMethods[name](this.state.value[name]);
-      } else {
+      if (name) {
         this.state.value[name] = currentTarget.value;
         this.state.validation[name] = validationMethods[name](this.state.value[name]);
       }
 
-      if (currentTarget.type === 'select-one' || name === 'confirmTerms') {
+      if (currentTarget.type === 'select-one') {
         this.state.interact[name] = true;
       }
 
@@ -94,7 +88,7 @@ class Stage4 {
   private onBlur(e: Event) {
     if (e.currentTarget && this.state) {
       const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
-      const name = currentTarget.name as keyof Omit<Contact, 'confirmTerms'>;
+      const name = currentTarget.name as keyof Contact;
       this.state.validation[name] = validationMethods[name](this.state.value[name]);
       if (!this.state.interact[name]) {
         this.state.interact[name] = true;
@@ -120,7 +114,6 @@ class Stage4 {
         branchId: validationMethods.branchId(this.state.value.branchId),
         whenToSell: validationMethods.whenToSell(this.state.value.whenToSell),
         description: validationMethods.description(this.state.value.description),
-        confirmTerms: validationMethods.confirmTerms(this.state.value.confirmTerms),
       },
       interact: {
         fname: true,
@@ -130,7 +123,6 @@ class Stage4 {
         branchId: true,
         whenToSell: true,
         description: true,
-        confirmTerms: true,
       },
     };
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
@@ -159,10 +151,6 @@ class Stage4 {
       if (!this.state.validation.description) {
         formGroups[5].classList.add('has-error');
       }
-
-      if (!this.state.validation.confirmTerms) {
-        formGroups[6].classList.add('has-error');
-      }
     }
   }
 
@@ -174,8 +162,7 @@ class Stage4 {
       this.state.validation.phone &&
       this.state.validation.branchId &&
       this.state.validation.whenToSell &&
-      this.state.validation.description &&
-      this.state.validation.confirmTerms
+      this.state.validation.description
     ) {
       const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
       const existingSection = document.querySelector('.status');
@@ -451,7 +438,9 @@ class Stage4 {
         descriptionTextArea.value = this.state.value.description;
       }
 
-      const button = element.querySelector('button') as HTMLButtonElement | null;
+      const button = element.querySelector(
+        '[data-wayke-valuation-button]'
+      ) as HTMLButtonElement | null;
       if (button) {
         button.addEventListener('click', () => this.onSend());
       }
