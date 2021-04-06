@@ -41,7 +41,6 @@ const initialState = (props: Settings): AppState => ({
     branchId: props.branches[0].id,
     whenToSell: '1',
     description: '',
-    confirmTerms: false,
   },
 });
 

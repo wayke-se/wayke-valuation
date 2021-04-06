@@ -16,7 +16,6 @@ interface ContactValidation {
   branchId: boolean;
   whenToSell: boolean;
   description: boolean;
-  confirmTerms: boolean;
 }
 
 interface Stage4Props {
@@ -47,7 +46,6 @@ class Stage4 {
         branchId: validationMethods.branchId(value.branchId),
         whenToSell: validationMethods.whenToSell(value.whenToSell),
         description: validationMethods.description(value.description),
-        confirmTerms: validationMethods.confirmTerms(value.confirmTerms),
       },
       interact: {
         fname: false,
@@ -57,7 +55,6 @@ class Stage4 {
         branchId: false,
         whenToSell: false,
         description: false,
-        confirmTerms: false,
       },
     };
   }
@@ -69,15 +66,12 @@ class Stage4 {
         | HTMLSelectElement
         | HTMLTextAreaElement;
       const name = currentTarget.name as keyof Contact;
-      if (name === 'confirmTerms') {
-        this.state.value[name] = (currentTarget as HTMLInputElement).checked;
-        this.state.validation[name] = validationMethods[name](this.state.value[name]);
-      } else {
+      if (name) {
         this.state.value[name] = currentTarget.value;
         this.state.validation[name] = validationMethods[name](this.state.value[name]);
       }
 
-      if (currentTarget.type === 'select-one' || name === 'confirmTerms') {
+      if (currentTarget.type === 'select-one') {
         this.state.interact[name] = true;
       }
 
@@ -94,7 +88,7 @@ class Stage4 {
   private onBlur(e: Event) {
     if (e.currentTarget && this.state) {
       const currentTarget = e.currentTarget as HTMLInputElement | HTMLTextAreaElement;
-      const name = currentTarget.name as keyof Omit<Contact, 'confirmTerms'>;
+      const name = currentTarget.name as keyof Contact;
       this.state.validation[name] = validationMethods[name](this.state.value[name]);
       if (!this.state.interact[name]) {
         this.state.interact[name] = true;
@@ -120,7 +114,6 @@ class Stage4 {
         branchId: validationMethods.branchId(this.state.value.branchId),
         whenToSell: validationMethods.whenToSell(this.state.value.whenToSell),
         description: validationMethods.description(this.state.value.description),
-        confirmTerms: validationMethods.confirmTerms(this.state.value.confirmTerms),
       },
       interact: {
         fname: true,
@@ -130,7 +123,6 @@ class Stage4 {
         branchId: true,
         whenToSell: true,
         description: true,
-        confirmTerms: true,
       },
     };
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
@@ -159,10 +151,6 @@ class Stage4 {
       if (!this.state.validation.description) {
         formGroups[5].classList.add('has-error');
       }
-
-      if (!this.state.validation.confirmTerms) {
-        formGroups[6].classList.add('has-error');
-      }
     }
   }
 
@@ -174,8 +162,7 @@ class Stage4 {
       this.state.validation.phone &&
       this.state.validation.branchId &&
       this.state.validation.whenToSell &&
-      this.state.validation.description &&
-      this.state.validation.confirmTerms
+      this.state.validation.description
     ) {
       const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
       const existingSection = document.querySelector('.status');
@@ -297,15 +284,31 @@ class Stage4 {
                 </div>
               </div>
               <div class="form-group">
-                <div data-wayke-valuation-inputselection="checkbox">
-                  <input type="checkbox" id="wayke-valuation-contact-confirm-terms" name="confirmTerms" />
-                  <label for="wayke-valuation-contact-confirm-terms">
-                    <span class="text">Jag bekräftar att jag är över 18 år och samtycker till att mina uppgifter behandlas i vår teknikleverantör Waykes databas. </span>
-                  </label>
+              <div data-wayke-valuation-content="">
+                <p>
+                  Ditt registreringsnummer och dina kontaktuppgifter behandlas av vår
+                  värderingsleverantör Wayke och kommer att delas med <span id="wayke-valuation-contact-name-info"></span>.
+                  <button class="valign-baseline" data-wayke-valuation-link="" id="wayke-valuation-read-more-toggler">Läs mer</button>
+                </p>
+              </div>
+              <div data-wayke-valuation-scrollbox class="m-t">
+                <div data-wayke-valuation-content>
+                  <p>
+                    Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de
+                    personuppgifter du lämnar i samband med din begäran att få ditt
+                    fordon värderat. Läs mer om hu r dina personuppgifter behandlas i
+                    Waykes personuppgiftspolicy
+                    <a
+                      data-wayke-valuation-link
+                      href="https://www.wayke.se/personuppgiftspolicy-wayke"
+                      >https://www.wayke.se/personuppgiftspolicy-wayke</a
+                    >. <span id="wayke-valuation-contact-read-more-content"></span> är personuppgiftsansvarig för behandling av de
+                    personuppgifter som mottas från Wayke Sweden AB.
+                  </p>
                 </div>
-                <div class="form-alert">Du behöver samtycka.</div>
               </div>
             </div>
+            
           </section>
           <section class="page-section page-section-bottom">
             <button data-wayke-valuation-button="full-width">Skicka intresseanmälan</button>
@@ -375,6 +378,57 @@ class Stage4 {
         whenToSell.value = this.state.value.whenToSell;
       }
 
+      const valuationContactInfo = document.getElementById(
+        'wayke-valuation-contact-name-info'
+      ) as HTMLElement | null;
+
+      const valuationContactReadMoreContent = document.getElementById(
+        'wayke-valuation-contact-read-more-content'
+      ) as HTMLElement | null;
+
+      if (valuationContactReadMoreContent) {
+        if (this.props.settings.branches.length > 1) {
+          const result = this.props.settings.branches.find(
+            ({ id }) => id === this.state.value.branchId
+          );
+          valuationContactReadMoreContent.innerHTML += result?.name;
+        } else {
+          valuationContactReadMoreContent.innerHTML += `${this.props.settings.branches[0].name}`;
+        }
+      }
+
+      if (valuationContactInfo) {
+        if (this.props.settings.branches.length > 1) {
+          const result = this.props.settings.branches.find(
+            ({ id }) => id === this.state.value.branchId
+          );
+          valuationContactInfo.innerHTML += result?.name;
+        } else {
+          valuationContactInfo.innerHTML += `${this.props.settings.branches[0].name}`;
+        }
+      }
+
+      const readMore = document.getElementById(
+        'wayke-valuation-read-more-toggler'
+      ) as HTMLDivElement;
+
+      const content = document.querySelector(
+        '[data-wayke-valuation-scrollbox]'
+      ) as HTMLElement | null;
+
+      if (content) {
+        content.style.display = 'none';
+        readMore.addEventListener('click', () => {
+          if (content.style.display === 'block') {
+            content.style.display = 'none';
+            readMore.innerText = 'Läs mer';
+          } else {
+            content.style.display = 'block';
+            readMore.innerText = 'Läs mindre';
+          }
+        });
+      }
+
       const descriptionTextArea = element.querySelector(
         '#wayke-valuation-contact-description'
       ) as HTMLTextAreaElement | null;
@@ -384,15 +438,9 @@ class Stage4 {
         descriptionTextArea.value = this.state.value.description;
       }
 
-      const confirmTerms = element.querySelector(
-        '#wayke-valuation-contact-confirm-terms'
-      ) as HTMLInputElement | null;
-      if (confirmTerms) {
-        confirmTerms.addEventListener('input', (e) => this.onChange(e));
-        confirmTerms.checked = this.state.value.confirmTerms;
-      }
-
-      const button = element.querySelector('button') as HTMLButtonElement | null;
+      const button = element.querySelector(
+        '[data-wayke-valuation-button]'
+      ) as HTMLButtonElement | null;
       if (button) {
         button.addEventListener('click', () => this.onSend());
       }
