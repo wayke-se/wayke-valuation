@@ -69,6 +69,29 @@ class Stage4 {
       if (name) {
         this.state.value[name] = currentTarget.value;
         this.state.validation[name] = validationMethods[name](this.state.value[name]);
+
+        if (name === 'branchId' && this.props.settings.branches.length > 1) {
+          const readMoreElement = document.getElementById(
+            'wayke-valuation-contact-read-more-content'
+          ) as HTMLSpanElement | null;
+
+          const valuationInfoElement = document.getElementById(
+            'wayke-valuation-contact-name-info'
+          ) as HTMLElement | null;
+
+          if (readMoreElement) {
+            const result = this.props.settings.branches.find(
+              ({ id }) => id === this.state.value.branchId
+            );
+            readMoreElement.innerHTML = result?.name || '';
+          }
+          if (valuationInfoElement) {
+            const result = this.props.settings.branches.find(
+              ({ id }) => id === this.state.value.branchId
+            );
+            valuationInfoElement.innerHTML = result?.name || '';
+          }
+        }
       }
 
       if (currentTarget.type === 'select-one') {
