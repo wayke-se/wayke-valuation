@@ -322,6 +322,7 @@ class Stage4 {
                     fordon värderat. Läs mer om hur dina personuppgifter behandlas i
                     Waykes 
                     <a
+                      target="_blank"
                       data-wayke-valuation-link
                       href="https://www.wayke.se/personuppgiftspolicy-wayke"
                       >personuppgiftspolicy</a
