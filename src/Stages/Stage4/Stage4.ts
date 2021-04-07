@@ -319,12 +319,12 @@ class Stage4 {
                   <p>
                     Wayke Sweden AB är personuppgiftsansvarig för sin behandling av de
                     personuppgifter du lämnar i samband med din begäran att få ditt
-                    fordon värderat. Läs mer om hu r dina personuppgifter behandlas i
-                    Waykes personuppgiftspolicy
+                    fordon värderat. Läs mer om hur dina personuppgifter behandlas i
+                    Waykes 
                     <a
                       data-wayke-valuation-link
                       href="https://www.wayke.se/personuppgiftspolicy-wayke"
-                      >https://www.wayke.se/personuppgiftspolicy-wayke</a
+                      >personuppgiftspolicy</a
                     >. <span id="wayke-valuation-contact-read-more-content"></span> är personuppgiftsansvarig för behandling av de
                     personuppgifter som mottas från Wayke Sweden AB.
                   </p>
