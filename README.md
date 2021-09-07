@@ -2,6 +2,7 @@
 
 This project creates a stand alone javascript bundle with the Wayke Valuation which can be directly referenced from HTML - without manually building the component from source.
 
+In order to use the cdn-links provided in the examples below, replace `vX.X.X.` in wayke.valuation.vX.X.X.js with the latest version that can be found in `package.json`
 
 ## Usage 1: Auto
 
@@ -13,10 +14,10 @@ This project creates a stand alone javascript bundle with the Wayke Valuation wh
     <meta name="viewport" content="width=device-width" />
   </head>
   <body>
-    <script src="https://cdn.wayke.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+    <script src="https://cdn.wayke.se/public-assets/wayke.valuation.vX.X.X.js"></script>
     <!--
         A development version is available here:
-        <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+        <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.vX.X.X.js"></script>
     -->
     <script>
       new WaykeValuation.default({
@@ -45,10 +46,10 @@ Provide a custom button in order to start the widget
     <meta name="viewport" content="width=device-width" />
   </head>
   <body>
-    <script src="https://cdn.wayke.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+    <script src="https://cdn.wayke.se/public-assets/wayke.valuation.vX.X.X.js"></script>
     <!--
       A development version is available here:
-      <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js"></script>
+      <script src="https://test-cdn.wayketech.se/public-assets/wayke.valuation.vX.X.X.js"></script>
     -->
     <script>
       function openWaykeValuation() {
@@ -110,8 +111,8 @@ The modal is opened by calling the Valuation's instance `render`-method.
 ## Available Sources
 | Version | Environment | Url                                                                   |
 |---------|-------------|-----------------------------------------------------------------------|
-| 1.0.0   | Production  | https://cdn.wayke.se/public-assets/wayke.valuation.v1.0.0.js          |
-| 1.0.0   | Development | https://test-cdn.wayketech.se/public-assets/wayke.valuation.v1.0.0.js |
+| 1.0.0   | Production  | https://cdn.wayke.se/public-assets/wayke.valuation.vX.X.X.js          |
+| 1.0.0   | Development | https://test-cdn.wayketech.se/public-assets/wayke.valuation.vX.X.X.js |
 
 ## Develop
 
