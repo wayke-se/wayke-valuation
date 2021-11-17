@@ -1,5 +1,5 @@
 const logo = `
-    <svg class="header-logo" viewBox="0 0 185.57 109.13" height="32" preserveAspectRatio="xMinYMid" xmlns="http://www.w3.org/2000/svg">
+    <svg class="header-logo-svg" viewBox="0 0 185.57 109.13" height="32" preserveAspectRatio="xMinYMid" xmlns="http://www.w3.org/2000/svg">
         <title>Wayke logotyp</title>
         <circle class="wayke-logo-dot-1" cx="4.25" cy="39.68" r="4.25" />
         <circle class="wayke-logo-dot-2" cx="25.15" cy="68.03" r="4.96" />
