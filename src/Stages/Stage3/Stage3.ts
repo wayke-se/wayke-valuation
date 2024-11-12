@@ -27,15 +27,8 @@ class Stage3 {
     const element = document.querySelector('[data-wayke-valuation-page]') as HTMLElement | null;
     if (element) {
       const { registrationNumber, dataUsed, price } = this.props.state.valuation;
-      const {
-        manufacturer,
-        modelName,
-        modelSeries,
-        modelYear,
-        fuelType,
-        gearboxType,
-        chassis,
-      } = dataUsed;
+      const { manufacturer, modelName, modelSeries, modelYear, fuelType, gearboxType, chassis } =
+        dataUsed;
 
       const fixedPrediction =
         this.props.settings.conditionReduction[this.props.state.condition] * price.prediction;
