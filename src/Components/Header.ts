@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 interface HeaderProps {
   logo: string;
   close: () => void;
@@ -26,7 +28,7 @@ class Header {
         <div class="header">
           <div class="header-action"></div>
           <div class="header-logo-container">
-            ${this.props.logo}
+            ${DOMPurify.sanitize(this.props.logo)}
           </div>
           <div class="header-action">
             <button class="header-action-btn" title="Stäng"><i class="icon-close no-margin"></i></button>
