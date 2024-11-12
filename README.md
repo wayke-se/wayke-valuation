@@ -1,3 +1,5 @@
+> ⚠️ This repository is deprecated. For a newer version, please see https://github.com/wayke-se/wayke-valuation-web.
+
 # Wayke Valuation
 
 This project creates a stand alone javascript bundle with the Wayke Valuation which can be directly referenced from HTML - without manually building the component from source.
