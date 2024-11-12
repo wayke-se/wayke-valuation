@@ -1,4 +1,4 @@
-> ⚠️ This repository is deprecated. For a newer version, please see https://github.com/wayke-se/wayke-valuation-web.
+> ⚠️ This repository is deprecated. For a newer version, please see https://www.npmjs.com/package/@wayke-se/valuation-web.
 
 # Wayke Valuation
 
